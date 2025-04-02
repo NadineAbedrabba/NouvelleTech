@@ -1,0 +1,17 @@
+# Backend (Spring Boot)
+target/
+*.jar
+*.war
+*.class
+application.properties
+application.yml
+
+# Frontend (Angular)
+node_modules/
+dist/
+.angular/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
