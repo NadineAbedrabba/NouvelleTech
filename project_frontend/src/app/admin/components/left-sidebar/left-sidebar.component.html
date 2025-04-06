@@ -1,0 +1,28 @@
+<div class="sidenav" [class.sidenav-collapsed]="isLeftSidebarCollapsed">
+  <div class="logo-container">
+    <button class="logo" (click)="toggleCollapse()" aria-label="Toggle sidebar">
+      <i class="fal fa-bars"></i>
+    </button>
+    
+    <ng-container *ngIf="!isLeftSidebarCollapsed">
+      
+      <button class="btn-close" (click)="closeSidenav()" aria-label="Close sidebar">
+        <i class="fal fa-times"></i>
+      </button>
+    </ng-container>
+  </div>
+  
+  <nav class="sidenav-nav">
+    <ul>
+      <li class="sidenav-nav-item" *ngFor="let item of items; trackBy: trackByIndex" [attr.data-tooltip]="isLeftSidebarCollapsed ? item.label : null">
+        <a class="sidenav-nav-link" 
+           [routerLink]="item.routeLink" 
+           routerLinkActive="active"
+           [routerLinkActiveOptions]="{ exact: true }">
+          <i class="sidenav-link-icon" [class]="item.icon"></i>
+          <span class="sidenav-link-text">{{ item.label }}</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
