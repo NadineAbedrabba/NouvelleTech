@@ -1,6 +1,4 @@
 package com.utm.fst.project.controller;
-
-
 import com.utm.fst.project.dto.AuthenticationRequest;
 import com.utm.fst.project.dto.AuthenticationResponse;
 import com.utm.fst.project.entities.User;

@@ -1,0 +1,10 @@
+.main {
+    margin: 0;
+  padding: 0;
+  height: 100vh; /* Prendre toute la hauteur de l'écran */
+  background-image: url('/assets/background.png'); /* Image de fond */
+  background-size: cover; /* Couvre tout l'écran */
+  background-position: center center; /* Centre l'image */
+  background-attachment: fixed; /* Fixe l'image lors du défilement */
+  background-repeat: no-repeat; /* Évite de répéter l'image */
+}
