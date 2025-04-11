@@ -1,1 +1,28 @@
-<p>login-user works!</p>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="email">Email</label>
+
+    <input 
+      type="email" 
+      id="email" 
+      formControlName="email"
+      placeholder=" "> <!-- Important pour l'animation -->
+    <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+      Email invalide
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="password">Mot de passe</label>
+
+    <input 
+      type="password" 
+      id="password" 
+      formControlName="password"
+      placeholder=" ">
+  </div>
+  
+  <div class="form-footer">
+    <button type="submit" [disabled]="loginForm.invalid">Se connecter</button>
+  </div>
+</form>

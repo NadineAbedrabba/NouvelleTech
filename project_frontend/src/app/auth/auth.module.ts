@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 
 import { AuthRoutingModule } from './auth-routing.module';
@@ -8,6 +9,9 @@ import { RegisterUserComponent } from './components/register-user/register-user.
 import { LoginCompanyComponent } from './components/login-company/login-company.component';
 import { RegisterCompanyComponent } from './components/register-company/register-company.component';
 import { SharedComponent } from './components/shared/shared.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+
 
 
 @NgModule({
@@ -20,13 +24,15 @@ import { SharedComponent } from './components/shared/shared.component';
     SharedComponent
   ],
   imports: [
+    HttpClientModule,
     CommonModule,
-    AuthRoutingModule
+    AuthRoutingModule,
+    ReactiveFormsModule,
+
   ],
   exports: [
     AuthSelectionComponent, 
     LoginUserComponent, 
-    RegisterUserComponent, 
     LoginCompanyComponent, 
     RegisterCompanyComponent
   ]

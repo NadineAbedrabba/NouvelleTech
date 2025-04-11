@@ -7,4 +7,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'project_frontend';
+  showAuthModal = false;
+
+  openAuthModal() {
+    this.showAuthModal = true;
+  }
+
+  closeAuthModal() {
+    this.showAuthModal = false;
+  }
 }

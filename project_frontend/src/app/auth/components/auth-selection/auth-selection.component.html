@@ -1,7 +1,53 @@
-<div class="main">
-
-</div>
-
-
-
-
+<div class="modal-overlay" (click)="onClose()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <button class="close-button" (click)="onClose()">&times;</button>
+      
+      <!-- Étape 1: Sélection du type de compte -->
+      <div *ngIf="currentStep === 'select'" class="selection-step">
+        <h2>Choisissez votre type de compte</h2>
+        
+        <div class="account-type-cards">
+          <div class="account-card" (click)="selectTab('user')">
+            <div class="card-icon">👤</div>
+            <h3>Utilisateur</h3>
+            <p>Je veux découvrir et noter des restaurants</p>
+          </div>
+          
+          <div class="account-card" (click)="selectTab('restaurant')">
+            <div class="card-icon">🍽️</div>
+            <h3>Restaurant</h3>
+            <p>Je représente un établissement et veux gérer ma page</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Étape 2: Formulaire de connexion/inscription -->
+      <div *ngIf="currentStep === 'form'" class="form-step">
+        <button class="back-button" (click)="goBackToSelection()"> Retour</button>
+        
+        <h2>{{ activeTab === 'user' ? 'Utilisateur' : 'Restaurant' }}</h2>
+        
+        <div class="form-container">
+          <!-- Formulaire de login -->
+          <app-login-user *ngIf="activeTab === 'user' && activeForm === 'login'"  (switchToSignup)="switchForm('signup')"></app-login-user>
+          <app-login-company *ngIf="activeTab === 'restaurant' && activeForm === 'login'"></app-login-company>
+          
+          <!-- Formulaire d'inscription -->
+          <app-register-user *ngIf="activeTab === 'user' && activeForm === 'signup'"></app-register-user>
+          <app-register-company *ngIf="activeTab === 'restaurant' && activeForm === 'signup'"></app-register-company>
+        </div>
+        
+        <!-- Lien pour basculer entre login et signup -->
+        <div class="switch-form-link">
+          <span *ngIf="activeForm === 'login'">
+            Vous n'avez pas de compte ? 
+            <a (click)="switchForm('signup')">Inscrivez-vous</a>
+          </span>
+          <span *ngIf="activeForm === 'signup'">
+            Vous avez déjà un compte ? 
+            <a (click)="switchForm('login')">Connectez-vous</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>

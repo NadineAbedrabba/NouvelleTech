@@ -1,1 +1,11 @@
-<app-auth-selection> </app-auth-selection>
+<!-- app.component.html -->
+<header>
+    <!-- Votre en-tête -->
+    <button (click)="openAuthModal()">Connexion / Inscription</button>
+  </header>
+  
+  <main>
+    <!-- Contenu principal de votre application -->
+  </main>
+  
+  <app-auth-selection *ngIf="showAuthModal" (closeModal)="closeAuthModal()"></app-auth-selection>
