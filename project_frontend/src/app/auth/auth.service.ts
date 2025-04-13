@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080';
+  private apiUrl = 'http://localhost:8081/review';
 
   constructor(private http: HttpClient) { }
 
@@ -26,13 +26,9 @@ export class AuthService {
   }
 
   authenticate(userData: any): Observable<any> {
-    // On envoie seulement le premier password
-    const payload = {
-      email: userData.email,
-      password: userData.password
-    };
+   
     
-    return this.http.post(`${this.apiUrl}/authenticate`, payload,
+    return this.http.post(`${this.apiUrl}/authenticate`, userData,
       { headers: new HttpHeaders({ 'Content-Type': 'application/json' }), withCredentials: true }
     );
   }
