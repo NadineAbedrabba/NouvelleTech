@@ -17,8 +17,13 @@ public class User {
     private String email ;
     private String password ;
 
+    @Enumerated(EnumType.STRING)
+
     private UserRole userRole ;
     private byte[] img ;
+    @ManyToOne
+    @JoinColumn(name = "entreprise_id")
+    private Entreprise entreprise;
 
 
 
