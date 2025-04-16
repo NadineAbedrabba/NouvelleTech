@@ -1,131 +1,162 @@
 /* Style général du formulaire */
 form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem; /* Espacement entre les groupes */
-    width: 100%;
-    max-width: 500px;
-    margin: -30px;
-    padding: 2rem;
-  }
-  
-  /* Style des groupes de formulaire */
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    position: relative;
-  }
-  
-  /* Style des labels */
-  label {
-    color: #4A81A8;
-    font-weight: 500;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-  }
-  
-  /* Style des inputs */
-  input {
-    padding: 0.8rem 1rem;
-    border: 2px solid #8BB9D9;
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    background-color: rgba(139, 185, 217, 0.1);
-  }
-  
-  input:focus {
-    outline: none;
-    border-color: #4A81A8;
-    box-shadow: 0 0 0 3px rgba(74, 129, 168, 0.2);
-  }
-  
-  /* Style des messages d'erreur */
-  .form-group > div {
-    color: #e74c3c;
-    font-size: 0.85rem;
-    height: 1rem;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem; /* Espacement réduit pour mieux s'adapter au modal */
+  width: 100%;
+  max-width: 100%; /* Supprime la limite de largeur pour s'adapter au conteneur */
+  margin: 0; /* Supprime la marge négative problématique */
+  padding: 1.5rem;
+  box-sizing: border-box; /* Inclut le padding dans la largeur */
+}
 
+/* Style des groupes de formulaire */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  position: relative;
+}
+
+/* Style des labels */
+label {
+  color: #4A81A8;
+  font-weight: 500;
+  font-size: 0.95rem; /* Taille légèrement réduite */
+  transition: all 0.3s ease;
+  margin-left: 0.5rem; /* Alignement avec l'input */
+}
+
+/* Style des inputs */
+input {
+  padding: 0.75rem 1rem; /* Padding légèrement réduit */
+  border: 2px solid #8BB9D9;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  background-color: rgba(139, 185, 217, 0.1);
+  width: 100%; /* Garantit la pleine largeur */
+  box-sizing: border-box; /* Inclut le padding dans la largeur */
+}
+
+input:focus {
+  outline: none;
+  border-color: #4A81A8;
+  box-shadow: 0 0 0 3px rgba(74, 129, 168, 0.2);
+}
+
+/* Style des messages d'erreur */
+.form-group > div {
+  color: #e74c3c;
+  font-size: 0.8rem; /* Taille réduite */
+  height: 1rem;
+  margin-left: 0.5rem; /* Alignement avec l'input */
+  margin-top: -0.25rem; /* Réduit l'espacement */
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 0.8rem;
+}
+
+/* Style du bouton de soumission */
+.form-footer button {
+  background-color: #4A81A8;
+  color: white;
+  border: none;
+  padding: 0.9rem; /* Légèrement réduit */
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem; /* Espacement réduit */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Pleine largeur sur mobile */
+}
+
+.form-footer button:hover:not([disabled]) {
+  background-color: #3a6a8a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.form-footer button[disabled] {
+  background-color: #8BB9D9;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.form-footer {
+  display: flex;
+  justify-content: center;
+}
+
+/* Animation pour les labels */
+input:focus + label,
+input:not(:placeholder-shown) + label {
+  transform: translateY(0) translateX(0.5rem); /* Animation modifiée */
+  font-size: 0.75rem;
+  color: #F1B316;
+  background: white; /* Fond pour meilleure lisibilité */
+  padding: 0 0.25rem;
+  z-index: 1;
+}
+
+/* Styles spécifiques pour les petits écrans */
+@media (max-width: 768px) {
+  form {
+    padding: 1.25rem;
+    gap: 1.1rem;
+  }
   
-  /* Style du bouton de soumission */
+  input {
+    padding: 0.7rem 0.9rem;
+    font-size: 0.9rem;
+  }
+  
   .form-footer button {
-    background-color: #4A81A8;
-    color: white;
-    border: none;
+    padding: 0.85rem;
+  }
+  
+  label {
+    font-size: 0.9rem;
+  }
+}
+
+/* Styles pour très petits écrans */
+@media (max-width: 480px) {
+  form {
     padding: 1rem;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 1rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  
+    gap: 1rem;
   }
   
-  .form-footer button:hover:not([disabled]) {
-    background-color: #3a6a8a;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  label {
+    font-size: 0.85rem;
   }
   
-  .form-footer button[disabled] {
-    background-color: #8BB9D9;
-    cursor: not-allowed;
-    opacity: 0.7;
-    
-  }
-  .form-footer {
-    display: flex;
-    justify-content: center;
+  input {
+    padding: 0.65rem 0.8rem;
+    font-size: 0.85rem;
   }
   
-  /* Style pour les écrans mobiles */
-  @media (max-width: 768px) {
-    form {
-      padding: 1.5rem;
-      gap: 1.2rem;
-    }
-    
-    input {
-      padding: 0.7rem 0.9rem;
-    }
-    
-    .form-footer button {
-      padding: 0.9rem;
-    }
-  }
-  .error-message{
-    color: #e74c3c;
+  .form-footer button {
+    padding: 0.8rem;
+    font-size: 0.85rem;
   }
   
-  @media (max-width: 480px) {
-    form {
-      padding: 1rem;
-      gap: 1rem;
-    }
-    
-    label {
-      font-size: 0.9rem;
-    }
-    
-    input {
-      padding: 0.6rem 0.8rem;
-      font-size: 0.9rem;
-    }
-    
-    .form-footer button {
-      padding: 0.8rem;
-      font-size: 0.9rem;
-    }
+  .form-group > div {
+    font-size: 0.75rem;
+  }
+}
+
+/* Adaptation pour les modaux étroits */
+@media (max-width: 350px) {
+  form {
+    padding: 0.75rem;
   }
   
-  /* Animation pour les labels */
-  input:focus + label,
-  input:not(:placeholder-shown) + label {
-    transform: translateY(-0.5rem);
-    font-size: 0.8rem;
-    color: #F1B316;
+  input {
+    padding: 0.6rem 0.75rem;
   }
+}
