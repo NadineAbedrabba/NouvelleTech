@@ -5,6 +5,9 @@ import { RestaurantsPageComponent } from './admin/components/restaurants-page/re
 import { RestaurantRequestsComponent } from './admin/components/restaurant-requests/restaurant-requests.component';
 import { RestaurantDetailsComponent } from './admin/components/restaurant-details/restaurant-details.component';
 import { RestaurantPendingComponent } from './admin/components/restaurant-pending copy/restaurant-pending.component';
+import { RestaurantProfileComponent } from './entreprise/components/profil-entreprise/profil-entreprise.component';
+import { ReservationsComponent } from './entreprise/components/resevations/resevations.component';
+import { ReservationDetailsComponent } from './entreprise/components/reservation-details/reservation-details.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -19,4 +22,7 @@ export const routes: Routes = [
       component: RestaurantPendingComponent },
   { path: '', redirectTo: '/restaurants', pathMatch: 'full' },
   { path: 'reviews/:id', component: ReviewsComponent },
+  { path: 'profil', component: RestaurantProfileComponent },
+  { path: 'reservations', component: ReservationsComponent },
+  { path: 'reservations/:id', component: ReservationDetailsComponent },
 ];

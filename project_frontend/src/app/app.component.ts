@@ -2,11 +2,12 @@ import { Component, HostListener, OnInit, signal } from '@angular/core';
 import { LeftSidebarComponent } from './admin/components/left-sidebar/left-sidebar.component';
 import { MainComponent } from './main/main.component';
 import { CommonModule } from '@angular/common';
+import { EntrepriseLeftSidebarComponent } from "./entreprise/components/left-sidebar/entreprise-left-sidebar.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [LeftSidebarComponent, MainComponent,CommonModule],
+  imports: [LeftSidebarComponent, MainComponent, CommonModule, EntrepriseLeftSidebarComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
