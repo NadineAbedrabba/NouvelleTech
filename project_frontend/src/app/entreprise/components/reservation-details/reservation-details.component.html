@@ -1,0 +1,78 @@
+<!-- reservation-details.component.html -->
+<div class="glass-container">
+  <div class="glass-card">
+    <div class="reservation-header">
+      <button class="glass-btn back-btn" routerLink="/reservations">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+      <h1 class="soft-title">Réservation #{{reservation.id}}</h1>
+      <div class="status-chip" [ngClass]="reservation.statut.toLowerCase()">
+        {{reservation.statut}}
+      </div>
+    </div>
+
+    <div class="reservation-grid">
+      <!-- Carte Date -->
+      <div class="glass-card info-card" style="--accent-color: #901430; --card-bg: rgba(144, 20, 48, 0.08)">
+        <div class="card-icon">
+          <i class="fas fa-calendar-day"></i>
+        </div>
+        <div class="card-content">
+          <h3>Date & Heure</h3>
+          <p>{{reservation.date | date:'fullDate'}}</p>
+          <p class="highlight">{{reservation.tempsArrivee}}</p>
+        </div>
+      </div>
+
+      <!-- Carte Client -->
+      <div class="glass-card info-card" style="--accent-color: #a82d4d; --card-bg: rgba(168, 45, 77, 0.08)">
+          <div class="card-icon">
+            <i class="fas fa-user-tie"></i>
+          </div>
+          <div class="card-content">
+            <h3>Client</h3>
+            <p>{{reservation.clientNom}}</p>
+            <p>{{reservation.clientEmail}}</p>
+            <p>{{reservation.clientTelephone}}</p>
+          </div>
+        </div>
+
+      <!-- Carte Invités -->
+      <div class="glass-card info-card" style="--accent-color: #c04566; --card-bg: rgba(192, 69, 102, 0.08)">
+        <div class="card-icon">
+          <i class="fas fa-users"></i>
+        </div>
+        <div class="card-content">
+          <h3>Invites</h3>
+          <p class="highlight">{{reservation.nbPersonnes}} personnes</p>
+        </div>
+      </div>
+
+      <!-- Carte Préférences -->
+      <div class="glass-card info-card" style="--accent-color: #d85d7f; --card-bg: rgba(216, 93, 127, 0.08)">
+        <div class="card-icon">
+          <i class="fas fa-heart"></i>
+        </div>
+        <div class="card-content">
+          <h3>Préférences</h3>
+          <p>{{reservation.preference || "Aucune préférence"}}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <button class="glass-btn confirm-btn" 
+              (click)="confirmReservation()" 
+              *ngIf="reservation.statut === 'En attente' && !isRefused"
+              [disabled]="isConfirmed">
+        <i class="fas fa-check"></i> Confirmer
+      </button>
+      <button class="glass-btn cancel-btn" 
+              (click)="cancelReservation()" 
+              *ngIf="reservation.statut === 'En attente' && !isConfirmed"
+              [disabled]="isRefused">
+        <i class="fas fa-times"></i> Refuser
+      </button>
+    </div>
+  </div>
+</div>

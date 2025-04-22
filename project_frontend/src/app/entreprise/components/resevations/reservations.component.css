@@ -1,0 +1,322 @@
+.elegant-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+  }
+  
+  .header-section {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .header-section h1 {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+  }
+
+  .date-filter, .statut-filter {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .date-filter input, .statut-filter select {
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 0.95rem;
+    background-color: #eff2f5;
+  }
+  
+  
+  .filters {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+  
+  .search-filter {
+    position: relative;
+    min-width: 250px;
+  }
+  
+  .search-filter input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    width:500px;
+    border-radius: 20px;
+    background-color: #eff2f5;
+  }
+  
+  .search-filter input:focus {
+    outline: none;
+    border-color: #4a81a8;
+    box-shadow: 0 0 0 2px rgba(74, 129, 168, 0.2);
+  }
+  
+  .search-icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: #777;
+  }
+  
+  .date-filter {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .date-filter label {
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  .date-filter input {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .table-container {
+    overflow-x: auto;
+    margin-bottom: 2rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+  
+  }
+  
+  .elegant-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+  }
+  
+  .elegant-table th {
+    background-color: #4a81a8;
+    color: white;
+    padding: 1rem;
+  
+    font-weight: 500;
+    
+  }
+  
+  .elegant-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #f0f0f0;
+    text-align:center;
+  }
+  
+  .elegant-table tr:hover {
+    background-color: #f8fafc;
+  }
+  
+  .status {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-align: center;
+  }
+  
+  .status-pending {
+    background-color: #fff3cd;
+    color: #856404;
+    font-size:12px;
+    width:90px
+  }
+  
+  .status-approved {
+    background-color: #d4edda;
+    color: #155724;
+    font-size:12px;
+    width:90px
+  }
+  
+  .status-rejected {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  
+  .actions-cell {
+    white-space: nowrap;
+  }
+  
+  .action-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    margin-right: 0.5rem;
+    color: white;
+  }
+  
+  .action-btn:last-child {
+    margin-right: 0;
+  }
+  
+  .action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .accept-btn {
+    background-color: #2a873f;
+    border-radius: 20px;
+  }
+  
+  .reject-btn {
+    background-color: #bf2b39;
+    border-radius: 20px;
+  }
+  
+  .details-btn {
+    background-color: #4a81a8;
+    border-radius: 20px;
+  }
+  
+  .action-btn:hover:not(:disabled) {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+  
+  .no-results {
+    text-align: center;
+    padding: 2rem;
+    color: #777;
+    font-style: italic;
+  }
+  
+  .pagination-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  
+  .items-per-page {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .items-per-page select {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .page-nav, .page-btn {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .page-nav {
+    font-size: 1rem;
+  }
+  
+  .page-btn {
+    min-width: 2.5rem;
+  }
+  
+  .page-nav:hover:not(:disabled), 
+  .page-btn:hover:not(.active) {
+    background-color: #f5f5f5;
+  }
+  
+  .page-nav:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .active {
+    background-color: #ecebf0;
+    color: black;
+    
+  }
+  
+  .pagination-info {
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  .date-filter, .statut-filter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.date-filter input, .statut-filter select {
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+}
+
+  
+  @media (max-width: 768px) {
+    .filters {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .search-filter, .date-filter {
+      width: 100%;
+    }
+    
+    .date-filter {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .pagination-section {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .elegant-table {
+      font-size: 0.85rem;
+    }
+    
+    .elegant-table th, 
+    .elegant-table td {
+      padding: 0.75rem 0.5rem;
+    }
+    
+    .action-btn {
+      padding: 0.5rem;
+      margin-bottom: 0.25rem;
+    }
+  }
+  

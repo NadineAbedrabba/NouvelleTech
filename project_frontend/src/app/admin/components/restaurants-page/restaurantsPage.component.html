@@ -1,0 +1,75 @@
+<div class="restaurants-container">
+  <h1 class="page-title">Nos Restaurants Partenaires</h1>
+
+  <div class="search-filter-container">
+    <div class="search-box">
+      <i class="bi bi-search"></i>
+      <input type="text" [(ngModel)]="searchQuery" (input)="filterRestaurants()" 
+             placeholder="Rechercher un restaurant ou une cuisine...">
+    </div>
+
+    <select class="cuisine-filter" [(ngModel)]="selectedCuisine" (change)="filterRestaurants()">
+      <option value="all">Toutes les cuisines</option>
+      <option *ngFor="let cuisine of cuisineTypes" [value]="cuisine">{{ cuisine }}</option>
+    </select>
+
+    <select class="cuisine-filter" [(ngModel)]="selectedPrice" (change)="filterRestaurants()">
+      <option value="all">Tous les prix</option>
+      <option *ngFor="let price of priceRanges" [value]="price">{{ price }}</option>
+    </select>
+  </div>
+
+  <div *ngIf="filteredRestaurants.length === 0" class="no-results">
+    <i class="bi bi-emoji-frown"></i>
+    <p>Aucun restaurant ne correspond à votre recherche.</p>
+  </div>
+
+  <div class="restaurants-grid">
+    <div *ngFor="let restaurant of filteredRestaurants" class="restaurant-card"
+         (click)="viewDetails(restaurant.id)"
+         (contextmenu)="showContextMenu($event, restaurant.id)">
+      <div class="card">
+        <img [src]="restaurant.imageUrl" class="card-img-top" [alt]="restaurant.name">
+        <div class="card-body">
+          <div class="card-header">
+            <h5 class="card-title">{{ restaurant.name }}</h5>
+            <span class="cuisine-badge">{{ restaurant.cuisine }}</span>
+          </div>
+          <p class="card-text">{{ restaurant.description }}</p>
+          <div class="restaurant-info">
+            <div class="rating">
+              <span class="stars">★★★★★</span>
+              <span class="rating-value">{{ restaurant.rating }}</span>
+            </div>
+            <div class="delivery-time">
+              <i class="bi bi-clock"></i> {{ restaurant.horaireTravail }}
+            </div>
+            <div class="price-range">
+              {{ restaurant.priceRange }}
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="footer-actions">
+            <a [routerLink]="['/reviews', restaurant.id]" class="btn btn-outline-secondary" (click)="$event.stopPropagation()">
+              <i class="bi bi-star-fill"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menu contextuel -->
+  <div class="context-menu" *ngIf="contextMenuVisible"
+       [style.left.px]="contextMenuPosition.x"
+       [style.top.px]="contextMenuPosition.y"
+       (click)="$event.stopPropagation()">
+    <button (click)="viewDetails()" class="context-menu-item">
+      <i class="bi bi-eye"></i> Voir détails
+    </button>
+    <button (click)="deleteRestaurant()" class="context-menu-item delete">
+      <i class="bi bi-trash"></i> Supprimer
+    </button>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+<div class="body" [class.body-full-width]="isLeftSidebarCollapsed" 
+     [class.body-expanded]="!isLeftSidebarCollapsed && screenWidth > 768"
+     [class.body-md-screen]="!isLeftSidebarCollapsed && screenWidth <= 768">
+  <router-outlet></router-outlet>
+</div>
+
