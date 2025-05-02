@@ -12,6 +12,7 @@ export class RegisterCompanyComponent {
     passwordCheck=true;
     signUpForm = this.fb.group({
           email: ['', [Validators.required, Validators.email]],
+          matricule: ['', Validators.required],
           nomEntreprise: ['', Validators.required],
           adresse: ['', Validators.required],
           telephone: ['', Validators.required],
@@ -37,9 +38,9 @@ export class RegisterCompanyComponent {
       
         onSubmit() {
           this.checkPasswordMatch();
-          const {email, nomEntreprise,adresse, telephone, typeCuisine, password } = this.signUpForm.value;
+          const {email,matricule, nomEntreprise,adresse, telephone, typeCuisine, password } = this.signUpForm.value;
 
-          const payload = {email,nomEntreprise,adresse,telephone,typeCuisine,password};
+          const payload = {email,matricule,nomEntreprise,adresse,telephone,typeCuisine,password};
           if (this.signUpForm.valid  && this.passwordCheck) {
             console.log('User Signing Up data:', payload);
             this.authService.signUpEntreprise(payload).subscribe({
