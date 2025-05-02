@@ -1,142 +1,103 @@
-import { Component, HostListener } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { RestaurantService } from '../../../services/restaurant.service';
 import { FormsModule } from '@angular/forms';
-
-interface Restaurant {
-  id: number;
-  name: string;
-  cuisine: string;
-  description: string;
-  imageUrl: string;
-  rating: number;
-  horaireTravail: string;
-  priceRange: string;
-}
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-restaurants-page',
-  standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './restaurantsPage.component.html',
-  styleUrls: ['./restaurantsPage.component.css']
+  styleUrls: ['./restaurantsPage.component.css'],
+  standalone:true,
+  imports:[FormsModule, RouterModule, CommonModule]
 })
-export class RestaurantsPageComponent {
-  constructor(private router: Router) {}
 
-  restaurants: Restaurant[] = [
-    {
-      id: 1,
-      name: "Le Gourmet Français",
-      cuisine: "Française",
-      description: "Cuisine traditionnelle française dans un cadre élégant.",
-      imageUrl: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4",
-      rating: 4.7,
-      horaireTravail: "08:00-22:00",
-      priceRange: "10-50DT"
-    },
-    {
-      id: 2,
-      name: "Pasta Amore",
-      cuisine: "Italienne",
-      description: "Authentiques pâtes italiennes et pizzas au feu de bois.",
-      imageUrl: "https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb",
-      rating: 4.5,
-      horaireTravail: "08:00-22:00",
-      priceRange: "10-70DT"
-    },
-    {
-      id: 3,
-      name: "Tokyo Sushi",
-      cuisine: "Japonaise",
-      description: "Sushi frais préparé quotidiennement.",
-      imageUrl: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c",
-      rating: 4.8,
-      horaireTravail: "08:00-22:00",
-      priceRange: "10-40DT"
-    },
-    {
-      id: 4,
-      name: "Burger Palace",
-      cuisine: "Américaine",
-      description: "Les meilleurs burgers de la ville.",
-      imageUrl: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
-      rating: 4.3,
-      horaireTravail: "08:00-22:00",
-      priceRange: "10-50DT"
-    },
-    {
-      id: 5,
-      name: "La Petite Crêperie",
-      cuisine: "Française",
-      description: "Crêpes sucrées et salées à la minute.",
-      imageUrl: "https://images.unsplash.com/photo-1559561723-608b8570f7aa",
-      rating: 4.6,
-      horaireTravail: "08:00-22:00",
-      priceRange: "10-50DT"
-    },
-    {
-      id: 6,
-      name: "El Sombrero",
-      cuisine: "Mexicaine",
-      description: "Tacos et burritos légendaires.",
-      imageUrl: "https://images.unsplash.com/photo-1513456852971-30c0b8199d4d",
-      rating: 4.4,
-      horaireTravail: "08:00-22:00",
-      priceRange: "10-50DT"
-    }
-  ];
 
-  filteredRestaurants: Restaurant[] = [...this.restaurants];
-  searchQuery: string = '';
-  selectedCuisine: string = 'all';
-  selectedPrice: string = 'all';
 
-  cuisineTypes: string[] = [...new Set(this.restaurants.map(r => r.cuisine))];
-  priceRanges: string[] = [...new Set(this.restaurants.map(r => r.priceRange))];
+export class RestaurantsPageComponent implements OnInit {
+  restaurants: any[] = [];
+  filteredRestaurants: any[] = [];
+  cuisineTypes: string[] = [];
+  priceRanges: string[] = [];
+  searchQuery = '';
+  selectedCuisine = 'all';
+  selectedPrice = 'all';
+
 
   contextMenuVisible = false;
   contextMenuPosition = { x: 0, y: 0 };
   selectedRestaurantId: number | null = null;
 
-  filterRestaurants() {
-    this.filteredRestaurants = this.restaurants.filter(restaurant => {
-      const matchesSearch = restaurant.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-                            restaurant.description.toLowerCase().includes(this.searchQuery.toLowerCase());
-      const matchesCuisine = this.selectedCuisine === 'all' ||
-                            restaurant.cuisine.toLowerCase() === this.selectedCuisine.toLowerCase();
-      const matchesPrice = this.selectedPrice === 'all' ||
-                           restaurant.priceRange === this.selectedPrice;
+  constructor(private restaurantService: RestaurantService, private router: Router) {}
 
-      return matchesSearch && matchesCuisine && matchesPrice;
+  ngOnInit(): void {
+    this.restaurantService.getRestaurants().subscribe(data => {
+      this.restaurants = data;
+      this.filteredRestaurants = [...data];
+      this.extractFilterOptions();
+      this.loadProfileImages();
     });
   }
 
-  showContextMenu(event: MouseEvent, restaurantId: number) {
+  extractFilterOptions(): void {
+    this.cuisineTypes = [...new Set(this.restaurants.map(r => r.typeCuisine))];
+    this.priceRanges = [...new Set(this.restaurants.map(r => r.gammePrix))];
+  }
+
+  filterRestaurants(): void {
+    const query = this.searchQuery.toLowerCase();
+
+    this.filteredRestaurants = this.restaurants.filter(restaurant => {
+      const matchesQuery = restaurant.nomEntreprise.toLowerCase().includes(query)
+        || (restaurant.description && restaurant.description.toLowerCase().includes(query));
+      const matchesCuisine = this.selectedCuisine === 'all' || restaurant.typeCuisine === this.selectedCuisine;
+      const matchesPrice = this.selectedPrice === 'all' || restaurant.gammePrix === this.selectedPrice;
+      return matchesQuery && matchesCuisine && matchesPrice;
+    });
+  }
+
+  loadProfileImages(): void {
+    this.restaurants.forEach(restaurant => {
+      this.restaurantService.getProfileImage(restaurant.id).subscribe(images => {
+        if (images && images.length > 0) {
+          restaurant.profileImage = images[0];
+        } else {
+          restaurant.profileImage = null;
+        }
+      });
+    });
+  }
+
+  viewDetails(id?: number): void {
+    if (id) {
+      this.router.navigate(['/restaurants', id]);
+    }
+  }
+  
+  onImageError(event: Event): void {
+    const target = event.target as HTMLImageElement;
+    target.src = 'assets/background.png';
+  }
+  
+
+
+  showContextMenu(event: MouseEvent, id: number): void {
     event.preventDefault();
-    this.contextMenuPosition = { x: event.clientX, y: event.clientY };
-    this.selectedRestaurantId = restaurantId;
     this.contextMenuVisible = true;
+    this.contextMenuPosition = { x: event.clientX, y: event.clientY };
+    this.selectedRestaurantId = id;
   }
 
   @HostListener('document:click')
-  closeContextMenu() {
+  hideContextMenu(): void {
     this.contextMenuVisible = false;
   }
 
-  deleteRestaurant() {
-    if (this.selectedRestaurantId && confirm('Êtes-vous sûr de vouloir supprimer ce restaurant ?')) {
+  deleteRestaurant(): void {
+    if (this.selectedRestaurantId !== null) {
       this.restaurants = this.restaurants.filter(r => r.id !== this.selectedRestaurantId);
       this.filterRestaurants();
       this.contextMenuVisible = false;
     }
-  }
-
-  viewDetails(id?: number) {
-    const restaurantId = id || this.selectedRestaurantId;
-    if (restaurantId) {
-      this.router.navigate(['/restaurants', restaurantId]);
-      this.contextMenuVisible = false;
-    }
-  }
+}
 }

@@ -2,57 +2,55 @@
   <div class="restaurant-header">
     <div class="image-gallery">
       <div class="image-category-label">{{ getCurrentCategory() }}</div>
-      <img [src]="getCurrentImage().src" [alt]="getCurrentImage().alt" class="main-image">
+      <img [src]="getCurrentImage().lien" class="main-image" (error)="handleImageError($event)">
       <button class="nav-btn prev" (click)="prevImage()">❮</button>
       <button class="nav-btn next" (click)="nextImage()">❯</button>
-      
+
       <div class="image-categories">
-        <button 
-          *ngFor="let category of restaurant.imagesParCategories; let i = index" 
-          [class.active]="i === currentCategoryIndex"
-          (click)="selectCategory(i)">
+        <button *ngFor="let category of restaurant.imagesParCategories; let i = index" 
+                [class.active]="i === currentCategoryIndex"
+                (click)="selectCategory(i)">
           {{ category.categorie }}
         </button>
       </div>
-      
+
       <div class="image-dots">
-        <span *ngFor="let img of restaurant.imagesParCategories[currentCategoryIndex].images; let i = index" 
+        <span *ngFor="let img of restaurant.imagesParCategories[currentCategoryIndex]?.images || []; let i = index" 
               [class.active]="i === currentImageIndex"
               (click)="currentImageIndex = i"></span>
       </div>
     </div>
-    
+
     <div class="header-content">
-      
-      
       <div class="title-section">
-        <img [src]="restaurant.photoProfil.src" [alt]="restaurant.photoProfil.alt" class="profile-image">
-        <h1>{{ restaurant.nom }}</h1>
+        <img [src]="restaurant.profileImage?.lien || 'assets/images/background.png'" class="profile-image">
+        <h1>{{ restaurant.nomEntreprise }}</h1>
       </div>
+
       <div class="header-top">
         <span class="matricule-badge">Matricule: {{ restaurant.matricule }}</span>
       </div>
-      
 
       <span class="description">{{ restaurant.description }}</span>
+
       <div class="restaurant-meta">
-        
         <span class="cuisine-type">{{ restaurant.typeCuisine }}</span>
         <span class="price-range">{{ restaurant.gammePrix }}</span>
         <span class="delivery" *ngIf="restaurant.livraisonDisponible">
           <i class="bi bi-bicycle"></i> Livraison disponible
         </span>
       </div>
-      
+
       <div class="rating-section">
         <span class="reservation-badge" [class.available]="restaurant.acceptReservation">
           <i class="bi bi-calendar-check"></i> 
           {{ restaurant.acceptReservation ? 'Réservations acceptées' : 'Réservations non acceptées' }}
         </span>
       </div>
+
       <div class="rating-section">
         <div class="stars">★★★★★</div>
-        <span class="review-count">142 avis</span>
+        <span class="review-count">{{ restaurant.rating || '0' }} avis</span>
       </div>
     </div>
   </div>
@@ -65,62 +63,65 @@
           <i class="bi bi-geo-alt"></i>
           <div>
             <h3>Adresse</h3>
-            <p>{{ restaurant.localisation }}</p>
+            <p>{{ restaurant.adresse || 'Non disponible' }}</p>
           </div>
         </div>
+
         <div class="detail-item">
           <i class="bi bi-clock"></i>
           <div>
             <h3>Horaires</h3>
-            <p>{{ restaurant.horaireDeTravail }}</p>
+            <pre>{{ formatHoraires(restaurant.horaires) }}</pre>
           </div>
         </div>
+
         <div class="detail-item">
           <i class="bi bi-telephone"></i>
           <div>
             <h3>Téléphone</h3>
-            <p>{{ restaurant.telephone }}</p>
+            <p>{{ restaurant.telephone || 'Non disponible' }}</p>
           </div>
         </div>
+
         <div class="detail-item">
           <i class="bi bi-envelope"></i>
           <div>
             <h3>Email</h3>
-            <p>{{ restaurant.email }}</p>
+            <p>{{ restaurant.email || 'Non disponible' }}</p>
           </div>
         </div>
       </div>
     </div>
 
     <div class="features-section">
-      <div class="feature-column">
+      <div class="feature-column" *ngIf="restaurant.services?.length">
         <h3><i class="bi bi-list-check"></i> Services</h3>
         <ul>
-          <li *ngFor="let service of restaurant.Service">
+          <li *ngFor="let service of restaurant.services">
             <i class="bi bi-check-circle"></i> {{ service }}
           </li>
         </ul>
       </div>
-      
-      <div class="feature-column">
+
+      <div class="feature-column" *ngIf="restaurant.optionsAlimentaires?.length">
         <h3><i class="bi bi-egg-fried"></i> Options alimentaires</h3>
         <ul>
-          <li *ngFor="let option of restaurant.optionAlimentaires">
+          <li *ngFor="let option of restaurant.optionsAlimentaires">
             <i class="bi bi-check-circle"></i> {{ option }}
           </li>
         </ul>
       </div>
-      
-      <div class="feature-column">
+
+      <div class="feature-column" *ngIf="restaurant.experiences?.length">
         <h3><i class="bi bi-stars"></i> Expériences</h3>
         <ul>
-          <li *ngFor="let exp of restaurant.experience">
+          <li *ngFor="let exp of restaurant.experiences">
             <i class="bi bi-check-circle"></i> {{ exp }}
           </li>
         </ul>
       </div>
-      
-      <div class="feature-column">
+
+      <div class="feature-column" *ngIf="restaurant.accesibilite?.length">
         <h3><i class="bi bi-universal-access"></i> Accessibilité</h3>
         <ul>
           <li *ngFor="let access of restaurant.accesibilite">

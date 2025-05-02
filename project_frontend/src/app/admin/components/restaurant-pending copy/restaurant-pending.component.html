@@ -10,7 +10,7 @@
           <svg viewBox="0 0 24 24">
             <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M13,9H11V7H13M13,17H11V11H13V17Z"/>
           </svg>
-          {{ restaurant.statut }}
+          {{ restaurant?.statut }}
         </div>
       </div>
     </div>
@@ -29,20 +29,20 @@
         </div>
         
         <div class="identity-info">
-          <h2>{{ restaurant.nom }}</h2>
-          <p class="description">{{ restaurant.description }}</p>
+          <h2>{{ restaurant?.nomEntreprise }}</h2>
+          <p class="description">{{ restaurant?.description }}</p>
           
           <div class="meta-tags">
-            <span class="tag matricule">{{ restaurant.matricule }}</span>
-            <span class="tag cuisine">{{ restaurant.typeCuisine }}</span>
-            <span class="tag price">{{ restaurant.gammePrix }}</span>
-            <span class="tag matricule" [class.available]="restaurant.livraisonDisponible">
+            <span class="tag matricule">{{ restaurant?.matricule }}</span>
+            <span class="tag cuisine">{{ restaurant?.typeCuisine }}</span>
+            <span class="tag price">{{ restaurant?.gammePrix }}</span>
+            <span class="tag matricule" [class.available]="restaurant?.livraisonDisponible">
               <i class="bi bi-bicycle"></i> 
-              {{ restaurant.livraisonDisponible ? 'Livraison acceptées' : 'livraison non acceptées' }}
+              {{ restaurant?.livraisonDisponible ? 'Livraison acceptées' : 'livraison non acceptées' }}
             </span>
-            <span class="tag matricule" [class.available]="restaurant.acceptReservation">
+            <span class="tag matricule" [class.available]="restaurant?.acceptReservation">
               <i class="bi bi-calendar-check"></i> 
-              {{ restaurant.acceptReservation ? 'Réservations acceptées' : 'Réservations non acceptées' }}
+              {{ restaurant?.acceptReservation ? 'Réservations acceptées' : 'Réservations non acceptées' }}
             </span>
             
           </div>
@@ -59,9 +59,18 @@
             <i class="bi bi-geo-alt"></i>
             <h3>Localisation</h3>
           </div>
-          <p class="address">{{ restaurant.localisation }}</p>
+          <p class="address">{{ restaurant?.adresse }}</p>
           <div class="map-container">
-            <iframe [src]="safeMapUrl" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <iframe 
+        width="100%" 
+        height="300" 
+        frameborder="0" 
+        style="border:0"
+        [src]="safeMapUrl"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
           </div>
         </div>
 
@@ -71,9 +80,15 @@
             <h3>Horaires d'ouverture</h3>
           </div>
           <div class="opening-hours">
-            <div *ngFor="let schedule of parseHours(restaurant.horaireDeTravail)" class="hour-row">
-              <span class="day">{{ schedule.day }}</span>
-              <span class="hours">{{ schedule.hours }}</span>
+            <div *ngFor="let h of restaurant?.horaires">
+              <span>{{ h.jour }} : 
+                <ng-container *ngIf="!h.estFerme">
+                  {{ h.heureOuverture }} - {{ h.heureFermeture }}
+                </ng-container>
+                <ng-container *ngIf="h.estFerme">
+                  Fermé
+                </ng-container>
+              </span>
             </div>
           </div>
         </div>
@@ -84,7 +99,7 @@
             <h3>Expériences</h3>
           </div>
           <ul class="features-list">
-            <li *ngFor="let access of restaurant.experience">
+            <li *ngFor="let access of restaurant?.experiences">
               <i class="bi bi-check-circle"></i>
               {{ access }}
             </li>
@@ -102,11 +117,11 @@
           <div class="contact-info">
             <div class="contact-item">
               <i class="bi bi-telephone"></i>
-              <span>{{ restaurant.telephone }}</span>
+              <span>{{ restaurant?.telephone }}</span>
             </div>
             <div class="contact-item">
               <i class="bi bi-envelope"></i>
-              <span>{{ restaurant.email }}</span>
+              <span>{{ restaurant?.email }}</span>
             </div>
           </div>
         </div>
@@ -117,7 +132,7 @@
             <h3>Services proposés</h3>
           </div>
           <ul class="features-list">
-            <li *ngFor="let service of restaurant.Service">
+            <li *ngFor="let service of restaurant?.services">
               <i class="bi bi-check-circle"></i>
               {{ service }}
             </li>
@@ -130,7 +145,7 @@
             <h3>Options disponibles</h3>
           </div>
           <ul class="features-list">
-            <li *ngFor="let option of restaurant.optionAlimentaires">
+            <li *ngFor="let option of restaurant?.optionsAlimentaires">
               <i class="bi bi-check-circle"></i>
               {{ option }}
             </li>
@@ -143,7 +158,7 @@
             <h3>Accessibilité</h3>
           </div>
           <ul class="features-list">
-            <li *ngFor="let access of restaurant.accesibilite">
+            <li *ngFor="let access of restaurant?.accesibilite">
               <i class="bi bi-check-circle"></i>
               {{ access }}
             </li>

@@ -15,11 +15,14 @@ export const routes: Routes = [
   { path: 'restaurants', component: RestaurantRequestsComponent },
   { path: 'reviews', component: ReviewsComponent },
   { path: 'pages', component: RestaurantsPageComponent },
-  { path: 'restaurants/:matricule',  // Assurez-vous que c'est bien ':matricule'
+  { path: 'restaurants/:id',  // Assurez-vous que c'est bien ':matricule'
     component: RestaurantDetailsComponent },
 
-    { path: 'restaurantsPending/:matricule',  // Assurez-vous que c'est bien ':matricule'
-      component: RestaurantPendingComponent },
+    {
+      path: 'restaurantsPending/:id',
+      component: RestaurantPendingComponent
+    }
+    ,
   { path: '', redirectTo: '/restaurants', pathMatch: 'full' },
   { path: 'reviews/:id', component: ReviewsComponent },
   { path: 'profil', component: RestaurantProfileComponent },

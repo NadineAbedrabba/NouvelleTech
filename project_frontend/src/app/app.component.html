@@ -1,9 +1,13 @@
-<ap-left-sidebar 
-  [isLeftSidebarCollapsed]="isLeftSidebarCollapsed()" 
-  (changeIsLeftSidebarCollapsed)="changeIsLeftSidebarCollapsed($event)">
-</ap-left-sidebar>
+<!-- app.component.html -->
+<header>
+  <!-- Votre en-tête -->
+  <button (click)="openAuthModal()">Connexion / Inscription</button>
+</header>
 
-<app-main 
-  [isLeftSidebarCollapsed]="isLeftSidebarCollapsed()" 
-  [screenWidth]="screenWidth()">
-</app-main>
+<main>
+  <!-- Contenu principal de votre application -->
+</main>
+
+<ng-container *ngIf="showAuthModal">
+  <app-auth-selection></app-auth-selection>
+</ng-container>

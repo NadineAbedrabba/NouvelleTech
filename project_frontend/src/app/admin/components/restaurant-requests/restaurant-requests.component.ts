@@ -1,120 +1,120 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { RestaurantService } from '../../../services/restaurant.service';
+import { Restaurant } from '../../../models/restaurant.model';
+import { finalize, map } from 'rxjs/operators';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-
-interface RestaurantRequest {
-  matricule: number;
-  nom: string;
-  email: string;
-  telephone: string;
-  localisation: string;
-  statut: 'En attente' | 'Acceptée' | 'Rejetée';
-  typeCuisine: string;
-  dateDemande: Date; // J'ai retiré gammePrix de l'interface
-}
 
 @Component({
   selector: 'app-restaurant-requests',
-  standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './restaurant-requests.component.html',
-  styleUrls: ['./restaurant-requests.component.css']
+  styleUrls: ['./restaurant-requests.component.css'],
+  standalone:true,
+  imports:[FormsModule, CommonModule,RouterModule
+  ]
 })
-export class RestaurantRequestsComponent {
-  restaurantRequests: RestaurantRequest[] = [
-    {
-      matricule: 1,
-      nom: 'Le Gourmet Français',
-      email: 'contact@gourmet-francais.com',
-      telephone: '01 23 45 67 89',
-      localisation: 'Paris, France',
-      statut: 'En attente',
-      dateDemande: new Date(2023, 5, 15),
-      typeCuisine: ''
-    },
-    {
-      matricule: 2,
-      nom: 'Bella Italia',
-      email: 'contact@bella-italia.com',
-      telephone: '06 12 34 56 78',
-      localisation: 'Lyon, France',
-      statut: 'En attente',
-      typeCuisine: 'Italienne',
-      dateDemande: new Date(2023, 5, 10)
-    },
-    {
-      matricule: 3,
-      nom: 'Tokyo Sushi',
-      email: 'contact@tokyo-sushi.com',
-      telephone: '07 89 01 23 45',
-      localisation: 'Marseille, France',
-      statut: 'En attente',
-      typeCuisine: 'Japonaise',
-      dateDemande: new Date(2023, 4, 28)
-    },
-    {
-      matricule: 4,
-      nom: 'Burger Palace',
-      email: 'contact@burger-palace.com',
-      telephone: '05 67 89 01 23',
-      localisation: 'Toulouse, France',
-      statut: 'Rejetée',
-      typeCuisine: 'Américaine',
-      
-      dateDemande: new Date(2023, 4, 20)
-    }
-  ];
-
-  filteredRequests: RestaurantRequest[] = [];
+export class RestaurantRequestsComponent implements OnInit {
+  restaurantRequests: Restaurant[] = [];
+  filteredRequests: Restaurant[] = [];
   searchText: string = '';
   currentPage: number = 1;
   itemsPerPage: number = 3;
-  dateFilter: string = '';
+  isLoading: boolean = false;
   totalPagesArray: number[] = [];
 
+  constructor(private restaurantService: RestaurantService) {}
+
   ngOnInit() {
-    this.filterRequests();
+    this.loadPendingRestaurants();
   }
 
-  filterRequests() {
+  loadPendingRestaurants(): void {
+    this.isLoading = true;
+    this.restaurantService.getPendingRestaurants()
+      .pipe(finalize(() => this.isLoading = false))
+      .subscribe({
+        next: (restaurants) => {
+          console.log('Données reçues:', restaurants); // Debug
+          this.restaurantRequests = restaurants;
+          this.filterRequests();
+        },
+        error: (err) => {
+          console.error('Erreur lors du chargement:', err);
+        }
+      });
+  }
+
+  filterRequests(): void {
+    if (!this.restaurantRequests) {
+      this.filteredRequests = [];
+      return;
+    }
+  
     this.filteredRequests = this.restaurantRequests.filter(request => {
-      const matchesSearch = this.searchText === '' || 
-        Object.values(request).some(val => 
-          val?.toString().toLowerCase().includes(this.searchText.toLowerCase())
-        );
+      // Vérifiez d'abord si request existe
+      if (!request) return false;
       
+      // Recherche insensible à la casse
+      const searchLower = this.searchText.toLowerCase();
       
-      
-      return matchesSearch
+      return (
+        this.searchText === '' ||
+        (request.nomEntreprise && request.nomEntreprise.toLowerCase().includes(searchLower)) ||
+        (request.email && request.email.toLowerCase().includes(searchLower)) ||
+        (request.telephone && request.telephone.includes(this.searchText)) ||
+        (request.adresse && request.adresse.toLowerCase().includes(searchLower)) ||
+        (request.typeCuisine && request.typeCuisine.toLowerCase().includes(searchLower))
+      );
     });
-    
+  
     this.currentPage = 1;
     this.updateTotalPagesArray();
   }
 
- 
-
-  acceptRequest(matricule: number): void {
-    const request = this.restaurantRequests.find(req => req.matricule === matricule);
-    if (request) request.statut = 'Acceptée';
+  acceptRequest(id: number): void {
+    this.isLoading = true;
+    this.restaurantService.updateRestaurantStatus(id, 'ACCEPTEE')
+      .pipe(finalize(() => this.isLoading = false))
+      .subscribe({
+        next: (updatedRestaurant) => {
+          const index = this.restaurantRequests.findIndex(r => r.id === id);
+          if (index !== -1) {
+            this.restaurantRequests[index] = updatedRestaurant;
+            this.filterRequests();
+          }
+        },
+        error: (err) => console.error('Erreur:', err)
+      });
+      
   }
 
-  rejectRequest(matricule: number): void {
-    const request = this.restaurantRequests.find(req => req.matricule === matricule);
-    if (request) request.statut = 'Rejetée';
+  rejectRequest(id: number): void {
+    this.isLoading = true;
+    this.restaurantService.updateRestaurantStatus(id, 'NON_ACCEPTEE')
+      .pipe(finalize(() => this.isLoading = false))
+      .subscribe({
+        next: (updatedRestaurant) => {
+          const index = this.restaurantRequests.findIndex(r => r.id === id);
+          if (index !== -1) {
+            this.restaurantRequests[index] = updatedRestaurant;
+            this.filterRequests();
+          }
+        },
+        error: (err) => console.error('Erreur:', err)
+      });
   }
 
   getStatusClass(status: string): string {
     switch(status) {
-      case 'En attente': return 'status-pending';
-      case 'Acceptée': return 'status-approved';
-      case 'Rejetée': return 'status-rejected';
+      case 'EN_ATTENTE': return 'status-pending';
+      case 'ACCEPTEE': return 'status-approved';
+      case 'NON_ACCEPTEE': return 'status-rejected';
       default: return '';
     }
   }
 
-  get paginatedRequests(): RestaurantRequest[] {
+  get paginatedRequests(): Restaurant[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     return this.filteredRequests.slice(startIndex, startIndex + this.itemsPerPage);
   }

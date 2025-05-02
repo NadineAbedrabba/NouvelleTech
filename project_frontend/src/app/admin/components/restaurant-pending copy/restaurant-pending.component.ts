@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { Restaurant } from 'src/app/models/restaurant.model';
+import { RestaurantService } from 'src/app/services/restaurant.service';
 
 @Component({
   selector: 'app-restaurant-pending',
@@ -11,37 +13,40 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './restaurant-pending.component.html',
   styleUrls: ['./restaurant-pending.component.scss']
 })
-export class RestaurantPendingComponent {
-  restaurant = {
-    matricule: 'REST-2023-0456',
-    nom: 'Le Jardin des Délices',
-    email: 'contact@jardindesdelices.com',
-    statut: 'En attente de validation',
-    telephone: '+33 1 45 67 89 01',
-    localisation: '18 Rue Gastronomique, 75008 Paris, France',
-    typeCuisine: 'Française contemporaine',
-    gammePrix: '50-150DT',
-    horaireDeTravail: '08:00 - 22:00',
-    Service: ['Réservation en ligne', 'Service en salle', 'Terrasse chauffée', 'Cave à vin'],
-    optionAlimentaires: ['Végétarien', 'Vegan', 'Sans gluten', 'Produits locaux'],
-    accesibilite: ['Accès PMR', 'Toilettes adaptées', 'Placement assis à l\'entrée'],
-    experience: ['Dîner romantique', 'Repas d\'affaires'],
-    acceptReservation: false,
-    livraisonDisponible: true,
-    description: 'Un cadre élégant proposant une cuisine française réinventée avec des produits locaux et de saison.'
-  };
+export class RestaurantPendingComponent implements OnInit {
+  restaurant?: Restaurant;
+  isLoading: boolean = true;
 
-  safeMapUrl: SafeResourceUrl;
+  safeMapUrl!: SafeResourceUrl;
   adminNotes = '';
   showDecisionForm = false;
   currentDecision: 'approve' | 'reject' | null = null;
+  
 
-  constructor(private sanitizer: DomSanitizer) {
-    const address = encodeURIComponent(this.restaurant.localisation);
-    this.safeMapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-      `https://maps.google.com/maps?q=${address}&output=embed&zoom=16&language=fr`
-    );
+  constructor(
+    private route: ActivatedRoute,
+    private restaurantService: RestaurantService,
+    private sanitizer: DomSanitizer
+  ) {}
+
+  ngOnInit() {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    if (id) {
+      this.restaurantService.getRestaurantById(id).subscribe({
+        next: (data) => {
+          this.restaurant = data;
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.error('Erreur lors du chargement du restaurant', err);
+          this.isLoading = false;
+        }
+      });
+    }
   }
+  
+
+  
 
   prepareDecision(decision: 'approve' | 'reject') {
     this.currentDecision = decision;
@@ -83,5 +88,12 @@ export class RestaurantPendingComponent {
         hours: timeParts.join(': ')
       };
     });
+  }
+
+  setMapUrl(address: string): void {
+    const encodedAddress = encodeURIComponent(address);
+    this.safeMapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+      `https://maps.google.com/maps?q=${encodedAddress}&output=embed&zoom=15`
+    );
   }
 }

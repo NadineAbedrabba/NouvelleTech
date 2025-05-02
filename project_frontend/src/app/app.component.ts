@@ -1,33 +1,29 @@
-import { Component, HostListener, OnInit, signal } from '@angular/core';
-import { LeftSidebarComponent } from './admin/components/left-sidebar/left-sidebar.component';
-import { MainComponent } from './main/main.component';
-import { CommonModule } from '@angular/common';
-import { EntrepriseLeftSidebarComponent } from "./entreprise/components/left-sidebar/entreprise-left-sidebar.component";
+import { Component } from '@angular/core';
+import { AuthModule } from "./auth/auth.module";
+import { NgIf } from '@angular/common'; // ✅ import NgIf
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [LeftSidebarComponent, MainComponent, CommonModule, EntrepriseLeftSidebarComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+  standalone: true,
+  imports: [
+    AuthModule,
+    NgIf, // ✅ Ajoute-le ici
+  ]
 })
-export class AppComponent implements OnInit {
-  isLeftSidebarCollapsed = signal<boolean>(false);
-  screenWidth = signal<number>(window.innerWidth);
+export class AppComponent {
+  title = 'project_frontend';
+  showAuthModal = false;
 
-  @HostListener('window:resize')
-  onResize() {
-    this.screenWidth.set(window.innerWidth);
-    if (this.screenWidth() < 768) {
-      this.isLeftSidebarCollapsed.set(true);
-    }
+  openAuthModal() {
+    this.showAuthModal = true;
   }
 
-  ngOnInit(): void {
-    this.isLeftSidebarCollapsed.set(this.screenWidth() < 768);
-  }
-
-  changeIsLeftSidebarCollapsed(isLeftSidebarCollapsed: boolean): void {
-    this.isLeftSidebarCollapsed.set(isLeftSidebarCollapsed);
+  closeAuthModal() {
+    this.showAuthModal = false;
   }
 }
+
+
+
