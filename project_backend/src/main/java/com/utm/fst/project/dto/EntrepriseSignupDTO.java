@@ -1,17 +1,21 @@
 package com.utm.fst.project.dto;
 
+import com.utm.fst.project.enums.TypeCuisine;
 import lombok.Data;
+import java.util.Date;
+
 
 @Data
 public class EntrepriseSignupDTO {
-    private String name;
     private String email;
+    private String matricule;
     private String password;
-
-    // Entreprise fields
     private String nomEntreprise;
-    private String secteur;
+    private String description;
     private String adresse;
     private String telephone;
-    private String specialite;
+    private TypeCuisine typeCuisine;
+    private String localisation;
+    // Add the createdAt field in DTO as well
+    private Date createdAt;
 }

@@ -18,7 +18,6 @@ public class UserServiceImpl implements UserService{
     @Override
     public UserDTO createUser(SignupDTO signupDTO) {
         User user = new User();
-        user.setName(signupDTO.getName());
         user.setEmail(signupDTO.getEmail());
 
 
@@ -29,7 +28,6 @@ public class UserServiceImpl implements UserService{
         User createdUser = userRepository.save(user);
         UserDTO userDTO =new UserDTO();
         userDTO.setId(createdUser.getId());
-        userDTO.setName(createdUser.getName());
         userDTO.setEmail(createdUser.getEmail());
 
 

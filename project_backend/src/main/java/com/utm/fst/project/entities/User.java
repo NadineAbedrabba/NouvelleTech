@@ -7,24 +7,20 @@ import lombok.Data;
 
 @Entity
 @Data
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "dtype", discriminatorType = DiscriminatorType.STRING)
 @Table(name="users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    private Long id ;
-    private String name ;
-    private String email ;
-    private String password ;
+    private Long id;
+    private String email;
+    private String password;
 
     @Enumerated(EnumType.STRING)
-
-    private UserRole userRole ;
-    private byte[] img ;
+    private UserRole userRole;
     @ManyToOne
     @JoinColumn(name = "entreprise_id")
     private Entreprise entreprise;
-
-
-
 }
