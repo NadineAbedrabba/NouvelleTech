@@ -1,1 +1,95 @@
-<p>register-company works!</p>
+<form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label for="email">Email</label>
+  
+      <input 
+        type="email" 
+        id="email" 
+        formControlName="email"
+        placeholder=" "> 
+      <div *ngIf="signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched">
+        Email invalide
+      </div>
+    </div>
+    
+    <div class="form-group">
+        <label for="nomEntreprise">Nom de l'entreprise</label>
+    
+        <input 
+          type="text" 
+          id="nomEntreprise" 
+          formControlName="nomEntreprise"
+          placeholder=" "> 
+       
+      </div>
+      
+
+     
+
+      <div class="form-group">
+        <label for="adresse">Adresse</label>
+    
+        <input 
+          type="text" 
+          id="adresse" 
+          formControlName="adresse"
+          placeholder=" "> 
+       
+      </div>
+
+
+      <div class="form-group">
+        <label for="telephone">Numéro de Téléphone</label>
+    
+        <input 
+          type="telephone" 
+          id="telephone" 
+          formControlName="telephone"
+          placeholder=" "> 
+       
+      </div>
+
+      <div class="form-group">
+        <label for="name">TypeCuisine</label>
+    
+        <input 
+          type="text" 
+          id="typeCuisine" 
+          formControlName="typeCuisine"
+          placeholder=" "> 
+       
+      </div>
+    <div class="form-group">
+      <label for="password">Mot de passe</label>
+  
+      <input 
+        type="password" 
+        id="password" 
+        formControlName="password"
+        (input)="checkPasswordMatch()" 
+
+        placeholder=" ">
+    </div>
+
+    <div class="form-group">
+        <label for="password">Confirmer votre mot de passe</label>
+    
+        <input 
+          type="password" 
+          id="password2" 
+          formControlName="password2"
+          placeholder=" "
+          (input)="checkPasswordMatch()" 
+       (blur)="checkPasswordMatch()">
+          
+      </div>
+
+      <div *ngIf="passwordError" class="error-message">
+        {{ passwordError }}
+      </div>
+    
+    <div class="form-footer">
+      <button type="submit" [disabled]="signUpForm.invalid || !passwordCheck ">S'inscrire</button>
+    </div>
+  </form>
