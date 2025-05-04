@@ -59,7 +59,9 @@ public class WebSecurityConfiguration {
                                 "/favicon.ico",
                                 "/webjars/**",
                                 "/api/entreprises/**", "/api/images/**",
-                                "/client/register/**").permitAll()
+                                "/client/register/**",
+                                "/api/reviews/**",
+                                "/client/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/api/**").authenticated()
                 )

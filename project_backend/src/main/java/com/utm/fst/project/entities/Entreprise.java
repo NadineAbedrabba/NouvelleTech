@@ -82,6 +82,10 @@ public class Entreprise extends User {
         @OneToMany(mappedBy = "entreprise", cascade = CascadeType.ALL, orphanRemoval = true)
         private List<Image> images;
 
+        @OneToMany(mappedBy = "entreprise", cascade = CascadeType.ALL, orphanRemoval = true)
+        private List<Review> reviews;
+
+
         // Add the createdAt field
         @Temporal(TemporalType.TIMESTAMP)
         @Column(name = "created_at", nullable = false, updatable = false)

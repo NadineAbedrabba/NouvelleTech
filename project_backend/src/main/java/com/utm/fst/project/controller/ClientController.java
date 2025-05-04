@@ -2,6 +2,7 @@ package com.utm.fst.project.controller;
 
 import com.utm.fst.project.dto.ClientSignupDTO;
 import com.utm.fst.project.dto.UserDTO;
+import com.utm.fst.project.dto.ClientInfoDTO;
 import com.utm.fst.project.service.ClientService;
 import com.utm.fst.project.service.user.UserService;
 import org.springframework.http.HttpStatus;
@@ -33,5 +34,13 @@ public class ClientController {
         }
 
         return new ResponseEntity<>(created, HttpStatus.CREATED);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<ClientInfoDTO> getClientById(@PathVariable Long id) {
+        ClientInfoDTO clientInfo = clientService.getClientInfo(id);
+        if (clientInfo != null) {
+            return new ResponseEntity<>(clientInfo, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

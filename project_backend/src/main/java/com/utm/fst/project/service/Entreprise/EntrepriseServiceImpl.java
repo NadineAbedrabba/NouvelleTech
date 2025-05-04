@@ -3,6 +3,7 @@ package com.utm.fst.project.service.Entreprise;
 import com.utm.fst.project.dto.*;
 import com.utm.fst.project.entities.*;
 import com.utm.fst.project.enums.*;
+import com.utm.fst.project.dto.ClientInfoDTO;
 import com.utm.fst.project.exception.NotFoundException;
 import com.utm.fst.project.repository.EntrepriseRepository;
 import com.utm.fst.project.repository.UserRepository;
