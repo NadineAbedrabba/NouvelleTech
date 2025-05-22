@@ -1,0 +1,45 @@
+@import 'src/app/header/variables';
+//@import 'app\components\section-transition';
+.rotating-words-section {
+    padding: 3rem 0;
+    text-align: center;
+    background: linear-gradient(to right, rgba($pink, 0.05), rgba($white-2, 0.8));
+  
+    .word-carousel {
+      display: inline-block;
+      position: relative;
+      height: 1.2em;
+      overflow: hidden;
+      vertical-align: bottom;
+    }
+  
+    .rotating-words {
+      display: inline-block;
+      position: relative;
+      animation: rotateWords 12s infinite ease-in-out;
+    }
+  
+    .word {
+      display: block;
+      font-weight: bold;
+      color: $pink;
+      white-space: nowrap;
+    }
+  }
+  
+  @keyframes rotateWords {
+    0%, 20% { transform: translateY(0); }
+    25%, 45% { transform: translateY(-1.2em); }
+    50%, 70% { transform: translateY(-2.4em); }
+    75%, 95% { transform: translateY(-3.6em); }
+    100% { transform: translateY(0); }
+  }
+    .h2{
+        font-family: var(--font-wow1, "Josefin Sans", sans-serif);
+    }
+    .subtitle{
+        font-family: var(--font-fazet, "Mynerve", sans-serif);
+        color: $blue;
+    }
+
+    

@@ -1,0 +1,161 @@
+@import 'src/app/header/variables';
+
+.restaurant-categories {
+  padding: 4rem 0;
+  background: linear-gradient(to bottom, rgba($white-2, 0.9), rgba($pink, 0.05));
+  overflow: hidden;
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .section-title {
+    font-family: var(--font-wow1, "Josefin Sans", sans-serif);
+    color: $pink;
+    font-size: 2.2rem;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .section-subtitle {
+    font-family: var(--font-fazet, "Mynerve", sans-serif);
+    color: $blue;
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 1.2rem;
+  }
+
+  .scrolling-wrapper {
+    display: flex;
+    width: 200%;
+    animation: scroll-loop 100s linear infinite;
+  }
+
+  .categories-grid {
+   // display: flex;
+   // gap: 2rem;
+   // flex-shrink: 0;
+   // width: 50%;
+   display: flex;
+   gap: 2rem;
+   flex-shrink: 0;
+   min-width: 100%;
+  }
+
+  @keyframes scroll-loop {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .category-card {
+    flex: 0 0 auto;
+    min-width: 280px;
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    //box-shadow: 0 5px 15px rgba($pink, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+
+    &:hover {
+      transform: translateY(-10px);
+      //box-shadow: 0 15px 30px rgba($pink, 0.2);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      .card-icon {
+        transform: scale(1.1) rotate(5deg);
+        background: rgba($pink, 0.1);
+      }
+    }
+
+    .card-image {
+      width: calc(100% + 4rem);
+      height: 160px;
+      overflow: hidden;
+      margin: -2rem -2rem 1rem -2rem;
+      //margin-bottom: 1rem;
+    
+      img {
+        width: 100%;
+        height: 100%;
+        //object-fit: cover;
+        display: block;
+        transition: transform 0.5s ease;
+      }
+    
+      &:hover img {
+        transform: scale(1.1);
+      }
+    }
+    
+
+    .card-icon {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: $pink;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    h3 {
+      font-family: var(--font-wow1, "Josefin Sans", sans-serif);
+      color: $blue;
+      margin-bottom: 1rem;
+      font-size: 1.4rem;
+    }
+
+    p {
+      font-family: var(--font-fazet, "Mynerve", sans-serif);
+      color: lighten($blue, 15%);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: $pink;
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Josefin Sans", sans-serif;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .scrolling-wrapper {
+      animation: none;
+      overflow-x: auto;
+      flex-wrap: nowrap;
+    }
+
+    .categories-grid {
+      flex-wrap: nowrap;
+      width: auto;
+    }
+
+    .category-card {
+      padding: 1.5rem;
+    }
+  }
+}

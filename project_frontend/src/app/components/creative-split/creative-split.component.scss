@@ -1,0 +1,206 @@
+@import 'src/app/header/variables';
+.creative-split {
+    padding: 0;
+    position: relative;
+    height: 100vh;
+    max-height: 800px;
+    overflow: hidden;
+  
+    .split-container {
+      display: flex;
+      height: 100%;
+    }
+  
+    .visual-half, .text-half {
+      width: 50%;
+      height: 100%;
+    }
+  
+    /* Partie Visuelle */
+    .visual-half {
+      position: relative;
+      .image-wrapper {
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+  
+        .main-image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 1.2s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+        }
+  
+        .image-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(135deg, rgba($pink, 0.1), rgba($blue, 0.1));
+          mix-blend-mode: multiply;
+        }
+  
+        &:hover .main-image {
+          transform: scale(1.05);
+        }
+      }
+  
+      .floating-elements {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+  
+      .floating-tag {
+        position: absolute;
+        background: rgba(white, 0.9);
+        padding: 0.5rem 1.2rem;
+        border-radius: 30px;
+        font-family: "Josefin Sans";
+        font-weight: bold;
+        color: $blue;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        animation: float 6s infinite ease-in-out;
+  
+        @for $i from 1 through 3 {
+          &:nth-child(#{$i}) {
+            animation-delay: $i * 1s;
+          }
+        }
+      }
+    }
+  
+    /* Partie Texte */
+    .text-half {
+      display: flex;
+      align-items: center;
+      padding: 4rem;
+      background: linear-gradient(to bottom right, $white-2, lighten($white-2, 5%));
+  
+      .text-content {
+        max-width: 80%;
+        margin: 0 auto;
+  
+        .section-label {
+          font-family: "Mynerve";
+          color: $pink;
+          font-size: 1.1rem;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+        }
+  
+        h2 {
+          font-family: "Josefin Sans";
+          color: $blue;
+          font-size: 2.8rem;
+          line-height: 1.2;
+          margin: 1rem 0 1.5rem;
+          position: relative;
+        }
+  
+        .animated-underline {
+          width: 100px;
+          height: 4px;
+          background: linear-gradient(to right, $pink, $yellow);
+          margin-bottom: 2rem;
+          transform-origin: left;
+          animation: underlineGrow 1.5s ease-out forwards;
+        }
+  
+        .lead-text {
+          font-family: "Mynerve";
+          color: lighten($blue, 15%);
+          font-size: 1.2rem;
+          line-height: 1.8;
+          margin-bottom: 2rem;
+        }
+  
+        .creative-list {
+          list-style: none;
+          padding: 0;
+          margin-bottom: 3rem;
+  
+          li {
+            margin-bottom: 1rem;
+            font-family: "Josefin Sans";
+            color: $blue;
+            display: flex;
+            align-items: center;
+  
+            i {
+              color: $pink;
+              margin-right: 1rem;
+              font-size: 1.2rem;
+            }
+          }
+        }
+  
+        .cta-button {
+          background: linear-gradient(to right, $pink, lighten($pink, 10%));
+          color: white;
+          border: none;
+          padding: 1rem 2.5rem;
+          border-radius: 50px;
+          font-family: "Josefin Sans";
+          font-size: 1.1rem;
+          cursor: pointer;
+          transition: all 0.4s ease;
+          display: inline-flex;
+          align-items: center;
+          box-shadow: 0 5px 20px rgba($pink, 0.3);
+  
+          &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba($pink, 0.4);
+  
+            i {
+              transform: translateX(5px);
+            }
+          }
+  
+          i {
+            margin-left: 0.8rem;
+            transition: transform 0.3s ease;
+          }
+        }
+      }
+    }
+  
+    /* Animations */
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(-2deg); }
+      50% { transform: translateY(-15px) rotate(2deg); }
+    }
+  
+    @keyframes underlineGrow {
+      0% { transform: scaleX(0); }
+      100% { transform: scaleX(1); }
+    }
+  
+    /* Responsive */
+    @media (max-width: 1024px) {
+      height: auto;
+      .split-container {
+        flex-direction: column;
+      }
+      .visual-half, .text-half {
+        width: 100%;
+        height: 50vh;
+      }
+      .text-half {
+        padding: 2rem;
+        .text-content {
+          max-width: 90%;
+        }
+      }
+    }
+  
+    @media (max-width: 768px) {
+      .text-half {
+        h2 {
+          font-size: 2.2rem;
+        }
+        .lead-text {
+          font-size: 1rem;
+        }
+      }
+    }
+  }

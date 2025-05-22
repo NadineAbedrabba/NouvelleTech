@@ -1,0 +1,484 @@
+// Variables
+$yellow: #FFDF6C;
+$blue: #8BB9D9;
+$pink: #C62C52;
+$white-1: #ECEBF0;
+$white-2: #FAF8F8;
+
+// Fonts
+$font-heading: 'Mynerve', cursive;
+$font-primary: 'Josefin Sans', sans-serif;
+$font-secondary: 'Mulish', sans-serif;
+
+// Animations
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes wobble {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(1deg); }
+  75% { transform: rotate(-1deg); }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-15px); }
+  60% { transform: translateY(-7px); }
+}
+
+@keyframes jump {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3) translateY(-5px); }
+}
+
+.review-container {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 1rem;
+  position: relative;
+  overflow: hidden;
+  font-family: $font-primary;
+
+  .floating-food {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+
+    .food-icon {
+      position: absolute;
+      font-size: 2rem;
+      opacity: 0.2;
+      animation: float 6s ease-in-out infinite;
+
+      &:nth-child(1) {
+        top: 10%;
+        left: 15%;
+        animation-delay: 0s;
+      }
+      &:nth-child(2) {
+        top: 30%;
+        right: 20%;
+        animation-delay: 1s;
+      }
+      &:nth-child(3) {
+        bottom: 20%;
+        left: 25%;
+        animation-delay: 2s;
+      }
+    }
+  }
+
+  .review-title {
+    text-align: center;
+    font-family: $font-heading;
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    color: $pink;
+    text-shadow: 2px 2px 0 rgba($blue, 0.2);
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: pulse 2s infinite;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, $yellow, $pink);
+      border-radius: 3px;
+    }
+  }
+
+  .review-card {
+    background: $white-2;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba($pink, 0.1);
+    padding: 2.5rem;
+    position: relative;
+    z-index: 1;
+    border: 2px solid rgba($blue, 0.3);
+    animation: wobble 5s infinite ease-in-out;
+    transition: all 0.3s;
+
+    &:hover {
+      box-shadow: 0 15px 35px rgba($pink, 0.2);
+    }
+  }
+
+  .overall-rating {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px dashed rgba($blue, 0.3);
+
+    .rating-bubble {
+      display: inline-flex;
+      align-items: flex-end;
+      background: $yellow;
+      padding: 0.5rem 1.5rem;
+      border-radius: 50px;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 0 rgba(darken($yellow, 20%), 0.3);
+
+      .rating-value {
+        font-size: 3rem;
+        font-weight: bold;
+        font-family: $font-heading;
+        color: $pink;
+        line-height: 1;
+      }
+
+      .rating-max {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: rgba($pink, 0.7);
+      }
+    }
+
+    h3 {
+      font-family: $font-secondary;
+      color: $blue;
+      margin-bottom: 1rem;
+    }
+
+    .stars {
+      font-size: 2rem;
+      color: $white-1;
+      letter-spacing: 5px;
+
+      .filled {
+        color: $yellow;
+        text-shadow: 0 0 10px rgba($yellow, 0.5);
+        position: relative;
+
+        &.bounce {
+          display: inline-block;
+          animation: bounce 0.5s;
+        }
+      }
+    }
+  }
+
+  .review-form {
+    .form-group {
+      margin-bottom: 2rem;
+      position: relative;
+
+      &.floating-label {
+        textarea {
+          width: 100%;
+          min-height: 120px;
+          padding: 1.5rem 1rem 1rem;
+          border: none;
+          border-radius: 10px;
+          background: rgba($white-1, 0.5);
+          font-family: $font-primary;
+          resize: vertical;
+          transition: all 0.3s;
+          box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+
+          &:focus {
+            outline: none;
+            background: $white-2;
+            box-shadow: 0 0 0 2px $blue, inset 0 2px 5px rgba(0,0,0,0.05);
+          }
+
+          &:focus + label,
+          &:not(:placeholder-shown) + label {
+            transform: translateY(-1.8rem) scale(0.9);
+            color: $pink;
+          }
+        }
+
+        label {
+          position: absolute;
+          top: 1.5rem;
+          left: 1rem;
+          color: rgba($pink, 0.7);
+          transition: all 0.3s;
+          pointer-events: none;
+          font-family: $font-secondary;
+        }
+
+        .underline {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background: linear-gradient(90deg, $yellow, $blue);
+          transform: scaleX(0);
+          transition: transform 0.3s;
+        }
+
+        textarea:focus ~ .underline {
+          transform: scaleX(1);
+        }
+      }
+    }
+
+    .rating-categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+
+      .rating-category {
+        label {
+          display: block;
+          margin-bottom: 0.5rem;
+          font-family: $font-secondary;
+          color: darken($blue, 15%);
+          font-weight: 600;
+        }
+
+        .star-rating {
+          font-size: 1.5rem;
+          color: $white-1;
+          letter-spacing: 3px;
+
+          span {
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-block;
+
+            &:hover {
+              transform: scale(1.3);
+            }
+
+            &.active {
+              color: $yellow;
+              text-shadow: 0 0 8px rgba($yellow, 0.5);
+            }
+
+            &.jump {
+              animation: jump 0.3s;
+            }
+          }
+        }
+      }
+    }
+
+    .selector-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+
+      .custom-select {
+        position: relative;
+
+        select {
+          width: 100%;
+          padding: 1rem;
+          border: none;
+          border-radius: 10px;
+          background: rgba($white-1, 0.5);
+          font-family: $font-primary;
+          color: $pink;
+          appearance: none;
+          cursor: pointer;
+          box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+          transition: all 0.3s;
+
+          &:focus {
+            outline: none;
+            background: $white-2;
+            box-shadow: 0 0 0 2px $blue, inset 0 2px 5px rgba(0,0,0,0.05);
+          }
+        }
+
+        .select-arrow {
+          position: absolute;
+          right: 1rem;
+          top: 50%;
+          transform: translateY(-50%);
+          color: $pink;
+          pointer-events: none;
+          transition: transform 0.3s;
+        }
+
+        &:hover .select-arrow {
+          transform: translateY(-50%) rotate(180deg);
+        }
+      }
+    }
+
+    .certification {
+      margin: 2.5rem 0;
+      position: relative;
+
+      .checkbox-container {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        position: relative;
+        padding-left: 2.5rem;
+        user-select: none;
+
+        input {
+          position: absolute;
+          opacity: 0;
+          cursor: pointer;
+          height: 0;
+          width: 0;
+
+          &:checked ~ .checkmark {
+            background-color: $pink;
+            border-color: $pink;
+
+            &::after {
+              display: block;
+            }
+          }
+        }
+
+        .checkmark {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 1.5rem;
+          width: 1.5rem;
+          background-color: transparent;
+          border: 2px solid $blue;
+          border-radius: 5px;
+          transition: all 0.3s;
+
+          &::after {
+            content: "✓";
+            position: absolute;
+            display: none;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: bold;
+          }
+        }
+
+        .certify-text {
+          font-family: $font-secondary;
+          color: darken($blue, 15%);
+          transition: all 0.3s;
+        }
+
+        &:hover {
+          .checkmark {
+            transform: scale(1.1);
+          }
+
+          .certify-text {
+            color: $pink;
+          }
+        }
+      }
+    }
+
+    .submit-btn {
+      background: linear-gradient(135deg, $pink, darken($pink, 10%));
+      color: white;
+      border: none;
+      padding: 1.2rem;
+      font-size: 1.2rem;
+      font-family: $font-heading;
+      border-radius: 50px;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.3s;
+      box-shadow: 0 5px 0 rgba(darken($pink, 20%), 0.3);
+      position: relative;
+      overflow: hidden;
+
+      span {
+        position: relative;
+        z-index: 2;
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: all 0.5s;
+      }
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 0 rgba(darken($pink, 20%), 0.3);
+
+        &::before {
+          left: 100%;
+        }
+      }
+
+      &:active {
+        transform: translateY(2px);
+        box-shadow: 0 3px 0 rgba(darken($pink, 20%), 0.3);
+      }
+
+      &:disabled {
+        background: $white-1;
+        color: lighten($pink, 25%);
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+
+        &::before {
+          display: none;
+        }
+      }
+
+      .submit-loading {
+        display: inline-block;
+
+        .loading-dot {
+          animation: pulse 1.5s infinite;
+          opacity: 0;
+
+          &:nth-child(1) { animation-delay: 0s; }
+          &:nth-child(2) { animation-delay: 0.2s; }
+          &:nth-child(3) { animation-delay: 0.4s; }
+        }
+      }
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .review-container {
+    padding: 1rem;
+
+    .review-title {
+      font-size: 2.2rem;
+    }
+
+    .review-card {
+      padding: 1.5rem;
+    }
+
+    .rating-categories {
+      grid-template-columns: 1fr;
+    }
+
+    .selector-group {
+      grid-template-columns: 1fr;
+    }
+  }
+}

@@ -1,0 +1,297 @@
+@import 'src/app/header/variables';
+
+@import '~animate.css/animate.min.css';
+
+.review-highlight {
+  padding: 6rem 0;
+  background: linear-gradient(135deg, rgba($white-2, 0.9), rgba($pink, 0.03));
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('/assets/Images/review-pattern.svg') center/cover;
+    opacity: 0.05;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    animation: fadeInDown 0.8s ease-out;
+
+    h2 {
+      font-family: "Josefin Sans";
+      color: $blue;
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+      position: relative;
+      display: inline-block;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background: linear-gradient(to right, $pink, $yellow);
+      }
+    }
+
+    .rating-display {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      animation: fadeIn 1s ease-out 0.3s both;
+
+      .stars {
+        color: $yellow;
+        font-size: 1.2rem;
+        letter-spacing: 2px;
+      }
+
+      span {
+        font-family: "Mynerve";
+        color: lighten($blue, 15%);
+        font-size: 1.1rem;
+      }
+    }
+  }
+
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    padding: 1rem;
+    perspective: 1000px;
+  }
+
+  .review-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    border: 1px solid rgba($pink, 0.2);
+    opacity: 0; /* Initial state */
+    transform: translateY(30px) rotateX(15deg);
+    transform-origin: center bottom;
+
+    &.animate__animated {
+      opacity: 1;
+      transform: translateY(0) rotateX(0);
+    }
+
+    &:hover {
+      transform: translateY(-15px) scale(1.03) !important;
+      box-shadow: 0 20px 50px rgba($pink, 0.25);
+      z-index: 2;
+
+      .decoration-element {
+        transform: scale(1.3) rotate(10deg);
+        opacity: 0.8;
+      }
+
+      .user-avatar {
+        transform: scale(1.1) rotate(5deg);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      }
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin-bottom: 1.8rem;
+
+      .user-avatar {
+        width: 65px;
+        height: 65px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid var(--card-color);
+        transition: all 0.5s ease;
+      }
+
+      .user-details {
+        h4 {
+          font-family: "Josefin Sans";
+          color: $blue;
+          margin: 0 0 0.3rem;
+          font-size: 1.2rem;
+        }
+
+        .user-rating {
+          color: $yellow;
+          font-size: 0.95rem;
+        }
+      }
+    }
+
+    .review-text {
+      font-family: "Mynerve";
+      color: lighten($blue, 10%);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      position: relative;
+      padding-left: 2rem;
+      transition: transform 0.3s ease;
+
+      &::before {
+        content: '"';
+        position: absolute;
+        left: 0;
+        top: -1rem;
+        font-size: 4rem;
+        color: rgba($pink, 0.15);
+        font-family: serif;
+        line-height: 1;
+      }
+    }
+
+    .review-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+
+      .location {
+        font-family: "Josefin Sans";
+        color: $pink;
+        font-weight: bold;
+      }
+
+      .date {
+        color: lighten($blue, 25%);
+      }
+    }
+
+    .decoration-element {
+      position: absolute;
+      top: -30px;
+      right: -30px;
+      width: 100px;
+      height: 100px;
+      background: var(--card-color);
+      border-radius: 50%;
+      z-index: -1;
+      transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.4);
+      opacity: 0.5;
+    }
+  }
+
+  .cta-section {
+    text-align: center;
+    margin-top: 5rem;
+    animation: fadeIn 1s ease-out 0.6s both;
+
+    .cta-button {
+      background: linear-gradient(135deg, $pink, lighten($pink, 10%));
+      color: white;
+      border: none;
+      padding: 1.3rem 3rem;
+      border-radius: 50px;
+      font-family: "Josefin Sans";
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      box-shadow: 0 8px 25px rgba($pink, 0.35);
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      position: relative;
+      overflow: hidden;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: 0.5s;
+      }
+
+      &:hover {
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 12px 30px rgba($pink, 0.5);
+
+        &::before {
+          left: 100%;
+        }
+      }
+
+      &.pulse {
+        animation: pulse 2s infinite ease-in-out;
+      }
+
+      i {
+        transition: transform 0.3s ease;
+      }
+
+      &:hover i {
+        transform: rotate(-15deg);
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 4rem 0;
+
+    .section-header h2 {
+      font-size: 2.2rem;
+    }
+
+    .reviews-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .review-card {
+      padding: 1.5rem;
+    }
+  }
+}
+
+/* Custom Animations */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); box-shadow: 0 8px 25px rgba($pink, 0.35); }
+  50% { transform: scale(1.05); box-shadow: 0 10px 30px rgba($pink, 0.45); }
+  100% { transform: scale(1); box-shadow: 0 8px 25px rgba($pink, 0.35); }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}

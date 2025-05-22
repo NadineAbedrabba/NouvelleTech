@@ -1,0 +1,47 @@
+<section class="review-highlight">
+    <div class="container">
+      <div class="section-header">
+        <h2>Ils parlent de nous</h2>
+        <div class="rating-display">
+          <div class="stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+          </div>
+          <span>4.8/5 sur 1247 avis</span>
+        </div>
+      </div>
+  
+      <!-- Remplacement du carrousel -->
+      <div class="reviews-grid">
+        <div class="review-card" *ngFor="let review of featuredReviews" 
+             [style.--card-color]="getRandomCardColor()">
+          <div class="user-info">
+            <img [src]="review.avatar" [alt]="review.name" class="user-avatar">
+            <div class="user-details">
+              <h4>{{review.name}}</h4>
+              <div class="user-rating">
+                <i class="fas fa-star" *ngFor="let star of getStarsArray(review.rating)"></i>
+              </div>
+            </div>
+          </div>
+          <p class="review-text">
+            "{{review.text}}"
+          </p>
+          <div class="review-meta">
+            <span class="location">{{review.location}}</span>
+            <span class="date">{{today | date}}</span>
+          </div>
+          <div class="decoration-element"></div>
+        </div>
+      </div>
+  
+      <div class="cta-section">
+        <button class="cta-button pulse">
+          <i class="fas fa-pen-fancy"></i> Laisser un avis
+        </button>
+      </div>
+    </div>
+  </section>

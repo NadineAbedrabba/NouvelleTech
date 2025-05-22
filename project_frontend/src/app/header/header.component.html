@@ -1,0 +1,56 @@
+<header class="header">
+  <div class="container">
+    <div class="logo">
+      <a routerLink="/">
+        <span class="logo-text">FoodMatch</span>
+        <span class="logo-dot"></span>
+      </a>
+    </div>
+    
+    <div class="search-bar">
+      <div class="search-container">
+        <input type="text" placeholder="Rechercher restaurants, plats..." 
+               [(ngModel)]="searchQuery" (keyup)="onSearch()">
+        <i class="fas fa-search search-icon"></i>
+      </div>
+      <div class="search-results" *ngIf="showSearchResults">
+        <!-- Les résultats de recherche apparaîtront ici -->
+      </div>
+    </div>
+    
+    <nav class="nav">
+      <div class="dropdown-container" 
+           (mouseenter)="showDropdown = true" 
+           (mouseleave)="onDropdownMouseLeave($event)">
+        <button class="nav-item dropdown-toggle">
+          <span>Restaurants</span>
+          <i class="fas fa-chevron-down dropdown-arrow" [class.rotate]="showDropdown"></i>
+        </button>
+        <ul class="dropdown-menu" *ngIf="showDropdown" @dropdownAnimation
+            (mouseenter)="keepDropdownOpen = true"
+            (mouseleave)="keepDropdownOpen = false; showDropdown = false">
+          <li *ngFor="let category of restaurantCategories">
+            <a href="#" (click)="showDropdown = false">
+              <i class="fas fa-utensils"></i>
+              {{category.name}}
+            </a>
+          </li>
+        </ul>
+      </div>
+      
+      <button class="nav-item btn-login">
+        <i class="fas fa-user"></i>
+        <span>Connexion</span>
+      </button>
+      
+      <button class="nav-item btn-signup">
+        <i class="fas fa-user-plus"></i>
+        <span>Inscription</span>
+      </button>
+    </nav>
+    
+    <button class="mobile-menu-btn">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+</header>

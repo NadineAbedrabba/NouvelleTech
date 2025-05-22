@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+/* Polices Google */
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600&family=Josefin+Sans:wght@400;600&display=swap');
+/*@import 'app\components\section-transition';*/
+@import 'swiper/swiper-bundle.min.css';
+/* Mynerve en local */
+@font-face {
+  font-family: 'Mynerve';
+  src: url('/assets/Fonts/mynerve-regular-webfont.woff2') format('woff2');
+  font-display: swap;
+}
+
+:root {
+    --font-normal: "Mulish", sans-serif;
+    --font-wow1: "Josefin Sans", sans-serif;
+    --font-fazet: "Mynerve", cursive; /* cursive > sans-serif pour Mynerve */
+  }

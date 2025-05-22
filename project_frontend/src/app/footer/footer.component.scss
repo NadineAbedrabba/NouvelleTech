@@ -1,0 +1,137 @@
+@import 'src/app/header/variables'; // Assurez-vous que $pink: #C62C52 est défini ici
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600&family=Josefin+Sans:wght@400;600&family=Mynerve&display=swap');
+
+.footer {
+  font-family: var(--font-normal, "Mulish", sans-serif);
+  background-color: $white-1; /* #ECEBF0 */
+  padding: 3rem 0;
+  color: #333;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .footer-column {
+    flex: 1;
+    min-width: 250px;
+
+    h3 {
+      font-family: var(--font-wow1, "Josefin Sans", sans-serif);
+      color: $blue; /* #8BB9D9 */
+      margin-bottom: 1.5rem;
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+
+    p {
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      a {
+        color: #555;
+        text-decoration: none;
+        transition: all 0.2s;
+
+        &:hover {
+          color: $pink; /* Nouveau rose #C62C52 au survol */
+        }
+      }
+    }
+
+    .newsletter {
+      margin-top: 1.5rem;
+
+      input {
+        width: 100%;
+        padding: 0.8rem;
+        margin: 0.5rem 0;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-family: var(--font-normal, "Mulish", sans-serif);
+        background-color: $white-2; /* #FAF8F8 */
+      }
+
+      button {
+        font-family: var(--font-wow1, "Josefin Sans", sans-serif);
+        background: $yellow; /* #FFDF6C */
+        color: darken($yellow, 50%);
+        border: none;
+        padding: 0.8rem 1.5rem;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: 600;
+
+        &:hover {
+          background: darken($yellow, 10%);
+          color: $pink; /* Texte en rose au survol */
+        }
+      }
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin: 1.5rem 0;
+
+      a {
+        color: $blue; /* #8BB9D9 */
+        font-size: 1.5rem;
+        transition: all 0.3s;
+
+        &:hover {
+          color: $pink; /* #C62C52 */
+          transform: scale(1.1);
+        }
+      }
+    }
+
+    .legal {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+
+      p {
+        margin-bottom: 0.5rem;
+      }
+
+      .legal-links {
+        display: flex;
+        gap: 1rem;
+
+        a {
+          color: #666;
+          text-decoration: none;
+          font-family: var(--font-fazet, "Mynerve", cursive);
+          transition: all 0.3s;
+
+          &:hover {
+            color: $pink; /* #C62C52 */
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  .copyright {
+    font-family: var(--font-fazet, "Mynerve", cursive);
+    text-align: center;
+    padding-top: 2rem;
+    margin-top: 2rem;
+    border-top: 1px solid rgba($blue, 0.2);
+    color: $pink; /* #C62C52 */
+    font-size: 1.1rem;
+  }
+}
