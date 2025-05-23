@@ -3,8 +3,8 @@ package com.utm.fst.project.entities;
 import com.utm.fst.project.enums.StatutEntreprise;
 import com.utm.fst.project.enums.TypeCuisine;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import jakarta.validation.constraints.Min;
@@ -14,12 +14,12 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @DiscriminatorValue("ENTREPRISE")
 public class Entreprise extends User {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
         private String matricule;
 
         @Column(nullable = false)
@@ -50,7 +50,6 @@ public class Entreprise extends User {
         @Max(5)
         private Double rating;
 
-        // Fixing the mappings here: Remove @OneToMany, use @ElementCollection only for simple collections
         @ElementCollection
         @CollectionTable(name = "entreprise_services", joinColumns = @JoinColumn(name = "entreprise_id"))
         @Column(name = "services")
@@ -85,13 +84,14 @@ public class Entreprise extends User {
         @OneToMany(mappedBy = "entreprise", cascade = CascadeType.ALL, orphanRemoval = true)
         private List<Review> reviews;
 
-
-        // Add the createdAt field
         @Temporal(TemporalType.TIMESTAMP)
         @Column(name = "created_at", nullable = false, updatable = false)
         private Date dateDemande;
 
-        // Set the createdAt field before persisting the entity
+        @OneToMany(mappedBy = "entreprise", cascade = CascadeType.ALL, orphanRemoval = true)
+        @Builder.Default
+        private List<Reservation> reservations = new ArrayList<>();
+
         @PrePersist
         public void prePersist() {
                 this.dateDemande = new Date();

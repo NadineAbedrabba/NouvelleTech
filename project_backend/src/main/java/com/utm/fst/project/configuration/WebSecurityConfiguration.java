@@ -61,7 +61,10 @@ public class WebSecurityConfiguration {
                                 "/api/entreprises/**", "/api/images/**",
                                 "/client/register/**",
                                 "/api/reviews/**",
-                                "/client/**").permitAll()
+                                "/client/**",
+                                "/entreprise/**",
+                                "/api/reservations/**",
+                                "/api/images").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/api/**").authenticated()
                 )

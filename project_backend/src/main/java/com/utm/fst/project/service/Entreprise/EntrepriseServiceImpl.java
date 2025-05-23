@@ -199,6 +199,19 @@ public class EntrepriseServiceImpl implements EntrepriseService {
         if (dto.getNomEntreprise() != null) {
             entreprise.setNomEntreprise(dto.getNomEntreprise());
         }
+
+        if (dto.getDescription() != null) {
+            entreprise.setDescription(dto.getDescription());
+        }
+
+        if (dto.getEmail() != null) {
+            entreprise.setEmail(dto.getEmail());
+        }
+
+        if (dto.getGammePrix() != null) {
+            entreprise.setGammePrix(dto.getGammePrix());
+        }
+
         if (dto.getAdresse() != null) {
             entreprise.setAdresse(dto.getAdresse());
         }
@@ -210,9 +223,6 @@ public class EntrepriseServiceImpl implements EntrepriseService {
         }
         if (dto.getStatut() != null) {
             entreprise.setStatut(dto.getStatut());
-        }
-        if (dto.getLocalisation() != null) {
-            entreprise.setLocalisation(dto.getLocalisation());
         }
     }
 
