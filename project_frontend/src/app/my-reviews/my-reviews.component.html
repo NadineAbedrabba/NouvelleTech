@@ -1,0 +1,80 @@
+<div class="reviews-container">
+    <h1 class="page-title">Mes Avis</h1>
+    <div class="filters-section">
+        <div class="search-filter">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Rechercher un restaurant..." [(ngModel)]="searchQuery" (input)="applyFilters()">
+        </div>
+      
+        <div class="filter-group">
+          <label>Trier par :</label>
+          <select [(ngModel)]="sortOption" (change)="applyFilters()">
+            <option value="date-desc">Plus récent</option>
+            <option value="date-asc">Plus ancien</option>
+            <option value="rating-desc">Meilleure note</option>
+            <option value="rating-asc">Moins bonne note</option>
+          </select>
+        </div>
+      
+        <div class="filter-group">
+          <label>Filtrer par note :</label>
+          <select [(ngModel)]="ratingFilter" (change)="applyFilters()">
+            <option value="all">Toutes</option>
+            <option value="5">⭐ 5 étoiles</option>
+            <option value="4">⭐ 4+ étoiles</option>
+            <option value="3">⭐ 3+ étoiles</option>
+          </select>
+        </div>
+      
+        <div class="filter-tags">
+          <span class="filter-tag" *ngFor="let tag of allTags" 
+                [class.active]="selectedTags.includes(tag)"
+                (click)="toggleTag(tag)">
+            {{tag}}
+          </span>
+        </div>
+      </div>
+    
+    <div class="reviews-grid">
+      <div class="review-card" *ngFor="let review of reviews">
+        <div class="card-header">
+          <h2>{{review.restaurantName}}</h2>
+          <div class="review-date">
+            {{review.date | date:'dd/MM/yyyy'}}
+          </div>
+        </div>
+        
+        <div class="rating-overview">
+          <div class="overall-rating">
+            <div class="rating-circle">
+              {{getOverallRating(review).toFixed(1)}}
+            </div>
+            <div class="rating-label">Note Globale</div>
+          </div>
+          
+          <div class="detailed-ratings">
+            <div class="rating-item">
+              <span>Nourriture</span>
+              <app-rating-stars [rating]="review.foodRating"></app-rating-stars>
+            </div>
+            <div class="rating-item">
+              <span>Service</span>
+              <app-rating-stars [rating]="review.serviceRating"></app-rating-stars>
+            </div>
+            <div class="rating-item">
+              <span>Ambiance</span>
+              <app-rating-stars [rating]="review.ambianceRating"></app-rating-stars>
+            </div>
+          </div>
+        </div>
+        
+        <div class="review-comment">
+          "{{review.comment}}"
+        </div>
+        
+        <div class="review-tags">
+          <span class="tag" *ngFor="let tag of review.tags">{{tag}}</span>
+        </div>
+      </div>
+    </div>
+  </div>

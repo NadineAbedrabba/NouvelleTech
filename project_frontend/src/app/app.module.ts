@@ -16,6 +16,9 @@ import { ReviewHighlightComponent } from './components/review-highlight/review-h
 import { ReviewContainerComponent } from './review-container/review-container.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MyReviewsComponent } from './my-reviews/my-reviews.component';
+import { RatingStarsComponent } from './rating-stars/rating-stars.component';
+import { FavoritesComponent } from './favorites/favorites.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     CreativeSplitComponent,
     SectionTransitionComponent,
     ReviewHighlightComponent,
-    ReviewContainerComponent
+    ReviewContainerComponent,
+    MyReviewsComponent,
+    RatingStarsComponent,
+    FavoritesComponent
   ],
   imports: [
     BrowserModule,

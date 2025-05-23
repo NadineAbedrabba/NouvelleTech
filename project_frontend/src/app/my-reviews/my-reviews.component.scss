@@ -1,0 +1,284 @@
+@import 'src/app/header/variables';
+
+.reviews-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 6rem auto 2rem; // Modifié (haut, droite/gauche, bas)
+    position: relative; // Ajouté
+    z-index: 1; // Pour s'assurer que le contenu reste au-dessus
+  }
+  .filters-section {
+    background: $white-2;
+    padding: 1.5rem;
+    border-radius: $border-radius-lg;
+    margin-bottom: 2rem;
+    box-shadow: $shadow-sm;
+    border: 1px solid rgba($blue, 0.1);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    align-items: end;
+  
+    .search-filter {
+        grid-column: 1 / -1;
+        position: relative;
+        margin-bottom: 0; // Supprime l'espace en dessous
+    
+        input {
+          width: calc(100% - 2rem); // Ajuste la largeur
+          padding: 0.8rem 1rem;
+          padding-left: 3rem; // Garde l'espace pour l'icône
+          border-radius: 30px;
+          border: 1px solid rgba(#8BB9D9, 0.3);
+          font-family: 'Mulish', sans-serif;
+          font-size: 1rem;
+          height: 48px; // Hauteur fixe pour l'alignement
+          box-sizing: border-box; // Important pour le calcul des dimensions
+    
+          &:focus {
+            outline: none;
+            border-color: #8BB9D9;
+            box-shadow: 0 0 0 2px rgba(#8BB9D9, 0.2);
+          }
+        }
+    
+        i {
+          position: absolute;
+          left: 1.2rem;
+          top: 50%;
+          transform: translateY(-50%);
+          color: rgba(#C62C52, 0.7);
+          font-size: 1.1rem;
+        }
+      }
+    
+      /* Ajustement spécifique pour l'alignement droit */
+      @media (min-width: 768px) {
+        .search-filter {
+          margin-right: 0.5rem; // Ajustez cette valeur au besoin
+        }
+      }
+  
+    .filter-group {
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-family: 'Mulish', sans-serif;
+        color: darken($blue, 15%);
+        font-size: 0.9rem;
+      }
+  
+      select {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid rgba($blue, 0.3);
+        border-radius: $border-radius-md;
+        background: $white-1;
+        font-family: 'Mulish', sans-serif;
+        color: $pink;
+        cursor: pointer;
+        transition: all 0.3s;
+  
+        &:hover {
+          border-color: $blue;
+        }
+      }
+    }
+  
+    .filter-tags {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 0.5rem;
+  
+      .filter-tag {
+        background: rgba($blue, 0.1);
+        color: darken($blue, 15%);
+        padding: 0.5rem 1rem;
+        border-radius: $border-radius-xl;
+        font-size: 0.9rem;
+        font-family: 'Mulish', sans-serif;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: 1px solid transparent;
+  
+        &:hover {
+          background: rgba($blue, 0.2);
+        }
+  
+        &.active {
+          background: $pink;
+          color: white;
+          font-weight: bold;
+          border-color: $pink;
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .filters-section {
+      grid-template-columns: 1fr;
+    }
+  }
+
+.page-title {
+  font-family: 'Mynerve', cursive;
+  color: $pink;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  font-size: 2.5rem;
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(to right, $yellow, $pink);
+  }
+}
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+.review-card {
+  background: $white-2;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  transition: transform 0.3s, box-shadow 0.3s;
+  border: 1px solid rgba($blue, 0.1);
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+  }
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px dashed rgba($blue, 0.3);
+  
+  h2 {
+    margin: 0;
+    font-family: 'Josefin Sans', sans-serif;
+    color: darken($pink, 10%);
+  }
+  
+  .review-date {
+    font-family: 'Mulish', sans-serif;
+    color: rgba($pink, 0.7);
+    font-size: 0.9rem;
+  }
+}
+
+.rating-overview {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.overall-rating {
+  text-align: center;
+  
+  .rating-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: $yellow;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Mynerve', cursive;
+    font-size: 1.5rem;
+    color: $pink;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba($yellow, 0.3);
+  }
+  
+  .rating-label {
+    margin-top: 0.5rem;
+    font-family: 'Mulish', sans-serif;
+    font-size: 0.8rem;
+    color: darken($blue, 15%);
+  }
+}
+
+.detailed-ratings {
+  flex: 1;
+  
+  .rating-item {
+    margin-bottom: 0.8rem;
+    
+    span {
+      display: inline-block;
+      width: 80px;
+      font-family: 'Josefin Sans', sans-serif;
+      color: darken($blue, 20%);
+    }
+  }
+}
+
+.review-comment {
+  font-style: italic;
+  padding: 1rem;
+  background: rgba($white-1, 0.5);
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  position: relative;
+  
+  &::before, &::after {
+    content: '"';
+    font-size: 2rem;
+    color: rgba($pink, 0.3);
+    position: absolute;
+  }
+  
+  &::before {
+    top: 0;
+    left: 5px;
+  }
+  
+  &::after {
+    bottom: -15px;
+    right: 5px;
+  }
+}
+
+.review-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  
+  .tag {
+    background: rgba($blue, 0.1);
+    color: darken($blue, 15%);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-family: 'Mulish', sans-serif;
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .reviews-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .rating-overview {
+    flex-direction: column;
+  }
+}
