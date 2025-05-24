@@ -2,11 +2,16 @@ import { Component, HostListener } from '@angular/core';
 import { RestaurantCategoriesService } from './restaurant-categories.service';
 import { RestaurantCategory } from './restaurant-category.model';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
+  standalone: true,
+  imports: [CommonModule, FormsModule, RouterModule],
   animations: [
     trigger('dropdownAnimation', [
       state('void', style({

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RatingStarsComponent } from '../rating-stars/rating-stars.component';
 
 interface Review {
   id: number;
@@ -14,7 +17,9 @@ interface Review {
 @Component({
   selector: 'app-my-reviews',
   templateUrl: './my-reviews.component.html',
-  styleUrls: ['./my-reviews.component.scss']
+  styleUrls: ['./my-reviews.component.scss'],
+  standalone: true,
+  imports: [CommonModule, FormsModule, RatingStarsComponent]
 })
 export class MyReviewsComponent implements OnInit {
   // Données originales

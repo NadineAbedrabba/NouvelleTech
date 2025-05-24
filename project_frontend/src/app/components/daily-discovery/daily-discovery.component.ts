@@ -1,10 +1,14 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-daily-discovery',
   templateUrl: './daily-discovery.component.html',
   styleUrls: ['./daily-discovery.component.scss'],
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   animations: [
     trigger('revealAnimation', [
       state('hidden', style({

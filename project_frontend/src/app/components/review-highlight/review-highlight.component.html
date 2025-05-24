@@ -1,7 +1,9 @@
 <section class="review-highlight">
     <div class="container">
       <div class="section-header">
-        <h2>Ils parlent de nous</h2>
+        <div class="header-content">
+          <h2>Ils parlent de nous</h2>
+        </div>
         <div class="rating-display">
           <div class="stars">
             <i class="fas fa-star"></i>
@@ -10,38 +12,106 @@
             <i class="fas fa-star"></i>
             <i class="fas fa-star-half-alt"></i>
           </div>
-          <span>4.8/5 sur 1247 avis</span>
+          <span>{{ averageRating }}/5 sur {{ totalReviews }} avis</span>
         </div>
       </div>
   
-      <!-- Remplacement du carrousel -->
-      <div class="reviews-grid">
-        <div class="review-card" *ngFor="let review of featuredReviews" 
-             [style.--card-color]="getRandomCardColor()">
-          <div class="user-info">
-            <img [src]="review.avatar" [alt]="review.name" class="user-avatar">
-            <div class="user-details">
-              <h4>{{review.name}}</h4>
-              <div class="user-rating">
-                <i class="fas fa-star" *ngFor="let star of getStarsArray(review.rating)"></i>
+      <!-- Carrousel horizontal d'avis avec animation -->
+      <div class="reviews-container animate__animated animate__fadeIn">
+
+        
+        <div class="reviews-carousel-container">
+          <!-- Bouton précédent -->
+          <button class="carousel-nav carousel-prev" (click)="slidePrev()">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          
+          <!-- Conteneur des avis avec défilement horizontal -->
+          <div class="reviews-slider" #reviewsSlider>
+            <div class="reviews-track" #reviewsTrack [style.transform]="'translateX(' + translateX + 'px)'">
+              <div class="review-card" *ngFor="let review of allReviews" [style.--card-color]="review.color">
+                <div class="decoration-element"></div>
+                <div class="user-info">
+                  <img [src]="review.avatar" [alt]="review.name" class="user-avatar">
+                  <div class="user-details">
+                    <h4>{{ review.name }}</h4>
+                    
+                  </div>
+                </div>
+                <div class="rating">
+                  <i class="fas fa-star" *ngFor="let star of [1, 2, 3, 4, 5].slice(0, review.rating)"></i>
+                  <i class="far fa-star" *ngFor="let star of [1, 2, 3, 4, 5].slice(review.rating)"></i>
+                </div>
+                <p class="review-text">"{{ review.text }}"</p>
               </div>
             </div>
           </div>
-          <p class="review-text">
-            "{{review.text}}"
-          </p>
-          <div class="review-meta">
-            <span class="location">{{review.location}}</span>
-            <span class="date">{{today | date}}</span>
-          </div>
-          <div class="decoration-element"></div>
+          
+          <!-- Bouton suivant -->
+          <button class="carousel-nav carousel-next" (click)="slideNext()">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+        
+        <!-- Indicateurs de position -->
+        <div class="carousel-indicators">
+          <span *ngFor="let _ of getSlideIndicators(); let i = index" 
+                [class.active]="currentSlide === i"
+                (click)="goToSlide(i)"></span>
         </div>
       </div>
   
       <div class="cta-section">
-        <button class="cta-button pulse">
-          <i class="fas fa-pen-fancy"></i> Laisser un avis
+        <div class="content">
+          <h3>Votre avis compte pour nous</h3>
+          <p>Aidez-nous à améliorer notre plateforme en partageant votre expérience</p>
+          <button class="cta-btn pulse" (click)="openReviewModal()">
+            <i class="fas fa-pen-fancy"></i> Laisser un avis
+          </button>
+        </div>
+      </div>
+      
+    </div>
+    
+    
+    <!-- Fenêtre modale pour laisser un avis -->
+    <div class="review-modal" [class.active]="isModalOpen">
+      <div class="modal-overlay" (click)="closeReviewModal()"></div>
+      <div class="modal-content">
+        <button class="close-button" (click)="closeReviewModal()">
+          <i class="fas fa-times"></i>
         </button>
+        <h3>Partagez votre expérience</h3>
+        <div class="rating-selector">
+          <p>Quelle note donneriez-vous à notre site ?</p>
+          <div class="stars-input">
+            <button type="button" *ngFor="let star of [1, 2, 3, 4, 5]" 
+               class="star-btn"
+               [class.active]="star <= tempRating"
+               (click)="setRating(star)"
+               (mouseenter)="hoverRating(star)"
+               (mouseleave)="resetHoverRating()">
+              <i class="fas fa-star"></i>
+            </button>
+          </div>
+          <span class="rating-value">{{userRating}}/5</span>
+        </div>
+        <div class="review-form">
+          <textarea 
+            [(ngModel)]="userReview" 
+            placeholder="Partagez votre expérience avec nous..."
+            rows="4"></textarea>
+          <div class="form-footer">
+            <button class="submit-review" (click)="submitReview()">
+              <i class="fas fa-paper-plane"></i> Envoyer
+            </button>
+          </div>
+        </div>
+        <div class="review-success" *ngIf="isReviewSubmitted">
+          <i class="fas fa-check-circle"></i>
+          <h4>Merci pour votre avis !</h4>
+          <p>Votre contribution aide d'autres utilisateurs à découvrir notre plateforme.</p>
+        </div>
       </div>
     </div>
   </section>

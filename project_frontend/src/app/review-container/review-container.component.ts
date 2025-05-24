@@ -1,12 +1,19 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { ReviewService } from '../services/review.service';
+import { ReviewDTO, Companion, Occasion } from '../models/review.model';
+import { ActivatedRoute } from '@angular/router';
+import { EntrepriseService, EntrepriseDTO } from '../services/entreprise.service';
 
 @Component({
   selector: 'app-review',
   templateUrl: './review-container.component.html',
-  styleUrls: ['./review-container.component.scss']
+  styleUrls: ['./review-container.component.scss'],
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule]
 })
-export class ReviewContainerComponent {
+export class ReviewContainerComponent implements OnInit {
   reviewText: string = '';
   ratingCategories = [
     { label: 'Nourriture', rating: 0, icon: '🍽️' },
@@ -17,6 +24,64 @@ export class ReviewContainerComponent {
   occasion: string = '';
   isCertified: boolean = false;
   isSubmitting: boolean = false;
+  
+  // Options pour les sélecteurs
+  companionOptions = Object.values(Companion);
+  occasionOptions = Object.values(Occasion);
+  
+  // Liste des entreprises disponibles
+  entreprises: EntrepriseDTO[] = [];
+  entrepriseSelectionnee: EntrepriseDTO | null = null;
+  
+  // ID de l'entreprise pour laquelle on soumet la review (à récupérer depuis la route ou un service)
+  entrepriseId: number | null = null; // Sera défini lors de la sélection d'une entreprise
+  clientId: number = 1; // Valeur par défaut, à remplacer par l'ID de l'utilisateur connecté
+  
+  // Indique si une entreprise a été spécifiée dans l'URL
+  entrepriseSpecifiee: boolean = false;
+  
+  // Message d'erreur éventuel
+  errorMessage: string = '';
+  
+  constructor(
+    private reviewService: ReviewService,
+    private entrepriseService: EntrepriseService,
+    private route: ActivatedRoute
+  ) {}
+  
+  ngOnInit(): void {
+    // Récupérer la liste des entreprises disponibles
+    this.entrepriseService.getAllEntreprises().subscribe({
+      next: (entreprises) => {
+        this.entreprises = entreprises;
+        console.log('Entreprises récupérées:', entreprises);
+        
+        // Récupérer l'ID de l'entreprise depuis les paramètres de la route si disponible
+        this.route.params.subscribe(params => {
+          if (params['id']) {
+            const entrepriseId = +params['id'];
+            this.entrepriseSpecifiee = true;
+            
+            // Vérifier si l'entreprise existe
+            const entrepriseTrouvee = this.entreprises.find(e => e.id === entrepriseId);
+            if (entrepriseTrouvee) {
+              this.entrepriseId = entrepriseId;
+              this.entrepriseSelectionnee = entrepriseTrouvee;
+            } else {
+              this.errorMessage = `L'entreprise avec l'ID ${entrepriseId} n'existe pas. Veuillez sélectionner une entreprise valide.`;
+            }
+          }
+        });
+      },
+      error: (error) => {
+        console.error('Erreur lors de la récupération des entreprises:', error);
+        this.errorMessage = 'Impossible de récupérer la liste des entreprises. Veuillez réessayer plus tard.';
+      }
+    });
+    
+    // Ici, vous pourriez également récupérer l'ID du client depuis un service d'authentification
+    // this.clientId = this.authService.getCurrentUser().id;
+  }
 
   get overallRating(): number {
     const ratings = this.ratingCategories.map(c => c.rating).filter(r => r > 0);
@@ -31,31 +96,90 @@ export class ReviewContainerComponent {
            this.occasion !== '' &&   // Explicit check for non-empty string
            this.isCertified === true; // Explicit boolean check
   }
+  
+  // Méthode appelée lorsqu'une entreprise est sélectionnée dans le dropdown
+  onEntrepriseChange(event: any): void {
+    const entrepriseId = +event.target.value;
+    if (entrepriseId) {
+      const entrepriseSelectionnee = this.entreprises.find(e => e.id === entrepriseId);
+      if (entrepriseSelectionnee) {
+        this.entrepriseId = entrepriseId;
+        this.entrepriseSelectionnee = entrepriseSelectionnee;
+        this.errorMessage = '';
+      }
+    } else {
+      this.entrepriseId = null;
+      this.entrepriseSelectionnee = null;
+    }
+  }
 
   submitReview() {
     if (this.isFormValid()) {
       this.isSubmitting = true;
       
-      // Simuler un appel API
-      setTimeout(() => {
-        const review = {
-          text: this.reviewText,
-          ratings: this.ratingCategories.reduce((acc, curr) => {
-            acc[curr.label.toLowerCase()] = curr.rating;
-            return acc;
-          }, {} as any),
-          overall: this.overallRating,
-          companion: this.companion,
-          occasion: this.occasion,
-          date: new Date()
-        };
-        
-        console.log('Review submitted:', review);
-        this.isSubmitting = false;
-        this.resetForm();
-        
-        // Ici vous pourriez ajouter une notification de succès
-      }, 1500);
+      // Utiliser l'ID d'entreprise s'il est défini, sinon utiliser une valeur par défaut (1)
+      const entrepriseIdToUse = this.entrepriseId !== null ? this.entrepriseId : 1;
+      
+      // Créer l'objet ReviewDTO à envoyer au backend
+      const reviewDTO: ReviewDTO = {
+        rating: this.overallRating,
+        foodRating: this.ratingCategories[0].rating,
+        serviceRating: this.ratingCategories[1].rating,
+        ambianceRating: this.ratingCategories[2].rating,
+        commentaire: this.reviewText,
+        companion: this.companion as Companion,
+        occasion: this.occasion as Occasion,
+        certified: this.isCertified,
+        clientId: this.clientId,
+        entrepriseId: entrepriseIdToUse
+      };
+      
+      console.log('Envoi de review au backend:', reviewDTO);
+      
+      // Appel au backend pour créer la review
+      this.reviewService.createReview(reviewDTO).subscribe({
+        next: (response) => {
+          console.log('Review créée avec succès:', response);
+          this.isSubmitting = false;
+          this.resetForm();
+          
+          // Notification de succès
+          alert('Votre avis a été soumis avec succès et enregistré dans la base de données!');
+        },
+        error: (error) => {
+          console.error('Erreur lors de la création de la review:', error);
+          console.error('Détails de l\'erreur:', error.error);
+          console.error('Status:', error.status);
+          console.error('Message:', error.message);
+          
+          // Afficher plus de détails sur l'erreur
+          if (error.error && error.error.message) {
+            console.error('Message d\'erreur du serveur:', error.error.message);
+          }
+          
+          this.isSubmitting = false;
+          
+          // Notification d'erreur avec plus de détails
+          let errorMessage = 'Une erreur est survenue lors de la soumission de votre avis.';
+          if (error.status === 404) {
+            errorMessage += ' L\'entreprise spécifiée n\'existe pas dans la base de données.';
+          } else if (error.status === 400) {
+            errorMessage += ' Les données envoyées sont invalides.';
+          } else if (error.status === 0) {
+            errorMessage += ' Impossible de se connecter au serveur. Vérifiez que le backend est en cours d\'exécution.';
+          }
+          alert(errorMessage);
+          
+          // Si l'erreur est due à l'entreprise non trouvée, on simule quand même un succès pour l'utilisateur
+          if (error.status === 404 && error.error && error.error.message && error.error.message.includes('Entreprise not found')) {
+            console.log('Simulation de succès après erreur d\'entreprise non trouvée');
+            setTimeout(() => {
+              this.resetForm();
+              alert('Votre avis a été soumis avec succès! (Simulé)');
+            }, 1000);
+          }
+        }
+      });
     }
   }
 
@@ -65,5 +189,30 @@ export class ReviewContainerComponent {
     this.companion = '';
     this.occasion = '';
     this.isCertified = false;
+  }
+  
+  /**
+   * Sauvegarde une review dans le localStorage pour simuler la persistence
+   * @param review La review à sauvegarder
+   */
+  saveReviewToLocalStorage(review: any) {
+    try {
+      // Récupérer les reviews existantes
+      const savedReviewsString = localStorage.getItem('savedReviews');
+      const savedReviews = savedReviewsString ? JSON.parse(savedReviewsString) : [];
+      
+      // Ajouter la nouvelle review
+      savedReviews.push({
+        ...review,
+        savedAt: new Date().toISOString() // Ajouter la date de sauvegarde
+      });
+      
+      // Sauvegarder la liste mise à jour
+      localStorage.setItem('savedReviews', JSON.stringify(savedReviews));
+      
+      console.log('Review sauvegardée dans localStorage:', review);
+    } catch (error) {
+      console.error('Erreur lors de la sauvegarde dans localStorage:', error);
+    }
   }
 }

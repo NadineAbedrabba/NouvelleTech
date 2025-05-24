@@ -7,6 +7,11 @@
   
     <h1 class="review-title pulse">Donnez votre avis</h1>
     
+    <!-- Message d'erreur -->
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+    
     <div class="review-card wobble">
       <!-- Note globale -->
       <div class="overall-rating">
@@ -24,6 +29,23 @@
   
       <!-- Formulaire -->
       <form class="review-form" (ngSubmit)="submitReview()">
+        <!-- Sélecteur d'entreprise (visible uniquement si l'entreprise n'est pas spécifiée dans l'URL) -->
+        <div class="form-group" *ngIf="!entrepriseSpecifiee">
+          <div class="custom-select">
+            <select [(ngModel)]="entrepriseId" name="entreprise" (change)="onEntrepriseChange($event)" required>
+              <option [ngValue]="null" disabled selected>Sélectionnez un restaurant</option>
+              <option *ngFor="let entreprise of entreprises" [ngValue]="entreprise.id">
+                {{ entreprise.nomEntreprise }}
+              </option>
+            </select>
+            <div class="select-arrow">▼</div>
+          </div>
+        </div>
+        
+        <!-- Affichage de l'entreprise sélectionnée si spécifiée dans l'URL -->
+        <div class="selected-entreprise" *ngIf="entrepriseSpecifiee && entrepriseSelectionnee">
+          <h3>Avis pour : {{ entrepriseSelectionnee.nomEntreprise }}</h3>
+        </div>
         <!-- Commentaire -->
         <div class="form-group floating-label">
           <textarea id="reviewText" [(ngModel)]="reviewText" name="reviewText" required></textarea>
@@ -49,23 +71,27 @@
           <div class="custom-select">
             <select [(ngModel)]="companion" name="companion">
               <option value="" disabled selected>Avec qui ?</option>
-              <option value="family">👨‍👩‍👧‍👦 Famille</option>
-              <option value="friends">👯‍♀️ Amis</option>
-              <option value="couple">💑 Couple</option>
-              <option value="colleagues">👔 Collègues</option>
-              <option value="alone">🧍‍♂️ Seul(e)</option>
+              <option *ngFor="let option of companionOptions" [value]="option">
+                {{ option === 'FAMILLE' ? '👨‍👩‍👧‍👦 Famille' :
+                   option === 'AMIS' ? '👯‍♀️ Amis' :
+                   option === 'COUPLE' ? '💑 Couple' :
+                   option === 'COLLEGUES' ? '👔 Collègues' :
+                   option === 'SEUL' ? '🧍‍♂️ Seul(e)' : option }}
+              </option>
             </select>
             <div class="select-arrow">▼</div>
           </div>
-  
+
           <div class="custom-select">
             <select [(ngModel)]="occasion" name="occasion">
               <option value="" disabled selected>Pourquoi ?</option>
-              <option value="dinner">🌙 Dîner</option>
-              <option value="lunch">☀️ Déjeuner</option>
-              <option value="business">💼 Repas d'affaires</option>
-              <option value="celebration">🎉 Célébration</option>
-              <option value="other">✨ Autre</option>
+              <option *ngFor="let option of occasionOptions" [value]="option">
+                {{ option === 'DINER' ? '🌙 Dîner' :
+                   option === 'DEJEUNER' ? '☀️ Déjeuner' :
+                   option === 'AFFAIRES' ? '💼 Repas d\'affaires' :
+                   option === 'CELEBRATION' ? '🎉 Célébration' :
+                   option === 'AUTRE' ? '✨ Autre' : option }}
+              </option>
             </select>
             <div class="select-arrow">▼</div>
           </div>

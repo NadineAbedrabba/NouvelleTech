@@ -1,0 +1,120 @@
+<div class="elegant-container">
+    <div class="header-section">
+      <h1>Gestion des Réservations</h1>
+      <div class="filters">
+        <div class="search-filter">
+          <input type="text" [(ngModel)]="searchText" (input)="filterReservations()" 
+                 placeholder="Rechercher...">
+          <svg class="search-icon" viewBox="0 0 24 24">...</svg>
+        </div>
+      
+        <div class="date-filter">
+          <label>Date :</label>
+          <input type="date" [(ngModel)]="dateFilter" (change)="filterReservations()" />
+        </div>
+      
+        <div class="statut-filter">
+          <label>Statut :</label>
+          <select [(ngModel)]="statutFilter" (change)="filterReservations()">
+            <option value="">Tous</option>
+            <option value="En attente">En attente</option>
+            <option value="Confirmée">Confirmée</option>
+            <option value="Annulée">Annulée</option>
+          </select>
+        </div>
+      </div>
+      
+    </div>
+  
+    <div class="table-container">
+      <table class="elegant-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Heure</th>
+            <th>Personnes</th>
+            <th>Préférence</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let reservation of paginatedReservations">
+            <td>{{ reservation.id }}</td>
+            <td>{{ reservation.date | date:'dd/MM/yyyy' }}</td>
+            <td>{{ reservation.tempsArrivee }}</td>
+            <td>{{ reservation.nbPersonnes }}</td>
+            <td>{{ reservation.preference }}</td>
+            <td>
+              <span class="status" [ngClass]="getStatusClass(reservation.statut)">
+                {{ reservation.statut }}
+              </span>
+            </td>
+            <td class="actions-cell">
+              <button (click)="confirmReservation(reservation.id)" 
+                      class="action-btn accept-btn"
+                      [disabled]="reservation.statut !== 'En attente'">
+                Confirmer
+              </button>
+              <button (click)="cancelReservation(reservation.id)" 
+                      class="action-btn reject-btn"
+                      [disabled]="reservation.statut === 'Annulée'">
+                Annuler
+              </button>
+              <button class="action-btn details-btn" 
+        [routerLink]="['/reservations', reservation.id]">
+  Détails
+</button>
+            </td>
+          </tr>
+          <tr *ngIf="filteredReservations.length === 0">
+            <td colspan="7" class="no-results">
+              Aucune réservation ne correspond à vos critères
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <div class="pagination-section">
+      <div class="items-per-page">
+        <span>Éléments par page :</span>
+        <select [(ngModel)]="itemsPerPage" (change)="filterReservations()">
+          <option value="3">3</option>
+          <option value="5">5</option>
+          <option value="10">10</option>
+        </select>
+      </div>
+      
+      <div class="pagination-controls">
+        <button (click)="changePage(1)" [disabled]="currentPage === 1" class="page-nav">
+          &laquo;
+        </button>
+        <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" class="page-nav">
+          &lsaquo;
+        </button>
+        
+        <div class="page-numbers">
+          <button *ngFor="let page of totalPagesArray" 
+                  (click)="changePage(page)"
+                  [class.active]="page === currentPage"
+                  class="page-btn">
+            {{ page }}
+          </button>
+        </div>
+        
+        <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages" class="page-nav">
+          &rsaquo;
+        </button>
+        <button (click)="changePage(totalPages)" [disabled]="currentPage === totalPages" class="page-nav">
+          &raquo;
+        </button>
+      </div>
+      
+      <div class="pagination-info">
+        Page {{ currentPage }} sur {{ totalPages }} - 
+        {{ filteredReservations.length }} résultats
+      </div>
+    </div>
+  </div>

@@ -1,7 +1,15 @@
 <div class="app-container">
-    <app-header></app-header>
-    <main class="main-content">
-      <router-outlet></router-outlet>
-    </main>
-    <app-footer></app-footer>
-  </div>
+  <app-header></app-header>
+
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <app-footer></app-footer>
+
+  <!--<button (click)="openAuthModal()">Connexion / Inscription</button>
+
+  <ng-container *ngIf="showAuthModal">
+    <app-auth-selection></app-auth-selection>
+  </ng-container> -->
+</div>

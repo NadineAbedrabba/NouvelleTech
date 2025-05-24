@@ -38,20 +38,20 @@ public class AuthenticationController {
     @PostMapping("/authenticate")
     public AuthenticationResponse createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest , HttpServletResponse response) throws BadCredentialsException,DisabledException,UsernameNotFoundException, IOException, JSONException , ServletException {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
-            System.out.println("✅ Authentification réussie pour : " + authenticationRequest.getUsername());
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword()));
+            System.out.println("✅ Authentification réussie pour : " + authenticationRequest.getEmail());
 
         } catch (BadCredentialsException e) {
-            System.out.println("❌ Mauvais identifiants pour : " + authenticationRequest.getUsername());
+            System.out.println("❌ Mauvais identifiants pour : " + authenticationRequest.getEmail());
 
             throw new BadCredentialsException("username or password is incorrect");
         } catch (DisabledException disabledException) {
             response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE, "user not activated");
             return null;
         }
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
-        User user = userRepository.findFirstByEmail(authenticationRequest.getUsername());
-        final String jwt = jwtUtil.generateToken(authenticationRequest.getUsername());
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
+        User user = userRepository.findFirstByEmail(authenticationRequest.getEmail());
+        final String jwt = jwtUtil.generateToken(authenticationRequest.getEmail());
         System.out.println("📦 Réponse envoyée : " + new AuthenticationResponse(jwt));
 
         System.out.println("🚀 Token généré : " + jwt);

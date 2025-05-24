@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 interface Restaurant {
   id: number;
@@ -14,7 +16,9 @@ interface Restaurant {
 @Component({
   selector: 'app-favorites',
   templateUrl: './favorites.component.html',
-  styleUrls: ['./favorites.component.scss']
+  styleUrls: ['./favorites.component.scss'],
+  standalone: true,
+  imports: [CommonModule, FormsModule]
 })
 export class FavoritesComponent {
   restaurants: Restaurant[] = [

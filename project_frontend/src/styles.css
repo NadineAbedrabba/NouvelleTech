@@ -1,17 +1,36 @@
-/* You can add global styles to this file, and also import other style files */
-/* Polices Google */
+/* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600&family=Josefin+Sans:wght@400;600&display=swap');
-/*@import 'app\components\section-transition';*/
+
+/* Import Swiper styles */
 @import 'swiper/swiper-bundle.min.css';
-/* Mynerve en local */
+
+/* Import FontAwesome via node_modules (à adapter selon ta config) */
+@import '~@fortawesome/fontawesome-free/css/all.css';
+
+/* Font locale Mynerve */
 @font-face {
   font-family: 'Mynerve';
   src: url('/assets/Fonts/mynerve-regular-webfont.woff2') format('woff2');
   font-display: swap;
 }
 
+/* Variables CSS pour polices */
 :root {
-    --font-normal: "Mulish", sans-serif;
-    --font-wow1: "Josefin Sans", sans-serif;
-    --font-fazet: "Mynerve", cursive; /* cursive > sans-serif pour Mynerve */
-  }
+  --font-normal: "Mulish", sans-serif;
+  --font-wow1: "Josefin Sans", sans-serif;
+  --font-fazet: "Mynerve", cursive; /* cursive > sans-serif pour Mynerve */
+}
+
+/* Reset global */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Styles globaux pour le body */
+body {
+  position: relative;
+  font-family: "Roboto", sans-serif;
+  background: #f4f7fa;
+}

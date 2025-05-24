@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
@@ -14,15 +18,14 @@ import { CreativeSplitComponent } from './components/creative-split/creative-spl
 import { SectionTransitionComponent } from './components/section-transition/section-transition.component';
 import { ReviewHighlightComponent } from './components/review-highlight/review-highlight.component';
 import { ReviewContainerComponent } from './review-container/review-container.component';
-import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
 import { MyReviewsComponent } from './my-reviews/my-reviews.component';
 import { RatingStarsComponent } from './rating-stars/rating-stars.component';
 import { FavoritesComponent } from './favorites/favorites.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    
     HeaderComponent,
     FooterComponent,
     HomeComponent,
@@ -40,13 +43,18 @@ import { FavoritesComponent } from './favorites/favorites.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
-    FormsModule,
-    AuthModule,
+    RouterModule,
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    AuthModule
   ],
-  providers: [],
+  exports: [
+    HeaderComponent,
+    FooterComponent
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
