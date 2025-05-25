@@ -1,16 +1,35 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ReviewDTO } from '../models/review.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReviewService {
-  private baseUrl = 'http://localhost:8081/review/api/reviews';
+  private baseUrl = `${environment.apiBaseUrl}/review/api/reviews`;
+  // Note: L'URL utilise le contexte de servlet /review configuré dans application.properties
   
   constructor(private http: HttpClient) {
     console.log('ReviewService initialisé avec URL:', this.baseUrl);
+  }
+  
+  /**
+   * Crée les en-têtes HTTP avec le token JWT
+   * @returns Les options HTTP avec les en-têtes
+   */
+  private getHttpOptions() {
+    // Récupérer le token JWT du localStorage
+    const token = localStorage.getItem('authToken');
+    
+    // Créer les en-têtes HTTP avec le token JWT
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+      })
+    };
   }
 
   /**
@@ -30,7 +49,12 @@ export class ReviewService {
       console.warn('Attention: clientId est null ou non défini');
     }
     
-    return this.http.post<ReviewDTO>(this.baseUrl, review);
+    // Utiliser la méthode utilitaire pour obtenir les en-têtes HTTP
+    const httpOptions = this.getHttpOptions();
+    console.log('Token JWT utilisé pour la requête:', localStorage.getItem('authToken') ? 'Présent' : 'Absent');
+    
+    // Envoyer la requête avec les en-têtes
+    return this.http.post<ReviewDTO>(this.baseUrl, review, httpOptions);
   }
 
   /**
@@ -39,7 +63,9 @@ export class ReviewService {
    * @returns La liste des reviews de l'entreprise
    */
   getReviewsByEntreprise(entrepriseId: number): Observable<ReviewDTO[]> {
-    return this.http.get<ReviewDTO[]>(`${this.baseUrl}/entreprise/${entrepriseId}`);
+    // Utiliser la méthode utilitaire pour obtenir les en-têtes HTTP
+    const httpOptions = this.getHttpOptions();
+    return this.http.get<ReviewDTO[]>(`${this.baseUrl}/entreprise/${entrepriseId}`, httpOptions);
   }
 
   /**
@@ -48,7 +74,9 @@ export class ReviewService {
    * @returns La liste des reviews du client
    */
   getReviewsByClient(clientId: number): Observable<ReviewDTO[]> {
-    return this.http.get<ReviewDTO[]>(`${this.baseUrl}/client/${clientId}`);
+    // Utiliser la méthode utilitaire pour obtenir les en-têtes HTTP
+    const httpOptions = this.getHttpOptions();
+    return this.http.get<ReviewDTO[]>(`${this.baseUrl}/client/${clientId}`, httpOptions);
   }
 
   /**
@@ -56,6 +84,8 @@ export class ReviewService {
    * @param reviewId L'ID de la review à supprimer
    */
   deleteReview(reviewId: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${reviewId}`);
+    // Utiliser la méthode utilitaire pour obtenir les en-têtes HTTP
+    const httpOptions = this.getHttpOptions();
+    return this.http.delete<void>(`${this.baseUrl}/${reviewId}`, httpOptions);
   }
 }

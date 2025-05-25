@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/client")
 public class ClientController {
@@ -20,6 +22,20 @@ public class ClientController {
     public ClientController(ClientService clientService, UserService userService) {
         this.clientService = clientService;
         this.userService = userService;
+    }
+    
+    // Nouvel endpoint pour récupérer l'ID du client par email
+    @GetMapping("/by-email/{email}")
+    public ResponseEntity<?> getClientByEmail(@PathVariable String email) {
+        try {
+            Long clientId = clientService.getClientIdByEmail(email);
+            if (clientId != null) {
+                return new ResponseEntity<>(Map.of("id", clientId), HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(Map.of("error", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping("/register")

@@ -24,6 +24,6 @@ export interface ReviewDTO {
   companion: Companion;
   occasion: Occasion;
   certified: boolean;
-  clientId: number;
+  clientId: number; // Doit être un nombre valide lors de l'envoi au backend
   entrepriseId: number;
 }

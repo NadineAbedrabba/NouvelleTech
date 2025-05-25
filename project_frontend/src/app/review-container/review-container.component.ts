@@ -5,6 +5,7 @@ import { ReviewService } from '../services/review.service';
 import { ReviewDTO, Companion, Occasion } from '../models/review.model';
 import { ActivatedRoute } from '@angular/router';
 import { EntrepriseService, EntrepriseDTO } from '../services/entreprise.service';
+import { UserService, Client } from '../user-profile/user.service';
 
 @Component({
   selector: 'app-review',
@@ -35,7 +36,10 @@ export class ReviewContainerComponent implements OnInit {
   
   // ID de l'entreprise pour laquelle on soumet la review (à récupérer depuis la route ou un service)
   entrepriseId: number | null = null; // Sera défini lors de la sélection d'une entreprise
-  clientId: number = 1; // Valeur par défaut, à remplacer par l'ID de l'utilisateur connecté
+  clientId: number | null = null; // Sera défini dynamiquement à partir de l'utilisateur connecté
+  
+  // Informations sur le client connecté
+  clientConnecte: Client | null = null;
   
   // Indique si une entreprise a été spécifiée dans l'URL
   entrepriseSpecifiee: boolean = false;
@@ -46,7 +50,8 @@ export class ReviewContainerComponent implements OnInit {
   constructor(
     private reviewService: ReviewService,
     private entrepriseService: EntrepriseService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private userService: UserService
   ) {}
   
   ngOnInit(): void {
@@ -79,8 +84,42 @@ export class ReviewContainerComponent implements OnInit {
       }
     });
     
-    // Ici, vous pourriez également récupérer l'ID du client depuis un service d'authentification
-    // this.clientId = this.authService.getCurrentUser().id;
+    // Récupérer les informations du client connecté
+    this.userService.currentClient$.subscribe(client => {
+      this.clientConnecte = client;
+      if (client) {
+        console.log('Client connecté récupéré:', client);
+        console.log('ID client utilisé pour la review:', client.id);
+        this.clientId = client.id;
+      } else {
+        console.warn('Aucun client connecté détecté. Vérification de l\'utilisateur...');
+        
+        // Si nous n'avons pas d'informations client, essayer de récupérer l'utilisateur
+        const user = this.userService.getCurrentUser();
+        if (user) {
+          console.log('Utilisateur connecté récupéré:', user);
+          console.log('Tentative de récupération des informations client pour l\'utilisateur ID:', user.id);
+          
+          // Forcer le chargement des informations client
+          this.userService.loadClientInfo(user.id);
+          
+          // Vérifier à nouveau après un court délai
+          setTimeout(() => {
+            const clientInfo = this.userService.getClientInfo();
+            if (clientInfo) {
+              console.log('Informations client récupérées après délai:', clientInfo);
+              this.clientId = clientInfo.id;
+              console.log('ID client défini après délai:', this.clientId);
+            } else {
+              console.warn('Impossible de récupérer les informations client même après délai');
+            }
+          }, 1000);
+        } else {
+          console.warn('Aucun utilisateur connecté. Les reviews ne pourront pas être créées sans ID client.');
+          this.clientId = null;
+        }
+      }
+    });
   }
 
   get overallRating(): number {
@@ -117,6 +156,32 @@ export class ReviewContainerComponent implements OnInit {
     if (this.isFormValid()) {
       this.isSubmitting = true;
       
+      // Vérifier à nouveau les informations client les plus récentes
+      const clientActuel = this.userService.getClientInfo();
+      if (clientActuel && clientActuel.id) {
+        // Mettre à jour l'ID client si nécessaire
+        if (this.clientId !== clientActuel.id) {
+          console.log(`Mise à jour de l'ID client: ${this.clientId} -> ${clientActuel.id}`);
+          this.clientId = clientActuel.id;
+        }
+      }
+      
+      // Vérifier si l'utilisateur est connecté
+      const user = this.userService.getCurrentUser();
+      if (!user) {
+        // Si l'utilisateur n'est pas connecté, afficher un message d'erreur
+        alert('Vous devez être connecté pour soumettre un avis. Veuillez vous connecter et réessayer.');
+        this.isSubmitting = false;
+        return;
+      }
+      
+      // Si nous n'avons pas d'ID client valide mais que l'utilisateur est connecté
+      // utiliser un ID temporaire pour le développement
+      if (!this.clientId) {
+        console.warn('ID client non disponible. Utilisation d\'un ID temporaire pour le développement.');
+        this.clientId = 1; // ID temporaire pour le développement
+      }
+      
       // Utiliser l'ID d'entreprise s'il est défini, sinon utiliser une valeur par défaut (1)
       const entrepriseIdToUse = this.entrepriseId !== null ? this.entrepriseId : 1;
       
@@ -130,11 +195,13 @@ export class ReviewContainerComponent implements OnInit {
         companion: this.companion as Companion,
         occasion: this.occasion as Occasion,
         certified: this.isCertified,
-        clientId: this.clientId,
+        clientId: this.clientId, // Utilisation de l'ID client (qui est maintenant garanti d'être non null)
         entrepriseId: entrepriseIdToUse
       };
       
-      console.log('Envoi de review au backend:', reviewDTO);
+      console.log('Envoi de review au backend avec ID client:', this.clientId);
+      
+      console.log('Détails de la review:', reviewDTO);
       
       // Appel au backend pour créer la review
       this.reviewService.createReview(reviewDTO).subscribe({

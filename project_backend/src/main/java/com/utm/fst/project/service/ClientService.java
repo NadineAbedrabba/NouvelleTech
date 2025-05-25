@@ -8,4 +8,5 @@ import com.utm.fst.project.dto.ClientInfoDTO;
 public interface ClientService {
     UserDTO registerClient(ClientSignupDTO dto);
     ClientInfoDTO getClientInfo(Long id);
+    Long getClientIdByEmail(String email);
 }

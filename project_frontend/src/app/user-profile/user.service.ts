@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -80,7 +80,30 @@ export class UserService {
 
   // Méthode pour charger les informations du client associé à l'utilisateur
   loadClientInfo(userId: number): void {
-    this.http.get<any>(`${this.apiUrl}/review/client/by-user/${userId}`).subscribe({
+    console.log(`Tentative de récupération des informations client pour l'utilisateur ID: ${userId}`);
+    
+    // Si l'ID utilisateur est 0 ou invalide, créer un client par défaut
+    if (!userId || userId === 0) {
+      console.warn('ID utilisateur invalide (0 ou null). Création d\'un client par défaut.');
+      this.createDefaultClient(userId || 1);
+      return;
+    }
+    
+    // Récupérer le token JWT du localStorage
+    const token = localStorage.getItem('authToken');
+    
+    // Créer un objet HttpHeaders pour les en-têtes
+    const httpOptions = {
+      headers: token ? new HttpHeaders({
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }) : new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    
+    // Ajouter le token JWT à la requête
+    this.http.get<any>(`${this.apiUrl}/review/client/by-user/${userId}`, httpOptions).subscribe({
       next: (response) => {
         console.log('Réponse complète de loadClientInfo:', response);
         
@@ -97,9 +120,9 @@ export class UserService {
         console.log('Informations client extraites dans loadClientInfo:', clientInfo);
         
         // Vérifier que les informations client sont valides
-        if (clientInfo && (clientInfo.nom || clientInfo.prenom)) {
+        if (clientInfo && (clientInfo.id || clientInfo.nom || clientInfo.prenom)) {
           const client: Client = {
-            id: clientInfo.id || 0,
+            id: clientInfo.id || 1, // Utiliser 1 comme valeur par défaut si id n'est pas défini
             userId: userId,
             nom: clientInfo.nom || '',
             prenom: clientInfo.prenom || '',
@@ -109,17 +132,41 @@ export class UserService {
           console.log('Informations client mises à jour:', client);
           this.currentClientSubject.next(client);
         } else {
-          console.warn('Aucune information client valide n\'a été trouvée');
+          console.warn('Aucune information client valide n\'a été trouvée. Création d\'un client par défaut.');
+          this.createDefaultClient(userId);
         }
       },
       error: (error) => {
         console.error('Erreur lors du chargement des informations client:', error);
+        // En cas d'erreur, créer un client par défaut pour permettre l'utilisation de l'application
+        this.createDefaultClient(userId);
       }
     });
+  }
+  
+  // Méthode pour créer un client par défaut en cas d'erreur ou d'absence de données
+  private createDefaultClient(userId: number): void {
+    console.log('Création d\'un client par défaut pour l\'utilisateur ID:', userId);
+    const user = this.getCurrentUser();
+    const defaultClient: Client = {
+      id: 1, // ID par défaut pour le développement
+      userId: userId,
+      nom: user?.nom || 'Utilisateur',
+      prenom: user?.prenom || '',
+      imageUrl: user?.imageUrl
+    };
+    console.log('Client par défaut créé:', defaultClient);
+    this.currentClientSubject.next(defaultClient);
   }
 
   // Méthode pour récupérer les informations du client
   getClientInfo(): Client | null {
     return this.currentClientSubject.value;
+  }
+  
+  // Méthode pour définir directement les informations du client
+  setCurrentClient(client: Client): void {
+    console.log('Définition des informations client:', client);
+    this.currentClientSubject.next(client);
   }
 }

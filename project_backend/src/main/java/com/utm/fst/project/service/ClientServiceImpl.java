@@ -46,6 +46,15 @@ public class ClientServiceImpl implements ClientService {
         return null;
     }
 
+    @Override
+    public Long getClientIdByEmail(String email) {
+        User user = userRepository.findFirstByEmail(email);
+        if (user != null && user instanceof Client) {
+            return user.getId();
+        }
+        return null;
+    }
+
     private UserDTO mapToUserDTO(User user) {
         UserDTO dto = new UserDTO();
         dto.setId(user.getId());

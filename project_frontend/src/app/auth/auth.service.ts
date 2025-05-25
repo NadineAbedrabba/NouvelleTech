@@ -1,9 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Observable, tap, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-
-
 
 @Injectable({
   providedIn: 'root'
@@ -60,6 +59,23 @@ export class AuthService {
     const token = localStorage.getItem('authToken');
     const headers = token ? new HttpHeaders({ 'Authorization': `Bearer ${token}` }) : undefined;
     return this.http.get(`${environment.apiBaseUrl}/review/client/by-user/${userId}`, { headers, withCredentials: true });
+  }
+  
+  // Récupérer l'ID du client directement depuis la base de données en utilisant l'email
+  getClientIdByEmail(email: string): Observable<any> {
+    console.log(`Récupération de l'ID client pour l'email: ${email}`);
+    const token = localStorage.getItem('authToken');
+    const headers = token ? new HttpHeaders({ 'Authorization': `Bearer ${token}` }) : undefined;
+    
+    // Utiliser le nouvel endpoint que nous avons créé dans le backend
+    return this.http.get(`${environment.apiBaseUrl}/review/client/by-email/${email}`, { headers, withCredentials: true })
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.log('Erreur avec l\'endpoint by-email, tentative avec getClientByEmail:', error);
+          // Si cet endpoint n'existe pas ou échoue, essayer avec l'endpoint général
+          return this.getClientByEmail(email);
+        })
+      );
   }
   
   // Méthode pour décoder le token JWT et extraire les informations utilisateur
