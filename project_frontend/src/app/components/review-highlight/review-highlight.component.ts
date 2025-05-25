@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SiteReviewService, SiteReviewDTO } from '../../services/site-review.service';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-review-highlight',
@@ -22,8 +23,8 @@ export class ReviewHighlightComponent implements AfterViewInit, OnInit {
   isLoggedIn = false; // À remplacer par la vérification réelle de l'authentification
   isReviewSubmitted = false;
   
-  // ID du client connecté (simuler un client connecté pour le moment)
-  clientId = 2; // ID client modifié comme demandé
+  // ID du client connecté (sera récupéré depuis le service d'authentification)
+  clientId: number | null = null;
   
   // Propriétés pour la moyenne des avis et le nombre total
   averageRating = 0;
@@ -39,7 +40,10 @@ export class ReviewHighlightComponent implements AfterViewInit, OnInit {
   itemsPerSlide = 3;
   allReviews: any[] = [];
   
-  constructor(private siteReviewService: SiteReviewService) {}
+  constructor(
+    private siteReviewService: SiteReviewService,
+    private authService: AuthService
+  ) {}
   
   // Couleurs pour les cartes
   cardColors = [
@@ -80,6 +84,58 @@ export class ReviewHighlightComponent implements AfterViewInit, OnInit {
     // Charger les avis depuis le backend
     this.loadRecentReviews();
     this.loadReviewStats();
+    
+    // Récupérer l'ID du client connecté
+    this.getClientId();
+  }
+  
+  // Méthode pour récupérer l'ID du client connecté
+  getClientId(): void {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      this.isLoggedIn = true;
+      const userEmail = localStorage.getItem('userEmail');
+      
+      if (userEmail) {
+        this.authService.getClientIdByEmail(userEmail).subscribe({
+          next: (clientId) => {
+            this.clientId = clientId;
+            console.log('ID client récupéré:', clientId);
+          },
+          error: (error) => {
+            console.error('Erreur lors de la récupération de l\'ID client:', error);
+            // Essayer de récupérer l'ID client par l'ID utilisateur
+            this.tryGetClientInfoByUserId();
+          }
+        });
+      } else {
+        // Essayer de récupérer l'ID client par l'ID utilisateur
+        this.tryGetClientInfoByUserId();
+      }
+    } else {
+      this.isLoggedIn = false;
+      console.log('Utilisateur non connecté');
+    }
+  }
+  
+  // Méthode de secours pour récupérer l'ID client par l'ID utilisateur
+  tryGetClientInfoByUserId(): void {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      this.authService.getClientInfo(Number(userId)).subscribe({
+        next: (clientInfo) => {
+          if (clientInfo && clientInfo.id) {
+            this.clientId = clientInfo.id;
+            console.log('ID client récupéré par ID utilisateur:', clientInfo.id);
+          } else {
+            console.log('Aucun ID client trouvé pour cet utilisateur');
+          }
+        },
+        error: (error) => {
+          console.error('Erreur lors de la récupération des infos client:', error);
+        }
+      });
+    }
   }
 
   ngAfterViewInit(): void {
@@ -187,9 +243,15 @@ export class ReviewHighlightComponent implements AfterViewInit, OnInit {
       commentaire: this.userReview
     };
     
-    // Toujours utiliser l'ID client 2 pour le moment
-    siteReview.clientId = 2;
-    console.log('Utilisation de l\'ID client fixe: 2');
+    // Utiliser l'ID du client connecté s'il est disponible
+    if (this.clientId) {
+      siteReview.clientId = this.clientId;
+      console.log('Utilisation de l\'ID client connecté:', this.clientId);
+    } else {
+      // Utiliser un ID par défaut si l'utilisateur n'est pas connecté ou si l'ID n'a pas pu être récupéré
+      siteReview.clientId = 14; // ID par défaut
+      console.log('Utilisation de l\'ID client par défaut: 14');
+    }
     
     console.log('Envoi de l\'avis au serveur:', siteReview);
     
