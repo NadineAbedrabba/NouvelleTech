@@ -4,6 +4,7 @@ import { NgIf, CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { WelcomeToastComponent } from './user-profile/welcome-toast/welcome-toast.component';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,8 @@ import { FooterComponent } from './footer/footer.component';
         NgIf,
         CommonModule,
         HeaderComponent,
-        FooterComponent
+        FooterComponent,
+        WelcomeToastComponent
     ]
 })
 export class AppComponent {

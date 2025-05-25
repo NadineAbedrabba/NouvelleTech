@@ -38,10 +38,14 @@
         </ul>
       </div>
       
-      <button class="nav-item btn-signup" (click)="openAuthModal()">
-        <i class="fas fa-user-plus"></i>
-        <span>Inscription</span>
+      <!-- Bouton de connexion (visible uniquement si non connecté) -->
+      <button *ngIf="!isUserLoggedIn" class="nav-item btn-signup" (click)="openAuthModal()">
+        <i class="fas fa-user"></i>
+        <span>Connexion</span>
       </button>
+      
+      <!-- Composant de profil utilisateur (visible uniquement si connecté) -->
+      <app-user-profile *ngIf="isUserLoggedIn"></app-user-profile>
     </nav>
     
     <button class="mobile-menu-btn">

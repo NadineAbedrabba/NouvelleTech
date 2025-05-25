@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { RestaurantCategoriesService } from './restaurant-categories.service';
 import { RestaurantCategory } from './restaurant-category.model';
 import { trigger, state, style, transition, animate } from '@angular/animations';
@@ -6,13 +6,16 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { AuthModule } from '../auth/auth.module';
+import { AuthModalService } from '../shared/auth-modal.service';
+import { UserService } from '../user-profile/user.service';
+import { UserProfileComponent } from '../user-profile/user-profile.component';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, AuthModule],
+  imports: [CommonModule, FormsModule, RouterModule, AuthModule, UserProfileComponent],
   animations: [
     trigger('dropdownAnimation', [
       state('void', style({
@@ -33,12 +36,27 @@ export class HeaderComponent {
   showDropdown: boolean = false;
   restaurantCategories: RestaurantCategory[] = [];
   keepDropdownOpen = false;
-  showAuthModal = false; // Ajout de la propriété manquante
+  showAuthModal = false; // Propriété pour le modal d'authentification
+  isUserLoggedIn = false; // Propriété pour suivre l'état de connexion
 
-  constructor(private categoriesService: RestaurantCategoriesService, private router: Router) {}
+  constructor(
+    private categoriesService: RestaurantCategoriesService, 
+    private router: Router,
+    private authModalService: AuthModalService,
+    public userService: UserService
+  ) {}
 
   ngOnInit(): void {
     this.loadRestaurantCategories();
+    
+    // Vérifier l'état de connexion initial
+    this.isUserLoggedIn = this.userService.isLoggedIn();
+    
+    // S'abonner aux changements d'état de connexion
+    this.userService.currentUser$.subscribe(user => {
+      console.log('État de connexion mis à jour:', user ? 'Connecté' : 'Déconnecté');
+      this.isUserLoggedIn = !!user;
+    });
   }
 
   loadRestaurantCategories(): void {
@@ -61,7 +79,11 @@ export class HeaderComponent {
     }, 100);
   }
 
-  // Méthode pour ouvrir le modal d'authentification
+  toggleDropdown() {
+    this.showDropdown = !this.showDropdown;
+  }
+  
+  // Méthodes pour gérer le modal d'authentification
   openAuthModal() {
     this.showAuthModal = true;
   }

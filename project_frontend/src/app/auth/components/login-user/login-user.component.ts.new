@@ -1,0 +1,123 @@
+import { Component, EventEmitter, Output } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from '../../auth.service';
+import { UserService } from '../../../user-profile/user.service';
+import { LoginSuccessService } from '../../../user-profile/login-success.service';
+
+@Component({
+  selector: 'app-login-user',
+  templateUrl: './login-user.component.html',
+  styleUrls: ['./login-user.component.css']
+})
+export class LoginUserComponent {
+  loginForm = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required]
+  });
+
+  @Output() closeModal = new EventEmitter<void>();
+  @Output() loginSubmitted = new EventEmitter<any>();
+
+  constructor(
+    private fb: FormBuilder, 
+    private authService: AuthService,
+    private userService: UserService,
+    private loginSuccessService: LoginSuccessService
+  ) {}
+
+  onSubmit(): void {
+    if (this.loginForm.valid) {
+      console.log('User login data:', this.loginForm.value);
+      
+      // Émettre l'événement pour permettre au composant parent de gérer la soumission
+      this.loginSubmitted.emit(this.loginForm.value);
+      
+      this.authService.authenticate(this.loginForm.value).subscribe({
+        next: (response: any) => {
+          console.log('Login réussie - Réponse complète:', response);
+          
+          // Analyser la structure de la réponse pour débugger
+          if (response) {
+            console.log('Type de réponse:', typeof response);
+            console.log('Propriétés de la réponse:', Object.keys(response));
+          }
+          
+          // Stocker le token dans le localStorage si présent
+          let jwtToken = '';
+          if (response.token) {
+            jwtToken = response.token;
+            localStorage.setItem('authToken', jwtToken);
+          } else if (response.jwtToken) {
+            jwtToken = response.jwtToken;
+            localStorage.setItem('authToken', jwtToken);
+          }
+          
+          // Explorer la structure complète de la réponse
+          console.log('Structure complète de la réponse:', JSON.stringify(response, null, 2));
+          
+          // Décoder le token JWT pour extraire les informations utilisateur
+          let userEmail = '';
+          let userId: number | null = null;
+          
+          if (jwtToken) {
+            const decodedToken = this.authService.decodeToken(jwtToken);
+            console.log('Token JWT décodé:', decodedToken);
+            
+            // Extraire l'email du token décodé
+            if (decodedToken) {
+              userEmail = decodedToken.sub || decodedToken.email || '';
+              userId = decodedToken.id || decodedToken.userId || null;
+              console.log('Email extrait du token:', userEmail);
+              console.log('ID utilisateur extrait du token:', userId);
+            }
+          }
+          
+          // Si nous n'avons pas d'email dans le token, utiliser celui du formulaire
+          if (!userEmail && this.loginForm.value.email) {
+            userEmail = this.loginForm.value.email;
+          }
+          
+          // Créer un objet utilisateur avec les informations disponibles
+          const user = {
+            id: userId || 0,
+            email: userEmail,
+            nom: '',
+            prenom: ''
+          };
+          
+          // Essayer d'extraire le nom d'utilisateur de l'email
+          if (userEmail && !user.nom) {
+            // Extraire le nom d'utilisateur de l'email (avant le @)
+            const emailParts = userEmail.split('@');
+            if (emailParts.length > 0) {
+              // Nettoyer le nom d'utilisateur (enlever les caractères spéciaux)
+              let username = emailParts[0].replace(/[^a-zA-Z0-9]/g, '');
+              // Mettre la première lettre en majuscule
+              if (username) {
+                username = username.charAt(0).toUpperCase() + username.slice(1);
+                user.nom = username;
+              }
+            }
+          }
+          
+          // Stocker les informations de l'utilisateur
+          this.userService.setCurrentUser(user);
+          
+          // Afficher un message de bienvenue avec le nom disponible
+          const displayName = user.nom || 'Utilisateur';
+          console.log('Nom pour le message de bienvenue:', displayName);
+          this.loginSuccessService.showWelcomeMessage(`Bienvenue, ${displayName}!`);
+          
+          // Fermer le modal
+          this.closeModal.emit();
+          
+          // Forcer la mise à jour de l'interface
+          setTimeout(() => this.userService.notifyLoginStateChange(), 100);
+        },
+        error: (err: any) => {
+          console.error('Erreur lors du login:', err);
+        }
+      });
+    }
+  }
+}
