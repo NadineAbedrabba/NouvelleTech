@@ -49,61 +49,57 @@
         display: inline-block;
         width: 8px;
         height: 8px;
-        background: $yellow;
+        background: $pink;
         border-radius: 50%;
-        margin-left: 6px;
-        transform: translateY(-4px);
+        margin-left: 4px;
+        position: relative;
+        top: -12px;
         animation: pulse 2s infinite;
       }
       
       &:hover {
         .logo-text {
-          transform: translateY(-2px);
-          text-shadow: 0 4px 8px rgba($blue, 0.1);
+          color: $pink;
         }
         
         .logo-dot {
-          animation: bounce 0.8s infinite alternate;
+          background: $blue;
         }
       }
     }
   }
-
+  
   .search-bar {
-    flex: 1;
-    max-width: 600px;
-    margin: 0 2rem;
     position: relative;
+    width: 40%;
     
     .search-container {
       position: relative;
       
       input {
         width: 100%;
-        padding: 0.8rem 1.5rem 0.8rem 3rem;
-        border-radius: 50px;
+        padding: 0.8rem 1.2rem 0.8rem 3rem;
         border: 1px solid rgba($blue, 0.1);
-        font-size: 1rem;
+        border-radius: 50px;
         font-family: "Poppins", sans-serif;
-        background: rgba($white-2, 0.6);
-        transition: all 0.4s ease;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
-        
-        &:focus {
-          background: white;
-          border-color: rgba($blue, 0.3);
-          box-shadow: 0 4px 20px rgba($blue, 0.1);
-          padding-left: 3.5rem;
-          
-          + .search-icon {
-            color: $blue;
-            transform: scale(1.1);
-          }
-        }
+        font-size: 0.9rem;
+        color: $blue;
+        background: rgba($white-2, 0.5);
+        transition: all 0.3s ease;
         
         &::placeholder {
-          color: rgba($blue, 0.5);
-          font-weight: 400;
+          color: rgba($blue, 0.4);
+        }
+        
+        &:focus {
+          outline: none;
+          border-color: rgba($pink, 0.3);
+          box-shadow: 0 5px 20px rgba($pink, 0.1);
+          background: white;
+          
+          & + .search-icon {
+            color: $pink;
+          }
         }
       }
       
@@ -308,10 +304,60 @@
   }
 }
 
+/* Modal d'authentification */
+.auth-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Z-index élevé pour être au-dessus de tout */
+  padding: 20px;
+}
+
+.auth-modal-container {
+  background-color: white;
+  border-radius: 12px;
+  padding: 30px;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #666;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.close-button:hover {
+  color: #000;
+  background-color: #f0f0f0;
+}
+
 /* Animations */
 @keyframes pulse {
   0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.2); opacity: 0.8; }
+  50% { transform: scale(1.05); opacity: 0.8; }
 }
 
 @keyframes bounce {
@@ -342,6 +388,139 @@
     
     .mobile-menu-btn {
       display: block;
+    }
+  }
+}
+
+/* Styles pour la fenêtre modale de connexion */
+.login-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba($blue, 0.9), rgba(darken($blue, 20%), 0.95));
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  overflow: auto;
+  padding: 20px;
+  
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    
+    .modal-content {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+  }
+  
+  .modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+  
+  .modal-content {
+    background-color: white;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 450px;
+    padding: 2.5rem;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    transform: translateY(30px) scale(0.95);
+    opacity: 0.5;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    z-index: 1;
+    overflow: hidden;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(to right, $pink, $yellow);
+    }
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba($blue, 0.1);
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: $blue;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+    
+    &:hover {
+      background: rgba($pink, 0.2);
+      color: $pink;
+      transform: rotate(90deg);
+    }
+  }
+  
+  h3 {
+    font-family: "Josefin Sans", sans-serif;
+    color: $blue;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    position: relative;
+    padding-bottom: 15px;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(to right, $pink, $yellow);
+      border-radius: 3px;
+    }
+  }
+  
+  .modal-footer {
+    margin-top: 1.5rem;
+    text-align: center;
+    
+    p {
+      color: lighten($blue, 20%);
+      font-size: 0.9rem;
+      
+      a {
+        color: $pink;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        
+        &:hover {
+          color: darken($pink, 10%);
+          text-decoration: underline;
+        }
+      }
     }
   }
 }

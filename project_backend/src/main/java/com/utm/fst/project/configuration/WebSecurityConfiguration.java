@@ -33,13 +33,10 @@ public class WebSecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("http://localhost:4200");
-        configuration.addAllowedOrigin("*");
+        configuration.setAllowedOrigins(List.of("http://localhost:4200"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
-        configuration.setExposedHeaders(List.of("Authorization", "Content-Type"));
-        configuration.setAllowCredentials(false); // Changé à false pour autoriser '*' dans les origines
-        configuration.setMaxAge(3600L);
+        configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
@@ -61,16 +58,17 @@ public class WebSecurityConfiguration {
                                 "/swagger-ui.html",
                                 "/favicon.ico",
                                 "/webjars/**",
-                                "/api/entreprises/**", 
-                                "/api/images/**",
+                                "/api/entreprises/**", "/api/images/**",
                                 "/client/register/**",
                                 "/api/reviews/**",
+                                "/client/**",
+                                "/entreprise/**",
+                                "/api/reservations/**",
                                 "/api/site-reviews/**",
                                 "/review/api/site-reviews/**",
-                                "/client/**").permitAll()
+                                "/api/images").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        // Ajout de règles spécifiques pour les endpoints qui nécessitent une authentification
-                        .anyRequest().authenticated()
+                        .requestMatchers("/api/**").authenticated()
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

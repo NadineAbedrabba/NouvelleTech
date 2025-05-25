@@ -8,12 +8,15 @@ import { RestaurantCategory } from './restaurant-category.model';
 export class RestaurantCategoriesService {
   private categories: RestaurantCategory[] = [
     { id: 1, name: 'Tous les restaurants' },
-    { id: 2, name: 'Tunisien' },
-    { id: 3, name: 'Restau Bar' },
-    { id: 4, name: 'Asiatique' },
+    { id: 2, name: 'Francais' },
+    { id: 3, name: 'Chinois' },
+    { id: 4, name: 'Japonnais' },
     { id: 5, name: 'Italien' },
-    { id: 6, name: 'Buffet' },
-    { id: 7, name: 'Healthy' }
+    { id: 6, name: 'Tunisien' },
+    { id: 7, name: 'Indien' },
+    { id: 8, name: 'Marocain' },
+    { id: 9, name: 'Libanais' },
+    { id: 10, name: 'Americain' },
     
   ];
 

@@ -38,12 +38,7 @@
         </ul>
       </div>
       
-      <button class="nav-item btn-login">
-        <i class="fas fa-user"></i>
-        <span>Connexion</span>
-      </button>
-      
-      <button class="nav-item btn-signup">
+      <button class="nav-item btn-signup" (click)="openAuthModal()">
         <i class="fas fa-user-plus"></i>
         <span>Inscription</span>
       </button>
@@ -54,3 +49,20 @@
     </button>
   </div>
 </header>
+
+<!-- Modal d'authentification (déplacé en dehors du header) -->
+<div class="auth-modal-overlay" *ngIf="showAuthModal" (click)="closeAuthModal()">
+  <div class="auth-modal-container" (click)="$event.stopPropagation()">
+    <button class="close-button" (click)="closeAuthModal()">×</button>
+    <app-auth-selection (closeModal)="closeAuthModal()"></app-auth-selection>
+  </div>
+</div>
+
+<!-- Commentaires anciens code -->
+<!--
+<button (click)="openAuthModal()">Connexion / Inscription</button>
+
+<ng-container *ngIf="showAuthModal">
+  <app-auth-selection></app-auth-selection>
+</ng-container> 
+-->

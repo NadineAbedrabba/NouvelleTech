@@ -56,15 +56,19 @@
   .category-card {
     flex: 0 0 auto;
     min-width: 280px;
+    width: 280px;
     background: white;
     border-radius: 15px;
     padding: 2rem;
-    //box-shadow: 0 5px 15px rgba($pink, 0.1);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
 
     &:hover {
       transform: translateY(-10px);
@@ -113,8 +117,13 @@
     h3 {
       font-family: var(--font-wow1, "Josefin Sans", sans-serif);
       color: $blue;
-      margin-bottom: 1rem;
+      margin: 0.5rem 0 1rem 0;
       font-size: 1.4rem;
+      text-transform: capitalize;
+      min-height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     p {
@@ -122,6 +131,11 @@
       color: lighten($blue, 15%);
       font-size: 0.95rem;
       line-height: 1.5;
+      margin: 0 0 1rem 0;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .card-badge {
