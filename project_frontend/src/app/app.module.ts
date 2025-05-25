@@ -8,9 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { CommonModule, NgIf } from '@angular/common';
 
 @NgModule({
-  declarations: [
-     // Declare the AppComponent
-  ],
+  declarations: [ ],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,  // Import BrowserModule for bootstrapping the application
@@ -18,7 +16,8 @@ import { CommonModule, NgIf } from '@angular/common';
     FormsModule,
     AuthModule,
     CommonModule,
-    NgIf
+    NgIf, 
+    AppComponent,
   ],
   bootstrap: [],  // Declare that AppComponent should be bootstrapped
 })
