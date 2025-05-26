@@ -1,0 +1,343 @@
+import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { DatePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { SiteReviewService, SiteReviewDTO } from '../../services/site-review.service';
+
+@Component({
+  selector: 'app-review-highlight',
+  templateUrl: './review-highlight.component.html',
+  styleUrls: ['./review-highlight.component.scss'],
+  standalone: true,
+  imports: [CommonModule, DatePipe, FormsModule]
+})
+export class ReviewHighlightComponent implements AfterViewInit, OnInit {
+  today = new Date();
+  
+  // Propriétés pour la fenêtre modale
+  isModalOpen = false;
+  userRating = 0;
+  tempRating = 0;
+  userReview = '';
+  isLoggedIn = false; // À remplacer par la vérification réelle de l'authentification
+  isReviewSubmitted = false;
+  
+  // ID du client connecté (simuler un client connecté pour le moment)
+  clientId = 2; // ID client modifié comme demandé
+  
+  // Propriétés pour la moyenne des avis et le nombre total
+  averageRating = 0;
+  totalReviews = 0;
+  
+  constructor(private siteReviewService: SiteReviewService) {}
+  
+  // Couleurs pour les cartes
+  cardColors = [
+    'rgba(255, 107, 157, 0.1)',
+    'rgba(58, 123, 213, 0.1)',
+    'rgba(255, 198, 0, 0.1)'
+  ];
+  
+  // Avis avec couleurs pré-assignées
+  featuredReviews = [
+    {
+      name: 'Marie D.',
+      location: 'Lyon',
+      rating: 5,
+      text: 'J\'ai trouvé LE restaurant parfait pour mon anniversaire en 2 clics ! La plateforme est tellement intuitive.',
+      avatar: 'assets/Images/P1.jpg',
+      color: this.cardColors[0]
+    },
+    {
+      name: 'Pierre T.',
+      location: 'Paris',
+      rating: 4,
+      text: 'Chaque jour une surprise différente, j\'adore cette diversité culinaire !',
+      avatar: 'assets/Images/P2.jpg',
+      color: this.cardColors[1]
+    },
+    {
+      name: 'Sophie R.',
+      location: 'Marseille',
+      rating: 5,
+      text: 'L\'expérience est ludique et les suggestions sont toujours pertinentes. 10/10 !',
+      avatar: 'assets/Images/P3.jpg',
+      color: this.cardColors[2]
+    }
+  ];
+
+  ngOnInit(): void {
+    // Charger les avis depuis le backend
+    this.loadRecentReviews();
+    this.loadReviewStats();
+  }
+
+  ngAfterViewInit(): void {
+    this.animateCards();
+  }
+
+  getStarsArray(rating: number): any[] {
+    return Array(rating).fill(0);
+  }
+
+  getRandomCardColor(): string {
+    const colors = [
+      'rgba(255, 107, 157, 0.1)',
+      'rgba(58, 123, 213, 0.1)',
+      'rgba(255, 198, 0, 0.1)'
+    ];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+
+  animateCards() {
+    const cards = document.querySelectorAll('.review-card');
+    cards.forEach((card: Element) => {
+      const htmlCard = card as HTMLElement;
+      const delay = htmlCard.style.getPropertyValue('--delay') || '0ms';
+      htmlCard.style.setProperty('--animate-duration', '0.6s');
+      htmlCard.style.setProperty('--animate-delay', delay);
+      htmlCard.classList.add('animate__animated', 'animate__fadeInUp');
+    });
+  }
+  
+  // Méthode pour charger les statistiques des avis
+  loadReviewStats() {
+    // Essayer d'abord d'utiliser l'endpoint dédié aux statistiques
+    this.siteReviewService.getSiteReviewStats().subscribe({
+      next: (stats) => {
+        this.averageRating = stats.averageRating;
+        this.totalReviews = stats.totalReviews;
+        console.log('Statistiques des avis chargées:', stats);
+      },
+      error: (error) => {
+        console.error('Erreur lors du chargement des statistiques, calcul local utilisé:', error);
+        
+        // En cas d'erreur (si l'endpoint n'existe pas), charger tous les avis et calculer localement
+        this.siteReviewService.getAllSiteReviews().subscribe({
+          next: (reviews) => {
+            const stats = this.siteReviewService.calculateAverageRating(reviews);
+            this.averageRating = stats.averageRating;
+            this.totalReviews = stats.totalReviews;
+            console.log('Statistiques calculées localement:', stats);
+          },
+          error: (err) => {
+            console.error('Impossible de calculer les statistiques des avis:', err);
+          }
+        });
+      }
+    });
+  }
+
+  // Méthodes pour la fenêtre modale
+  openReviewModal() {
+    this.isModalOpen = true;
+    document.body.classList.add('modal-open');
+  }
+
+  closeReviewModal() {
+    this.isModalOpen = false;
+    document.body.classList.remove('modal-open');
+    this.resetForm();
+  }
+
+  setRating(rating: number) {
+    this.userRating = rating;
+  }
+
+  hoverRating(rating: number) {
+    this.tempRating = rating;
+  }
+
+  resetHoverRating() {
+    this.tempRating = 0;
+  }
+
+  isReviewValid(): boolean {
+    return this.userRating > 0 && this.userReview.trim().length > 0;
+  }
+
+  submitReview() {
+    if (!this.isReviewValid()) {
+      return;
+    }
+
+    const review: SiteReviewDTO = {
+      rating: this.userRating,
+      commentaire: this.userReview,
+      clientId: this.clientId
+    };
+
+    console.log('Envoi de l\'avis:', review);
+
+    this.siteReviewService.createSiteReview(review).subscribe({
+      next: (response) => {
+        console.log('Avis créé avec succès:', response);
+        this.isReviewSubmitted = true;
+        
+        // Ajouter l'avis à la liste des avis affichés
+        const newReview = {
+          name: 'Vous',
+          location: 'Client',
+          rating: this.userRating,
+          text: this.userReview,
+          avatar: 'assets/Images/P1.jpg',
+          color: this.getRandomCardColor()
+        };
+        
+        // Sauvegarder l'avis dans le localStorage pour la persistence
+        this.saveReviewToLocalStorage(newReview);
+        
+        // Recharger les avis récents pour afficher le nouvel avis
+        setTimeout(() => {
+          this.loadRecentReviews();
+          this.loadReviewStats(); // Mettre à jour les statistiques
+          this.closeReviewModal();
+          this.isReviewSubmitted = false;
+        }, 2000);
+      },
+      error: (error) => {
+        console.error('Erreur lors de la création de l\'avis:', error);
+        
+        // Gérer les différents types d'erreurs
+        let errorMessage = 'Une erreur est survenue lors de l\'envoi de votre avis.';
+        
+        if (error.status === 403) {
+          errorMessage = 'Vous n\'êtes pas autorisé à soumettre un avis. Veuillez vous connecter.';
+        } else if (error.status === 400) {
+          errorMessage = 'Informations invalides. Veuillez vérifier votre avis.';
+        } else if (error.status === 0) {
+          errorMessage = 'Impossible de se connecter au serveur. Veuillez vérifier votre connexion internet.';
+        }
+        
+        alert(errorMessage);
+      }
+    });
+  }
+
+  resetForm() {
+    this.userRating = 0;
+    this.tempRating = 0;
+    this.userReview = '';
+  }
+
+  // Sauvegarder l'avis dans le localStorage pour la persistence
+  saveReviewToLocalStorage(review: any) {
+    // Récupérer les avis existants ou initialiser un tableau vide
+    const existingReviews = localStorage.getItem('userReviews');
+    const reviews = existingReviews ? JSON.parse(existingReviews) : [];
+    
+    // Ajouter le nouvel avis
+    reviews.push({
+      ...review,
+      date: new Date().toISOString()
+    });
+    
+    // Sauvegarder dans le localStorage
+    localStorage.setItem('userReviews', JSON.stringify(reviews));
+  }
+
+  // Méthode pour charger les avis récents depuis le backend
+  loadRecentReviews() {
+    this.siteReviewService.getRecentSiteReviews().subscribe({
+      next: (reviews: SiteReviewDTO[]) => {
+        console.log('Avis récents chargés:', reviews);
+        
+        if (reviews && reviews.length > 0) {
+          // Convertir les avis du backend en format affichable
+          const backendReviews = reviews.map(review => ({
+            name: review.clientName || 'Visiteur anonyme',
+            location: 'Client',
+            rating: review.rating,
+            text: review.commentaire,
+            avatar: 'assets/Images/P' + (Math.floor(Math.random() * 3) + 1) + '.jpg',
+            color: this.cardColors[Math.floor(Math.random() * this.cardColors.length)]
+          }));
+          
+          // Ne garder que les 3 derniers avis
+          const latestReviews = backendReviews.slice(0, 3);
+          
+          // Remplacer les avis statiques par les 3 derniers avis du backend
+          this.featuredReviews = latestReviews;
+          console.log('3 derniers avis chargés:', this.featuredReviews);
+          
+          // Initialiser le carrousel après avoir chargé les avis
+          setTimeout(() => {
+            this.initializeCarousel();
+          }, 100);
+        }
+      },
+      error: (error: any) => {
+        console.error('Erreur lors du chargement des avis récents:', error);
+      }
+    });
+  }
+
+  // Initialiser le carrousel Bootstrap
+  initializeCarousel() {
+    try {
+      // Vérifier si Bootstrap est disponible
+      if (typeof window !== 'undefined' && window.document) {
+        const carousel = document.getElementById('reviewCarousel');
+        if (carousel) {
+          // Utiliser JavaScript vanilla pour faire fonctionner le carrousel
+          const carouselItems = carousel.querySelectorAll('.carousel-item');
+          const prevButton = carousel.querySelector('.carousel-control-prev');
+          const nextButton = carousel.querySelector('.carousel-control-next');
+          const indicators = carousel.querySelectorAll('.carousel-indicators button');
+          
+          let currentIndex = 0;
+          
+          // Fonction pour afficher un slide spécifique
+          const showSlide = (index: number) => {
+            // Masquer tous les slides
+            carouselItems.forEach((item: Element) => {
+              item.classList.remove('active');
+            });
+            
+            // Désactiver tous les indicateurs
+            indicators.forEach((indicator: Element) => {
+              indicator.classList.remove('active');
+              indicator.setAttribute('aria-current', 'false');
+            });
+            
+            // Afficher le slide courant
+            carouselItems[index].classList.add('active');
+            indicators[index].classList.add('active');
+            indicators[index].setAttribute('aria-current', 'true');
+          };
+          
+          // Ajouter les écouteurs d'événements pour les boutons
+          if (prevButton) {
+            prevButton.addEventListener('click', () => {
+              currentIndex = (currentIndex === 0) ? carouselItems.length - 1 : currentIndex - 1;
+              showSlide(currentIndex);
+            });
+          }
+          
+          if (nextButton) {
+            nextButton.addEventListener('click', () => {
+              currentIndex = (currentIndex === carouselItems.length - 1) ? 0 : currentIndex + 1;
+              showSlide(currentIndex);
+            });
+          }
+          
+          // Ajouter les écouteurs d'événements pour les indicateurs
+          indicators.forEach((indicator: Element, index: number) => {
+            indicator.addEventListener('click', () => {
+              currentIndex = index;
+              showSlide(currentIndex);
+            });
+          });
+          
+          console.log('Carrousel initialisé avec succès');
+        } else {
+          console.error('Elément carrousel non trouvé');
+        }
+      } else {
+        console.error('Window ou document non disponible');
+      }
+    } catch (error) {
+      console.error('Erreur lors de l\'initialisation du carrousel:', error);
+    }
+  }
+}

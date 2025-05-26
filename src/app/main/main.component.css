@@ -1,0 +1,34 @@
+.body {
+  position: relative;
+  min-height: 100vh;
+  transition: margin-left 0.5s ease;
+  padding: 2rem;
+  background: #f4f7fa;
+}
+
+/* Sidebar FERMÉE - Prend TOUT l'espace */
+.body-full-width {
+  margin-left: 5% !important;
+  width: 95% !important;
+}
+
+/* Sidebar OUVERTE */
+.body-expanded {
+  margin-left: 16.5625rem;
+  width: calc(100% - 16.5625rem);
+}
+
+/* Version mobile */
+@media (max-width: 768px) {
+  .body {
+    margin-left: 0 !important;
+    width: 100% !important;
+    padding: 1rem;
+  }
+
+  .body-full-width {
+    margin-left: 20% !important;
+    width: 100% !important;
+  }
+}
+
