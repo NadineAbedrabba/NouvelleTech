@@ -1,0 +1,1312 @@
+/* Variables */
+$primary-color: #4A81A8;
+$secondary-color: #ff7e5f;
+$background-color: #f9f7ff;
+$text-color: #333;
+$success-color: #4CAF50;
+$warning-color: #FFC107;
+$error-color: #F44336;
+
+/* Mixins */
+@mixin card-shadow {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+@mixin subtle-transition {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Base Styles */
+.restaurant-profile {
+  max-width: 1200px;
+  margin: 2rem auto;
+  font-family: 'Poppins', sans-serif;
+  color: $text-color;
+  background: #FAF8F8;
+  ;
+  border-radius: 16px;
+  overflow: hidden;
+  @include card-shadow;
+}
+
+/* Header Styles */
+.profile-header {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  
+  .header-overlay {
+    height: 100px;
+    display: flex;
+    gap:30px;
+    padding: 2rem;
+    color: #901430;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    margin: 2rem 0 0.5rem;
+   
+  }
+}
+
+/* Variables */
+$primary-color: #4A81A8;
+$secondary-color: #ff7e5f;
+$background-color: #f9f7ff;
+$text-color: #333;
+$success-color: #4CAF50;
+$error-color: #F44336;
+
+/* Mixins */
+@mixin card-shadow {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+@mixin subtle-transition {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Base Styles */
+.restaurant-profile {
+  max-width: 1200px;
+  margin: 2rem auto;
+  font-family: 'Poppins', sans-serif;
+  color: $text-color;
+  background: #FAF8F8;
+  border-radius: 16px;
+  overflow: hidden;
+  @include card-shadow;
+}
+
+/* Header Styles */
+.profile-header {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  
+  .header-overlay {
+    height: 100px;
+    display: flex;
+    gap: 30px;
+    padding: 2rem;
+    color: #901430;
+    position: relative;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    margin: 2rem 0 0.5rem;
+    color:#4a81a8;
+  }
+}
+
+/* Bouton de statut */
+.status-toggle-btn {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  @include subtle-transition;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  background-color: #77af7a;
+  color: white;
+  width:170px;
+
+  &.complet {
+    background-color: #e99d98;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  .status-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    font-size: 0.9rem;
+  }
+
+  .status-text {
+    margin-left: 0.5rem;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .status-toggle-btn {
+    top: 1rem;
+    right: 1rem;
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* ... (reste des styles existants) ... */
+
+.profile-section contact-info{
+  background-color: #ECEBF0;
+  ;
+}
+
+.profile-section i{
+  color:#4A81A8
+}
+
+.avatar-container {
+  position: relative;
+  display: inline-block;
+  
+  .restaurant-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid white;
+    object-fit: cover;
+    @include card-shadow;
+  }
+  
+  .edit-icon {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: $primary-color;
+    color: white;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    @include subtle-transition;
+    
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+.restaurant-meta {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+  
+  span {
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+  }
+  
+  .cuisine-type {
+    background: $secondary-color;
+    backdrop-filter: blur(10px);
+    
+  }
+  
+  .price-range {
+    background: $secondary-color;
+  }
+  
+  .status-badge {
+    &.enattente {
+      background: $warning-color;
+      color: #333;
+    }
+    &.acceptée {
+      background: $success-color;
+      color: white;
+    }
+    &.rejetée {
+      background: $error-color;
+      color: white;
+    }
+  }
+}
+
+
+
+/* Styles pour la section À propos */
+.about-section {
+  color: black;
+  padding: 1.5rem;
+  border-radius: 8px;
+  
+  .section-header {
+    color: white;
+    
+    .edit-btn {
+      background: transparent;
+  border: 1px solid #4A81A8;
+  color: black;
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  @include subtle-transition;
+  
+  &:hover {
+    background: #4A81A8;
+    color: white;
+  }
+    }
+  }
+  
+  .about-details {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    
+    .cuisine-price {
+      display: flex;
+      gap: 1rem;
+      font-size: 1.1rem;
+      
+      .cuisine, .price {
+        padding: 0.5rem 1rem;
+        background-color: #4a81a8;
+        border-radius: 20px;
+        color:white
+      }
+    }
+    
+    .reservation-delivery {
+      display: flex;
+      gap: 1rem;
+      
+      span {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background-color: #4a81a8;
+        border-radius: 20px;
+        color: white;
+        
+        i {
+          color: white;
+        }
+      }
+    }
+  }
+}
+/* Section Styles */
+.profile-section {
+  padding: 2rem;
+  border-bottom: 1px solid #eee;
+  
+  &:last-child {
+    border-bottom: none;
+  }
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    
+    h2 {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.5rem;
+      color: #4A81A8;
+    }
+  }
+}
+
+.edit-btn {
+  background: transparent;
+  border: 1px solid #4A81A8;
+  color: black;
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  @include subtle-transition;
+  
+  &:hover {
+    background: #4A81A8;
+    color: white;
+  }
+}
+
+/* Tags */
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 15px;
+}
+
+.tag {
+  background: rgb(204, 226, 241);
+  color:black;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  
+  i {
+    cursor: pointer;
+    font-size: 0.8rem;
+
+    
+    &:hover {
+      color: $error-color;
+    }
+  }
+}
+
+/* Gallery */
+.gallery-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.images-row {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+}
+
+.image-container {
+  min-width: 200px;
+  height: 150px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 20px;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    @include subtle-transition;
+    
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1000;
+  @include subtle-transition;
+  
+  &.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+
+.edit-modal {
+  background: white;
+  width: 90%;
+  max-width: 600px;
+  border-radius: 16px;
+  padding: 2rem;
+  position: relative;
+  transform: translateY(20px);
+  @include subtle-transition;
+  @include card-shadow;
+  
+  .modal-overlay.active & {
+    transform: translateY(0);
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+    
+    &:hover {
+      color: $error-color;
+    }
+  }
+  
+  h3 {
+    margin-top: 0;
+    margin-bottom:20px;
+    color: #4A81A8;
+    padding-right: 2rem;
+
+  }
+  
+  textarea, input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 1rem;
+    height:40px;
+    @include subtle-transition;
+    
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+    }
+  }
+  
+  textarea {
+    min-height: 150px;
+    resize: vertical;
+  }
+}
+
+/* Style pour les images dans la page principale (sans croix) */
+.image-container {
+  position: relative;
+  min-width: 200px;
+  height: 150px;
+  border-radius: 8px;
+  overflow: hidden;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    @include subtle-transition;
+    
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+/* Style pour les images dans le popup (avec croix) */
+.edit-modal {
+  .image-item {
+    position: relative;
+    
+    .remove-icon {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: rgba(255, 255, 255, 0.8);
+      color: #ff6b6b;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      @include subtle-transition;
+      
+      &:hover {
+        color: #ff0000;
+        background: #4A81A8;
+      }
+    }
+  }
+  
+  
+  .category-header .remove-icon {
+    margin-left: 10px;
+    color: #ff6b6b;
+    cursor: pointer;
+    
+    
+    &:hover {
+      color: #ff0000;
+    }
+  }
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1000;
+  @include subtle-transition;
+  
+  &.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+
+.edit-modal {
+  background: white;
+  width: 90%;
+  max-width: 600px;
+  border-radius: 16px;
+  padding: 2rem;
+  position: relative;
+  transform: translateY(20px);
+  @include subtle-transition;
+  @include card-shadow;
+  max-height: 600px; /* Hauteur maximale */
+  display: flex;
+  flex-direction: column;
+  
+  .modal-overlay.active & {
+    transform: translateY(0);
+  }
+  
+  .modal-content-container {
+    overflow-y: auto; /* Activation du défilement */
+    flex: 1; /* Prend tout l'espace disponible */
+    padding-right: 10px; /* Espace pour éviter que le contenu ne soit caché par la barre de défilement */
+    margin-bottom: 1rem;
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+    
+    &:hover {
+      color: $error-color;
+    }
+  }
+  
+  h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #4A81A8;
+    padding-right: 2rem;
+  }
+  
+  /* ... reste du CSS existant ... */
+}
+.form-group .one{
+  display:flex;
+  gap:10px;
+  margin-top: 20px;
+} 
+
+
+.form-group button{
+  background: #4A81A8;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    height: 35px;
+    width:110px;
+  
+}
+
+.image-preview-container button {
+  margin-left: 200px;
+}
+
+/* Style pour la barre de défilement */
+.modal-content-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.modal-content-container::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.modal-content-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+.form-group {
+  
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    color: black;
+    padding-top: 15px;
+    font-size:15px;
+    padding-left: 5px;
+    padding-right: 15px;
+  }
+}
+
+.one select {
+  border-radius: 10px;
+  height:45px;
+}
+
+
+select:valid {
+  border-color: rgb(39, 108, 161); /* ✅ quand une vraie option est sélectionnée */
+}
+
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+  
+  button {
+    padding: 0.7rem 1.5rem;
+    border-radius: 30px;
+    cursor: pointer;
+    @include subtle-transition;
+    border: none;
+    font-weight: 500;
+    
+  }
+  
+  .cancel-btn {
+    background: #f0f0f0;
+    color: #666;
+    
+    &:hover {
+      background: #e0e0e0;
+    }
+  }
+  
+  .save-btn {
+    background: $primary-color;
+    color: white;
+    
+    &:hover {
+      background: darken($primary-color, 10%);
+    }
+  }
+}
+
+.add-item {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  height: 40px;
+  margin-top: 25px;
+  
+  input {
+    flex: 1;
+  }
+  
+  button {
+    background: #4A81A8;
+    color: white;
+    border: none;
+    padding: 0 1.5rem;
+    border-radius: 30px;
+    cursor: pointer;
+    @include subtle-transition;
+    
+    &:hover {
+      background: #3a6889;
+    }
+  }
+}
+
+.about-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.detail-item {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.8rem;
+  border-radius: 8px;
+  
+  .detail-label {
+    font-weight: 500;
+    color: $primary-color;
+  }
+}
+
+.checkbox-group {
+  label {
+    display: flex;
+    color:black;
+    gap: 0.5rem;
+    cursor: pointer;
+  }
+  
+  input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: $primary-color;
+  }
+}
+
+.gallery-management {
+  margin-top: 2rem;
+  
+  .gallery-categories {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 1rem;
+    background: $background-color;
+    border-radius: 8px;
+  }
+  
+  .gallery-category {
+    margin-bottom: 1.5rem;
+    
+    .category-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    
+    .category-images {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 0.8rem;
+    }
+  }
+}
+
+.image-item {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+
+/* Variables */
+$primary-color: #4A81A8;
+$secondary-color: #ff7e5f;
+$background-color: #f9f7ff;
+$text-color: #333;
+$success-color: #4CAF50;
+$warning-color: #FFC107;
+$error-color: #F44336;
+
+/* Mixins */
+@mixin card-shadow {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+@mixin subtle-transition {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Base Styles */
+.restaurant-profile {
+  max-width: 1200px;
+  margin: 2rem auto;
+  font-family: 'Poppins', sans-serif;
+  color: $text-color;
+  background: #FAF8F8;
+  border-radius: 16px;
+  overflow: hidden;
+  @include card-shadow;
+}
+
+/* Header Styles */
+.profile-header {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  
+  .header-overlay {
+    height: 100px;
+    display: flex;
+    gap: 30px;
+    padding: 2rem;
+    color: #901430;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    margin: 2rem 0 0.5rem;
+  }
+}
+
+.profile-section contact-info {
+  background-color: #ECEBF0;
+}
+
+.profile-section i {
+  color: #4A81A8;
+}
+
+.avatar-container {
+  position: relative;
+  display: inline-block;
+  
+  .restaurant-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid white;
+    object-fit: cover;
+    @include card-shadow;
+  }
+  
+  .edit-avatar-btn {
+    position: absolute;
+    bottom: -80px;
+    right: 10px;
+    background: $primary-color;
+    color: white;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    @include subtle-transition;
+    
+    &:hover {
+      transform: scale(1.1);
+      background: darken($primary-color, 10%);
+    }
+    
+    i {
+      font-size: 1rem;
+    }
+  }
+}
+
+/* Styles pour l'upload */
+.upload-container {
+  text-align: center;
+  padding: 2rem;
+}
+
+.upload-btn {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: $primary-color;
+  color: white;
+  border-radius: 30px;
+  cursor: pointer;
+  @include subtle-transition;
+  
+  &:hover {
+    background: darken($primary-color, 10%);
+  }
+  
+  i {
+    margin-right: 0.5rem;
+  }
+}
+
+.preview-container {
+  margin-top: 2rem;
+  text-align: center;
+  
+  h4 {
+    margin-bottom: 1rem;
+    color: #555;
+
+  }
+}
+
+.avatar-preview {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #eee;
+  margin: 0 auto;
+  margin-left: 120px;
+}
+
+.save-avatar-btn {
+  margin-top: 1rem;
+  padding: 0.7rem 1.5rem;
+  background: $success-color;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  @include subtle-transition;
+  
+  &:hover:not([disabled]) {
+    background: darken($success-color, 10%);
+  }
+  
+  &[disabled] {
+    background: #cccccc;
+    cursor: not-allowed;
+  }
+  
+  i {
+    margin-right: 0.5rem;
+  }
+}
+
+/* Styles existants pour les sections */
+.profile-section {
+  padding: 2rem;
+  border-bottom: 1px solid #eee;
+  
+  &:last-child {
+    border-bottom: none;
+  }
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    
+    h2 {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.5rem;
+      color: #4A81A8;
+    }
+  }
+}
+
+.one label {
+  height:45px;
+  display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: white;
+    padding-top: 15px;
+    font-size: 13px;
+    padding-left: 13px;
+    padding-right: 15px;
+}
+
+
+.edit-btn {
+  background: transparent;
+  border: 1px solid #4A81A8;
+  color: black;
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  @include subtle-transition;
+  
+  &:hover {
+    background: #4A81A8;
+    color: white;
+  }
+}
+
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 15px;
+}
+
+.tag {
+  background: rgb(204, 226, 241);
+  color: black;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  
+  i {
+    cursor: pointer;
+    font-size: 0.8rem;
+    
+    &:hover {
+      color: $error-color;
+    }
+  }
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1000;
+  @include subtle-transition;
+  
+  &.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+
+.edit-modal {
+  background: white;
+  width: 90%;
+  max-width: 600px;
+  border-radius: 16px;
+  padding: 2rem;
+  position: relative;
+  transform: translateY(20px);
+  @include subtle-transition;
+  @include card-shadow;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  
+  .modal-overlay.active & {
+    transform: translateY(0);
+  }
+  
+  .modal-content-container {
+    overflow-y: auto;
+    flex: 1;
+    padding-right: 10px;
+    margin-bottom: 1rem;
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+    
+    &:hover {
+      color: $error-color;
+    }
+  }
+  
+  h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #4A81A8;
+    padding-right: 2rem;
+  }
+  
+  textarea, input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 1rem;
+    height: 40px;
+    @include subtle-transition;
+    
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+    }
+  }
+  
+  textarea {
+    min-height: 150px;
+    resize: vertical;
+  }
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+  
+  button {
+    padding: 0.7rem 1.5rem;
+    border-radius: 30px;
+    cursor: pointer;
+    @include subtle-transition;
+    border: none;
+    font-weight: 500;
+  }
+  
+  .cancel-btn {
+    background: #f0f0f0;
+    color: #666;
+    
+    &:hover {
+      background: #e0e0e0;
+    }
+  }
+  
+  .save-btn {
+    background: $primary-color;
+    color: white;
+    
+    &:hover {
+      background: darken($primary-color, 10%);
+    }
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-header {
+    height: 250px;
+    
+    h1 {
+      font-size: 2rem;
+    }
+  }
+  
+  .restaurant-avatar {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .profile-section {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-header {
+    height: 200px;
+    
+    h1 {
+      font-size: 1.8rem;
+    }
+  }
+  
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .edit-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-header {
+    height: 250px;
+    
+    h1 {
+      font-size: 2rem;
+    }
+  }
+  
+  .restaurant-avatar {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .profile-section {
+    padding: 1.5rem;
+  }
+  
+  .about-details {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-header {
+    height: 200px;
+    
+    h1 {
+      font-size: 1.8rem;
+    }
+  }
+  
+  .restaurant-meta {
+    flex-wrap: wrap;
+  }
+  
+  .about-details {
+    grid-template-columns: 1fr;
+  }
+  
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .edit-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

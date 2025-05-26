@@ -1,0 +1,204 @@
+<div class="validation-container">
+  <header class="validation-header">
+    <div class="header-content">
+      <div class="title-group">
+        <h1>Détails du restaurant</h1>
+      </div>
+      
+      <div class="status-indicator">
+        <div class="status-badge pending">
+          <svg viewBox="0 0 24 24">
+            <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M13,9H11V7H13M13,17H11V11H13V17Z"/>
+          </svg>
+          {{ restaurant?.statut }}
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="restaurant-details">
+    <!-- Carte d'identité -->
+    <section class="identity-card">
+      <div class="identity-content">
+        <div class="restaurant-avatar">
+          <div class="avatar-placeholder">
+            <svg viewBox="0 0 24 24">
+              <path d="M12,13C9.33,13 4,14.33 4,17V20H20V17C20,14.33 14.67,13 12,13M12,4A4,4 0 0,0 8,8A4,4 0 0,0 12,12A4,4 0 0,0 16,8A4,4 0 0,0 12,4Z"/>
+            </svg>
+          </div>
+        </div>
+        
+        <div class="identity-info">
+          <h2>{{ restaurant?.nomEntreprise }}</h2>
+          <p class="description">{{ restaurant?.description }}</p>
+          
+          <div class="meta-tags">
+            <span class="tag matricule">{{ restaurant?.matricule }}</span>
+            <span class="tag cuisine">{{ restaurant?.typeCuisine }}</span>
+            <span class="tag price">{{ restaurant?.gammePrix }}</span>
+            <span class="tag matricule" [class.available]="restaurant?.livraisonDisponible">
+              <i class="bi bi-bicycle"></i> 
+              {{ restaurant?.livraisonDisponible ? 'Livraison acceptées' : 'livraison non acceptées' }}
+            </span>
+            <span class="tag matricule" [class.available]="restaurant?.acceptReservation">
+              <i class="bi bi-calendar-check"></i> 
+              {{ restaurant?.acceptReservation ? 'Réservations acceptées' : 'Réservations non acceptées' }}
+            </span>
+            
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Grille d'informations -->
+    <div class="details-grid">
+      <!-- Colonne gauche -->
+      <div class="details-column">
+        <div class="detail-card">
+          <div class="card-header">
+            <i class="bi bi-geo-alt"></i>
+            <h3>Localisation</h3>
+          </div>
+          <p class="address">{{ restaurant?.adresse }}</p>
+          <div class="map-container">
+            <iframe 
+        width="100%" 
+        height="300" 
+        frameborder="0" 
+        style="border:0"
+        [src]="safeMapUrl"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+          </div>
+        </div>
+
+        <div class="detail-card">
+          <div class="card-header">
+            <i class="bi bi-clock"></i>
+            <h3>Horaires d'ouverture</h3>
+          </div>
+          <div class="opening-hours">
+            <div *ngFor="let h of restaurant?.horaires">
+              <span>{{ h.jour }} : 
+                <ng-container *ngIf="!h.estFerme">
+                  {{ h.heureOuverture }} - {{ h.heureFermeture }}
+                </ng-container>
+                <ng-container *ngIf="h.estFerme">
+                  Fermé
+                </ng-container>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-card">
+          <div class="card-header">
+            <i class="bi bi-universal-access"></i>
+            <h3>Expériences</h3>
+          </div>
+          <ul class="features-list">
+            <li *ngFor="let access of restaurant?.experiences">
+              <i class="bi bi-check-circle"></i>
+              {{ access }}
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Colonne droite -->
+      <div class="details-column">
+        <div class="detail-card">
+          <div class="card-header">
+            <i class="bi bi-telephone"></i>
+            <h3>Coordonnées</h3>
+          </div>
+          <div class="contact-info">
+            <div class="contact-item">
+              <i class="bi bi-telephone"></i>
+              <span>{{ restaurant?.telephone }}</span>
+            </div>
+            <div class="contact-item">
+              <i class="bi bi-envelope"></i>
+              <span>{{ restaurant?.email }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-card">
+          <div class="card-header">
+            <i class="bi bi-list-check"></i>
+            <h3>Services proposés</h3>
+          </div>
+          <ul class="features-list">
+            <li *ngFor="let service of restaurant?.services">
+              <i class="bi bi-check-circle"></i>
+              {{ service }}
+            </li>
+          </ul>
+        </div>
+
+        <div class="detail-card">
+          <div class="card-header">
+            <i class="bi bi-egg-fried"></i>
+            <h3>Options disponibles</h3>
+          </div>
+          <ul class="features-list">
+            <li *ngFor="let option of restaurant?.optionsAlimentaires">
+              <i class="bi bi-check-circle"></i>
+              {{ option }}
+            </li>
+          </ul>
+        </div>
+
+        <div class="detail-card">
+          <div class="card-header">
+            <i class="bi bi-universal-access"></i>
+            <h3>Accessibilité</h3>
+          </div>
+          <ul class="features-list">
+            <li *ngFor="let access of restaurant?.accesibilite">
+              <i class="bi bi-check-circle"></i>
+              {{ access }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section de décision -->
+    <section class="decision-section" [class.active]="showDecisionForm">
+      <div class="decision-actions" *ngIf="!showDecisionForm">
+        <button class="decision-btn approve" (click)="prepareDecision('approve')">
+          <i class="bi bi-check"></i>
+          Approuver
+        </button>
+        <button class="decision-btn reject">
+          <i class="fal fa-times"></i>
+          Refuser
+        </button>
+      </div>
+
+      <div class="decision-form" *ngIf="showDecisionForm">
+        <h3>{{ currentDecision === 'approve' ? 'Confirmer l\'approbation' : 'Motif de refus' }}</h3>
+        
+        
+
+        <div class="form-group" *ngIf="currentDecision === 'approve'">
+          <p>Confirmez-vous l'approbation de ce restaurant ?</p>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn cancel" (click)="cancelDecision()">Annuler</button>
+          <button class="btn confirm" 
+                  [class.confirm-approve]="currentDecision === 'approve'"
+                  [class.confirm-reject]="currentDecision === 'reject'"
+                  (click)="submitDecision()">
+            {{ currentDecision === 'approve' ? 'Confirmer' : 'Envoyer le refus' }}
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>

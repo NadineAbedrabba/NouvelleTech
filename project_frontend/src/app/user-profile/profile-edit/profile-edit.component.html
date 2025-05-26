@@ -1,0 +1,81 @@
+<div class="fixed-header">
+  <div class="header-content">
+    <h1>Mon Profil</h1>
+    <div class="breadcrumb">
+      <a href="/">Accueil</a> / <span>Modifier mon profil</span>
+    </div>
+  </div>
+</div>
+
+<div class="profile-edit-container">
+  <!-- En-tête de la page avec avatar et titre -->
+  <div class="profile-header">
+    <div class="avatar-container">
+      <div class="avatar" *ngIf="client?.image?.url || client?.imageUrl">
+        <img [src]="client?.image?.url || client?.imageUrl" alt="Photo de profil">
+      </div>
+      <div class="avatar initials" *ngIf="!(client?.image?.url || client?.imageUrl)">
+        {{ client?.prenom?.charAt(0) || '' }}{{ client?.nom?.charAt(0) || '' }}
+      </div>
+      <div class="avatar-overlay" (click)="openImageUpload()">
+        <i class="fas fa-camera"></i>
+        <input type="file" #imageInput style="display: none" accept="image/*" (change)="onImageSelected($event)">
+      </div>
+    </div>
+    <h2>Informations personnelles</h2>
+    <p class="subtitle">Modifiez vos coordonnées et informations de contact</p>
+  </div>
+
+  <!-- Indicateur de chargement -->
+  <div class="loading-container" *ngIf="isLoading">
+    <div class="spinner-container">
+      <div class="spinner"></div>
+    </div>
+    <p>Chargement de votre profil...</p>
+  </div>
+
+  <!-- Messages d'erreur et de succès -->
+  <div class="message error-message" *ngIf="errorMessage">
+    <i class="fas fa-exclamation-circle"></i>
+    <span>{{ errorMessage }}</span>
+  </div>
+
+  <div class="message success-message" *ngIf="successMessage">
+    <i class="fas fa-check-circle"></i>
+    <span>{{ successMessage }}</span>
+  </div>
+
+  <!-- Formulaire de modification du profil -->
+  <form *ngIf="!isLoading && !errorMessage || client" (ngSubmit)="saveProfile()" class="profile-form">
+    <div class="form-section">
+      <h2>Informations personnelles</h2>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nom">Nom</label>
+          <div class="input-container">
+            <i class="fas fa-user"></i>
+            <input type="text" id="nom" name="nom" [(ngModel)]="editModel.nom" placeholder="Votre nom">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <div class="input-container">
+          <i class="fas fa-envelope"></i>
+          <input type="email" id="email" name="email" [(ngModel)]="editModel.email" placeholder="votre.email@exemple.com">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" (click)="cancel()">
+        <i class="fas fa-times"></i> Annuler
+      </button>
+      <button type="submit" class="btn-save">
+        <i class="fas fa-save"></i> Enregistrer
+      </button>
+    </div>
+  </form>
+</div>

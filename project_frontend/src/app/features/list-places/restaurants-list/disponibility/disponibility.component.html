@@ -1,0 +1,29 @@
+<div class="dispo">
+    <div class="flex-title-reset">
+      <p class="title">Disponibilité</p>
+      <span class="material-symbols-outlined" (click)="resetAvailability()">restart_alt</span>
+    </div>
+  
+    <div class="open-now checkbox-group">
+      <li>
+        <input #disp1 id="disp1" type="radio" name="dispo" />
+        <label for="disp1">Ouvert maintenant</label>
+      </li>
+      <li>
+        <input #disp2 id="disp2" type="radio" name="dispo" />
+        <label for="disp2">Ouvert dans une heure spécifique</label>
+      </li>
+    </div>
+    
+    <div class="dispo-jour-heure">
+      <span class="material-symbols-outlined" style="scale: 0.4; margin-top: 2px">Radio_Button_Unchecked</span>
+      <p>Jour :</p>
+      <input #dateSelect type="date" id="date-select" [disabled]="!disp2.checked" />
+    </div>
+  
+    <div class="dispo-jour-heure thenya">
+      <span class="material-symbols-outlined" style="scale: 0.4; margin-top: 3px">Radio_Button_Unchecked</span>
+      <p>Heure :</p>
+      <input #timeSelect type="time" id="time-select" [disabled]="!disp2.checked" />
+    </div>
+  </div>

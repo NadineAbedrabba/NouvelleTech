@@ -1,0 +1,395 @@
+<div class="restaurant-profile">
+  <!-- En-tête avec photo -->
+  <div class="profile-header">
+    <div class="header-overlay">
+      <div class="avatar-container">
+        <img [src]="restaurant.photoProfil.src" [alt]="restaurant.photoProfil.alt" class="restaurant-avatar">
+        <button class="edit-avatar-btn" (click)="openEditAvatarModal()">
+          <i class="fas fa-camera"></i>
+        </button>
+      </div>
+      <h1>{{restaurant.nom}}</h1>
+      
+      <!-- Bouton de statut Complet/Disponible -->
+      <button class="status-toggle-btn" 
+              [class.complet]="restaurant.complet"
+              (click)="toggleRestaurantStatus()">
+        <span class="status-icon">
+          <i class="fas" [class.fa-times]="restaurant.complet" [class.fa-check]="!restaurant.complet"></i>
+        </span>
+        <span class="status-text">
+          {{ restaurant.complet ? 'COMPLET' : 'DISPONIBLE' }}
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Section À propos -->
+  <section class="profile-section about-section">
+      <div class="section-header">
+        <h2><i class="fas fa-info-circle"></i> À propos</h2>
+        <button class="edit-btn" (click)="openEditModal('about')">
+          <i class="fas fa-edit"></i> Modifier
+        </button>
+      </div>
+     
+      <p class="description">{{restaurant.description}}</p>
+      
+      <div class="about-details">
+        <div class="cuisine-price">
+          <span class="cuisine">{{restaurant.typeCuisine}}</span>
+          <span class="price">{{restaurant.gammePrix}}</span>
+        </div>
+        <div class="reservation-delivery">
+          <span *ngIf="restaurant.acceptReservation" class="reservation">
+            <i class="fas fa-calendar-check"></i> Réservations
+          </span>
+          <span *ngIf="restaurant.livraisonDisponible" class="delivery">
+            <i class="fas fa-motorcycle"></i> Livraison
+          </span>
+        </div>
+      </div>
+    </section>
+
+  <!-- Section Contact -->
+  <section class="profile-section">
+    <div class="section-header">
+      <h2><i class="fas fa-address-book"></i> Contact</h2>
+      <button class="edit-btn" (click)="openEditModal('contact')">
+        <i class="fas fa-edit"></i> Modifier
+      </button>
+    </div>
+      <div class="detail-item">
+        <i class="fas fa-map-marker-alt"></i>
+        <span>{{restaurant.localisation}}</span>
+      </div>
+      <div class="detail-item">
+        <i class="fas fa-phone"></i>
+        <span>{{restaurant.telephone}}</span>
+      </div>
+      <div class="detail-item">
+        <i class="fas fa-envelope"></i>
+        <span>{{restaurant.email}}</span>
+      </div>
+      <div class="detail-item">
+        <i class="fas fa-clock"></i>
+        <span>{{restaurant.horaireDeTravail}}</span>
+      </div>
+  </section>
+
+  <!-- Services -->
+  <section class="profile-section">
+    <div class="section-header">
+      <h2><i class="fas fa-concierge-bell"></i> Services</h2>
+      <button class="edit-btn" (click)="openEditModal('services')">
+        <i class="fas fa-edit"></i> Modifier
+      </button>
+    </div>
+    <div class="tags-container">
+      <span class="tag" *ngFor="let service of restaurant.Service">{{service}}</span>
+    </div>
+  </section>
+
+  <!-- Options Alimentaires -->
+  <section class="profile-section">
+    <div class="section-header">
+      <h2><i class="fas fa-utensils"></i> Options Alimentaires</h2>
+      <button class="edit-btn" (click)="openEditModal('options')">
+        <i class="fas fa-edit"></i> Modifier
+      </button>
+    </div>
+    <div class="tags-container">
+      <span class="tag" *ngFor="let option of restaurant.optionAlimentaires">{{option}}</span>
+    </div>
+  </section>
+
+  <!-- Expériences -->
+  <section class="profile-section">
+    <div class="section-header">
+      <h2><i class="fas fa-star"></i> Expériences</h2>
+      <button class="edit-btn" (click)="openEditModal('experiences')">
+        <i class="fas fa-edit"></i> Modifier
+      </button>
+    </div>
+    <div class="tags-container">
+      <span class="tag" *ngFor="let experience of restaurant.experience">{{experience}}</span>
+    </div>
+  </section>
+
+  <!-- Caractéristiques Repas -->
+  <section class="profile-section">
+    <div class="section-header">
+      <h2><i class="fas fa-utensil-spoon"></i> Repas Servis</h2>
+      <button class="edit-btn" (click)="openEditModal('meals')">
+        <i class="fas fa-edit"></i> Modifier
+      </button>
+    </div>
+    <div class="tags-container">
+      <span class="tag" *ngFor="let meal of restaurant.caracteristiqueRepas">{{meal}}</span>
+    </div>
+  </section>
+
+  <!-- Accessibilité -->
+  <section class="profile-section">
+    <div class="section-header">
+      <h2><i class="fas fa-wheelchair"></i> Accessibilité</h2>
+      <button class="edit-btn" (click)="openEditModal('accessibility')">
+        <i class="fas fa-edit"></i> Modifier
+      </button>
+    </div>
+    <div class="tags-container">
+      <span class="tag" *ngFor="let access of restaurant.accesibilite">{{access}}</span>
+    </div>
+  </section>
+
+  <!-- Galerie -->
+  <section class="profile-section">
+    <div class="section-header">
+      <h2><i class="fas fa-images"></i> Galerie</h2>
+      <button class="edit-btn" (click)="openEditModal('gallery')">
+        <i class="fas fa-edit"></i> Modifier
+      </button>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-category" *ngFor="let category of restaurant.imagesParCategories">
+        <h3>{{category.categorie}}</h3>
+        <div class="images-row">
+          <div class="image-container" *ngFor="let image of category.images">
+            <img [src]="image.src" [alt]="image.alt">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Popup de modification principale -->
+  <div class="modal-overlay" *ngIf="showModal" [class.active]="showModal">
+    <div class="edit-modal">
+      <button class="close-btn" (click)="closeModal()">&times;</button>
+      <h3>Modifier {{currentEditSection}}</h3>
+      
+      <div class="modal-content-container">
+        <!-- À propos -->
+        <div *ngIf="currentEditSection === 'about'">
+          <div class="form-group">
+            <div class="form-group">
+              <label>Titre</label>
+              <input type="text" [(ngModel)]="tempData.nom">
+            </div>
+
+            <label>Description</label>
+            <textarea [(ngModel)]="tempData.description"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Type de cuisine</label>
+            <input type="text" [(ngModel)]="tempData.typeCuisine">
+          </div>
+          <div class="form-group">
+            <label>Gamme de prix</label>
+            <input type="text" [(ngModel)]="tempData.gammePrix">
+          </div>
+          <div class="form-group checkbox-group">
+            <label>
+              <input type="checkbox" [(ngModel)]="tempData.acceptReservation">
+              Accepte les réservations
+            </label>
+          </div>
+          <div class="form-group checkbox-group">
+            <label>
+              <input type="checkbox" [(ngModel)]="tempData.livraisonDisponible">
+              Livraison disponible
+            </label>
+          </div>
+        </div>
+        
+        <!-- Contact -->
+        <div *ngIf="currentEditSection === 'contact'">
+          <div class="form-group">
+            <label>Adresse</label>
+            <input type="text" [(ngModel)]="tempData.localisation">
+          </div>
+          <div class="form-group">
+            <label>Téléphone</label>
+            <input type="text" [(ngModel)]="tempData.telephone">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" [(ngModel)]="tempData.email">
+          </div>
+          <div class="form-group">
+            <label>Horaires</label>
+            <input type="text" [(ngModel)]="tempData.horaireDeTravail">
+          </div>
+        </div>
+        
+        <!-- Services -->
+        <div *ngIf="currentEditSection === 'services'">
+          <div class="current-items">
+            <h4>Services actuels:</h4>
+            <div class="tags-container">
+              <span class="tag" *ngFor="let service of tempData.Service">
+                {{service}} <i class="fas fa-times" (click)="removeService(service)"></i>
+              </span>
+            </div>
+          </div>
+          <div class="add-item">
+            <input type="text" #newService placeholder="Nouveau service">
+            <button (click)="addService(newService.value); newService.value=''">Ajouter</button>
+          </div>
+        </div>
+        
+        <!-- Options Alimentaires -->
+        <div *ngIf="currentEditSection === 'options'">
+          <div class="current-items">
+            <h4>Options actuelles:</h4>
+            <div class="tags-container">
+              <span class="tag" *ngFor="let option of tempData.optionAlimentaires">
+                {{option}} <i class="fas fa-times" (click)="removeOption(option)"></i>
+              </span>
+            </div>
+          </div>
+          <div class="add-item">
+            <input type="text" #newOption placeholder="Nouvelle option">
+            <button (click)="addOption(newOption.value); newOption.value=''">Ajouter</button>
+          </div>
+        </div>
+        
+        <!-- Expériences -->
+        <div *ngIf="currentEditSection === 'experiences'">
+          <div class="current-items">
+            <h4>Expériences actuelles:</h4>
+            <div class="tags-container">
+              <span class="tag" *ngFor="let experience of tempData.experience">
+                {{experience}} <i class="fas fa-times" (click)="removeExperience(experience)"></i>
+              </span>
+            </div>
+          </div>
+          <div class="add-item">
+            <input type="text" #newExperience placeholder="Nouvelle expérience">
+            <button (click)="addExperience(newExperience.value); newExperience.value=''">Ajouter</button>
+          </div>
+        </div>
+        
+        <!-- Caractéristiques Repas -->
+        <div *ngIf="currentEditSection === 'meals'">
+          <div class="current-items">
+            <h4>Repas servis actuels:</h4>
+            <div class="tags-container">
+              <span class="tag" *ngFor="let meal of tempData.caracteristiqueRepas">
+                {{meal}} <i class="fas fa-times" (click)="removeMeal(meal)"></i>
+              </span>
+            </div>
+          </div>
+          <div class="add-item">
+            <input type="text" #newMeal placeholder="Nouveau repas">
+            <button (click)="addMeal(newMeal.value); newMeal.value=''">Ajouter</button>
+          </div>
+        </div>
+        
+        <!-- Accessibilité -->
+        <div *ngIf="currentEditSection === 'accessibility'">
+          <div class="current-items">
+            <h4>Options d'accessibilité actuelles:</h4>
+            <div class="tags-container">
+              <span class="tag" *ngFor="let access of tempData.accesibilite">
+                {{access}} <i class="fas fa-times" (click)="removeAccessibility(access)"></i>
+              </span>
+            </div>
+          </div>
+          <div class="add-item">
+            <input type="text" #newAccess placeholder="Nouvelle option d'accessibilité">
+            <button (click)="addAccessibility(newAccess.value); newAccess.value=''">Ajouter</button>
+          </div>
+        </div>
+        
+        <!-- Galerie -->
+        <div *ngIf="currentEditSection === 'gallery'">
+          <div class="form-group">
+            <h4>Ajouter une catégorie</h4>
+            <div class="one">
+              <input type="text" [(ngModel)]="newCategoryName" placeholder="Nom de la catégorie">
+              <button (click)="addImageCategory()">
+                <i class="fas fa-plus"></i> Catégorie
+              </button>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <h4>Ajouter une image</h4>
+            <div class="one">
+              <select [(ngModel)]="selectedCategory">
+                <option value="" required>Sélectionnez une catégorie</option>
+                <option *ngFor="let cat of tempData.imagesParCategories" [value]="cat.categorie">
+                  {{cat.categorie}}
+                </option>
+              </select>
+              
+              <input type="file" id="galleryUpload" (change)="handleGalleryFileInput($event)" accept="image/*" style="display: none;">
+              <label for="galleryUpload" class="upload-btn">
+                <i class="fas fa-cloud-upload-alt"></i> Choisir image
+              </label>
+              
+              
+            </div>
+            
+            <div class="image-preview-container" *ngIf="galleryPreview">
+              <h5>Prévisualisation :</h5>
+              <img [src]="galleryPreview" class="image-preview">
+              <button class="add-image-btn" (click)="addImageToCategory()">
+                <i class="fas fa-plus"></i> Ajouter cette image
+              </button>
+            </div>
+          </div>
+          
+          <div class="gallery-management">
+            <h4>Gérer les catégories</h4>
+            <div class="gallery-categories">
+              <div class="gallery-category" *ngFor="let category of tempData.imagesParCategories">
+                <div class="category-header">
+                  <h5>{{category.categorie}}</h5>
+                  <i class="fas fa-times remove-icon" (click)="removeImageCategory(category.categorie)"></i>
+                </div>
+                <div class="category-images">
+                  <div class="image-item" *ngFor="let image of category.images; let i = index">
+                    <img [src]="image.src" [alt]="image.alt">
+                    <i class="fas fa-times remove-icon" 
+                       (click)="removeImageFromCategory(category.categorie, i)"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="modal-actions">
+        <button class="cancel-btn" (click)="closeModal()">Annuler</button>
+        <button class="save-btn" (click)="saveChanges()">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popup de modification de l'avatar -->
+  <div class="modal-overlay" *ngIf="showAvatarModal" [class.active]="showAvatarModal">
+    <div class="edit-modal">
+      <button class="close-btn" (click)="closeAvatarModal()">&times;</button>
+      <h3>Modifier la photo de profil</h3>
+      
+      <div class="modal-content-container">
+        <div class="upload-container">
+          <input type="file" id="avatarUpload" (change)="handleFileInput($event)" accept="image/*" style="display: none;">
+          <label for="avatarUpload" class="upload-btn">
+            <i class="fas fa-cloud-upload-alt"></i> Choisir une image
+          </label>
+          <div class="preview-container" *ngIf="avatarPreview">
+            <h4>Prévisualisation :</h4>
+            <img [src]="avatarPreview" alt="Prévisualisation" class="avatar-preview">
+            <button class="save-avatar-btn" (click)="saveAvatarChanges()" [disabled]="!avatarPreview">
+              <i class="fas fa-save"></i> Enregistrer
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

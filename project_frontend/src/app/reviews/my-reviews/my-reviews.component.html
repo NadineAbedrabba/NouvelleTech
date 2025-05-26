@@ -1,0 +1,166 @@
+<div class="my-reviews-container">
+  <div class="fixed-header">
+    <div class="header-content">
+      <h1>Mes Avis</h1>
+      <div class="breadcrumb">
+        <a href="/">Accueil</a> / <span>Mes Avis</span>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Section de filtres -->
+  <div class="filters-section" *ngIf="!isLoading && !errorMessage && allReviews.length > 0">
+    <div class="filters-container">
+      <!-- Barre de recherche -->
+      <div class="search-filter">
+        <input 
+          type="text" 
+          placeholder="Rechercher par restaurant ou commentaire" 
+          [(ngModel)]="searchQuery"
+          (input)="applyFilters()"
+          class="search-input"
+        >
+        <span class="search-icon">🔍</span>
+      </div>
+      
+      <!-- Filtres -->
+      <div class="filter-group">
+        <!-- Filtre par note -->
+        <div class="filter">
+          <label for="rating-filter">Note</label>
+          <select id="rating-filter" [(ngModel)]="ratingFilter" (change)="applyFilters()">
+            <option *ngFor="let option of ratingOptions" [value]="option.value">{{ option.label }}</option>
+          </select>
+        </div>
+        
+        <!-- Filtre par occasion -->
+        <div class="filter" *ngIf="occasionOptions.length > 1">
+          <label for="occasion-filter">Occasion</label>
+          <select id="occasion-filter" [(ngModel)]="occasionFilter" (change)="applyFilters()">
+            <option *ngFor="let option of occasionOptions" [value]="option.value">{{ option.label }}</option>
+          </select>
+        </div>
+        
+        <!-- Filtre par accompagnant -->
+        <div class="filter" *ngIf="companionOptions.length > 1">
+          <label for="companion-filter">Accompagnant</label>
+          <select id="companion-filter" [(ngModel)]="companionFilter" (change)="applyFilters()">
+            <option *ngFor="let option of companionOptions" [value]="option.value">{{ option.label }}</option>
+          </select>
+        </div>
+        
+        <!-- Option de tri -->
+        <div class="filter">
+          <label for="sort-option">Trier par</label>
+          <select id="sort-option" [(ngModel)]="sortOption" (change)="applyFilters()">
+            <option *ngFor="let option of sortOptions" [value]="option.value">{{ option.label }}</option>
+          </select>
+        </div>
+      </div>
+      
+      <!-- Bouton de réinitialisation -->
+      <button class="reset-filters-btn" (click)="resetFilters()">
+        Réinitialiser
+      </button>
+    </div>
+    
+    <!-- Compteur de résultats -->
+    <div class="results-count">
+      {{ reviews.length }} avis trouvé{{ reviews.length > 1 ? 's' : '' }}
+    </div>
+  </div>
+
+  <!-- Indicateur de chargement -->
+  <div class="loading-container" *ngIf="isLoading">
+    <div class="spinner-container">
+      <div class="spinner"></div>
+    </div>
+    <p>Chargement de vos avis...</p>
+  </div>
+
+  <!-- Message d'erreur -->
+  <div class="error-message" *ngIf="errorMessage">
+    <i class="fas fa-exclamation-circle"></i>
+    <span>{{ errorMessage }}</span>
+  </div>
+
+  <!-- Aucun avis -->
+  <div class="no-reviews" *ngIf="!isLoading && !errorMessage && reviews.length === 0">
+    <i class="fas fa-comment-slash"></i>
+    <p>Vous n'avez pas encore publié d'avis.</p>
+    <button class="btn-primary" routerLink="/restaurants">Découvrir des restaurants</button>
+  </div>
+
+  <!-- Liste des avis -->
+  <div class="reviews-grid" *ngIf="!isLoading && !errorMessage && reviews.length > 0">
+    <div class="review-card" *ngFor="let review of reviews">
+      <div class="review-header">
+        <div class="restaurant-info" (click)="goToRestaurant(review.entrepriseId)">
+          <h3>{{ review.entrepriseName || 'Restaurant' }}</h3>
+          <div class="rating" [ngClass]="getRatingColor(review.rating)">
+            <span class="rating-value">{{ review.rating.toFixed(1) }}</span>
+            <div class="stars">
+              <i class="fas fa-star" *ngFor="let star of [1,2,3,4,5]" 
+                 [ngClass]="{'filled': star <= review.rating, 'half-filled': star - 0.5 <= review.rating && star > review.rating}"></i>
+            </div>
+          </div>
+        </div>
+        <div class="review-date">
+          <i class="far fa-calendar-alt"></i>
+          <span>{{ formatDate(review.createdAt) }}</span>
+        </div>
+      </div>
+      
+      <div class="review-details">
+        <div class="detail-ratings">
+          <div class="detail-rating">
+            <span class="label">Nourriture</span>
+            <div class="rating-bar">
+              <div class="rating-fill" [style.width.%]="review.foodRating * 20"></div>
+            </div>
+            <span class="value">{{ review.foodRating.toFixed(1) }}</span>
+          </div>
+          <div class="detail-rating">
+            <span class="label">Service</span>
+            <div class="rating-bar">
+              <div class="rating-fill" [style.width.%]="review.serviceRating * 20"></div>
+            </div>
+            <span class="value">{{ review.serviceRating.toFixed(1) }}</span>
+          </div>
+          <div class="detail-rating">
+            <span class="label">Ambiance</span>
+            <div class="rating-bar">
+              <div class="rating-fill" [style.width.%]="review.ambianceRating * 20"></div>
+            </div>
+            <span class="value">{{ review.ambianceRating.toFixed(1) }}</span>
+          </div>
+        </div>
+        
+        <div class="visit-info">
+          <div class="occasion" *ngIf="review.occasion">
+            <i class="fas fa-glass-cheers"></i>
+            <span>{{ getOccasionText(review.occasion) }}</span>
+          </div>
+          <div class="companion" *ngIf="review.companion">
+            <i class="fas fa-users"></i>
+            <span>{{ getCompanionText(review.companion) }}</span>
+          </div>
+          <div class="certified" *ngIf="review.certified">
+            <i class="fas fa-certificate"></i>
+            <span>Vérifié</span>
+          </div>
+        </div>
+        
+        <div class="review-comment" *ngIf="review.commentaire">
+          <p>{{ review.commentaire }}</p>
+        </div>
+      </div>
+      
+      <div class="review-actions">
+        <button class="btn-delete" (click)="deleteReview(review.id)">
+          <i class="fas fa-trash-alt"></i> Supprimer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,5 @@
+<div class="stars-container">
+    <span *ngFor="let _ of [].constructor(fullStars)" class="star full">★</span>
+    <span *ngIf="hasHalfStar" class="star half">★</span>
+    <span *ngFor="let _ of [].constructor(emptyStars)" class="star empty">★</span>
+  </div>
