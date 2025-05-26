@@ -66,6 +66,7 @@ public class WebSecurityConfiguration {
                                 "/api/reservations/**",
                                 "/api/site-reviews/**",
                                 "/review/api/site-reviews/**",
+                                "/settings/**",
                                 "/images/upload",
                                 "/images/**",
                                 "/api/images").permitAll()

@@ -1,0 +1,59 @@
+body.dark-theme .creative-split {
+  background-color: #0f3460 !important;
+}
+
+body.dark-theme .split-container {
+  background-color: #0f3460 !important;
+}
+
+body.dark-theme .visual-half {
+  background-color: #0f3460 !important;
+}
+
+body.dark-theme .text-half {
+  background-color: #0f3460 !important;
+}
+
+body.dark-theme .image-wrapper {
+  background-color: #0f3460 !important;
+}
+
+body.dark-theme .text-content {
+  background-color: transparent !important;
+}
+
+body.dark-theme .section-label {
+  color: #6ec6ff !important;
+  background-color: rgba(77, 171, 247, 0.1) !important;
+}
+
+body.dark-theme h2 {
+  color: #ff94c2 !important;
+}
+
+body.dark-theme .lead-text {
+  color: #d0d0d0 !important;
+}
+
+body.dark-theme .creative-list {
+  color: #e0e0e0 !important;
+}
+
+body.dark-theme .creative-list i {
+  color: #6ec6ff !important;
+}
+
+body.dark-theme .cta-button {
+  background-color: #e91e63 !important;
+  color: white !important;
+}
+
+body.dark-theme .cta-button:hover {
+  background-color: #b0003a !important;
+}
+
+body.dark-theme .floating-tag {
+  background-color: #0f3460 !important;
+  border: 1px solid #4dabf7 !important;
+  color: white !important;
+}

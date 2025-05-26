@@ -7,6 +7,9 @@
 /* Import FontAwesome via node_modules (à adapter selon ta config) */
 @import '~@fortawesome/fontawesome-free/css/all.css';
 
+/* Import du thème sombre */
+@import './app/styles/dark-theme.css';
+
 /* Font locale Mynerve */
 @font-face {
   font-family: 'Mynerve';

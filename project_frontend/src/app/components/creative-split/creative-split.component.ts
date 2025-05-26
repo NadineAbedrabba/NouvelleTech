@@ -5,7 +5,7 @@ import { SiteReviewService } from '../../services/site-review.service';
 @Component({
   selector: 'app-creative-split',
   templateUrl: './creative-split.component.html',
-  styleUrls: ['./creative-split.component.scss'],
+  styleUrls: ['./creative-split.component.scss', './creative-split.component.dark.css'],
   standalone: true,
   imports: [CommonModule]
 })

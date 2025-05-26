@@ -1,0 +1,221 @@
+// Variables du thème sombre
+$dark-bg-primary: #121212;
+$dark-bg-secondary: #1e1e1e;
+$dark-bg-tertiary: #2d2d2d;
+$dark-text-primary: #ffffff;
+$dark-text-secondary: #b0b0b0;
+$dark-border: #3d3d3d;
+$dark-pink: #ff6b9d;
+$dark-blue: #4a90e2;
+
+// Application du thème sombre
+body.dark-theme {
+  // Couleurs de fond
+  background-color: $dark-bg-primary;
+  color: $dark-text-primary;
+  
+  // En-tête
+  .header {
+    background-color: $dark-bg-secondary;
+    border-bottom: 1px solid $dark-border;
+    
+    .logo-text {
+      color: $dark-text-primary;
+    }
+    
+    .search-bar input {
+      background-color: $dark-bg-tertiary;
+      color: $dark-text-primary;
+      border: 1px solid $dark-border;
+      
+      &::placeholder {
+        color: $dark-text-secondary;
+      }
+    }
+    
+    .search-results {
+      background-color: $dark-bg-tertiary;
+      border: 1px solid $dark-border;
+      
+      .search-result-item {
+        border-bottom: 1px solid $dark-border;
+        
+        h4 {
+          color: $dark-text-primary;
+        }
+        
+        p {
+          color: $dark-text-secondary;
+        }
+      }
+    }
+    
+    .nav-item {
+      color: $dark-text-primary;
+      
+      &:hover {
+        color: $dark-pink;
+      }
+    }
+    
+    .dropdown-menu {
+      background-color: $dark-bg-tertiary;
+      border: 1px solid $dark-border;
+      
+      a {
+        color: $dark-text-primary;
+        
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+      }
+    }
+  }
+  
+  // Pied de page
+  .footer {
+    background-color: $dark-bg-secondary;
+    border-top: 1px solid $dark-border;
+    
+    .footer-title {
+      color: $dark-text-primary;
+    }
+    
+    .footer-links a {
+      color: $dark-text-secondary;
+      
+      &:hover {
+        color: $dark-pink;
+      }
+    }
+  }
+  
+  // Cartes et conteneurs
+  .card, .container-card {
+    background-color: $dark-bg-secondary;
+    border: 1px solid $dark-border;
+    
+    .card-title {
+      color: $dark-text-primary;
+    }
+    
+    .card-text {
+      color: $dark-text-secondary;
+    }
+  }
+  
+  // Boutons
+  .btn-primary {
+    background-color: $dark-pink;
+    border-color: $dark-pink;
+    
+    &:hover {
+      background-color: darken($dark-pink, 10%);
+      border-color: darken($dark-pink, 10%);
+    }
+  }
+  
+  .btn-secondary {
+    background-color: $dark-bg-tertiary;
+    border-color: $dark-border;
+    color: $dark-text-primary;
+    
+    &:hover {
+      background-color: lighten($dark-bg-tertiary, 5%);
+      border-color: lighten($dark-border, 5%);
+    }
+  }
+  
+  // Formulaires
+  input, select, textarea {
+    background-color: $dark-bg-tertiary;
+    border: 1px solid $dark-border;
+    color: $dark-text-primary;
+    
+    &::placeholder {
+      color: $dark-text-secondary;
+    }
+  }
+  
+  // Page des paramètres
+  .settings-container {
+    background-color: $dark-bg-secondary;
+    
+    .settings-header {
+      h1 {
+        color: $dark-pink;
+      }
+      
+      p {
+        color: $dark-text-secondary;
+      }
+    }
+    
+    .settings-tabs button {
+      color: $dark-text-secondary;
+      
+      &.active {
+        color: $dark-pink;
+      }
+      
+      &:hover:not(.active) {
+        color: $dark-blue;
+      }
+    }
+    
+    .settings-section {
+      h2 {
+        color: $dark-blue;
+      }
+      
+      .setting-description {
+        color: $dark-text-secondary;
+      }
+    }
+    
+    .setting-item {
+      border-bottom: 1px solid $dark-border;
+      
+      .setting-label {
+        label {
+          color: $dark-text-primary;
+        }
+      }
+    }
+    
+    .toggle .slider {
+      background-color: #555;
+    }
+    
+    .cuisine-item {
+      background-color: $dark-bg-tertiary;
+      
+      &:hover {
+        background-color: rgba($dark-blue, 0.2);
+      }
+      
+      &.selected {
+        background-color: rgba($dark-pink, 0.2);
+        color: $dark-pink;
+      }
+    }
+  }
+  
+  // Modales
+  .modal-content {
+    background-color: $dark-bg-secondary;
+    border: 1px solid $dark-border;
+    
+    .modal-header {
+      border-bottom: 1px solid $dark-border;
+      
+      .modal-title {
+        color: $dark-text-primary;
+      }
+    }
+    
+    .modal-footer {
+      border-top: 1px solid $dark-border;
+    }
+  }
+}

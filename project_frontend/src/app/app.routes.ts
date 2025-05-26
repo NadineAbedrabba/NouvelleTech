@@ -14,6 +14,7 @@ import { MyReviewsComponent } from './reviews/my-reviews/my-reviews.component';
 import { FavoritesComponent } from './favorites/favorites.component';
 import { ProfileEditComponent } from './user-profile/profile-edit/profile-edit.component';
 import { AuthGuard } from './auth/auth.guard';
+import { SettingsComponent } from './settings/settings.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -36,4 +37,9 @@ export const routes: Routes = [
     canActivate: [AuthGuard] 
   },
   { path: 'favorites', component: FavoritesComponent },
+  { 
+    path: 'settings', 
+    component: SettingsComponent,
+    canActivate: [AuthGuard] 
+  }
 ];

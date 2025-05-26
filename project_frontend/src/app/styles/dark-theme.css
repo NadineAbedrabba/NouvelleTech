@@ -1,0 +1,213 @@
+/* Thème sombre pour FoodMatch */
+
+body.dark-theme {
+  /* Couleurs de fond */
+  background-color: #121212;
+  color: #ffffff;
+}
+
+/* En-tête */
+body.dark-theme .header {
+  background-color: #1e1e1e;
+  border-bottom: 1px solid #3d3d3d;
+}
+
+body.dark-theme .header .logo-text {
+  color: #ffffff;
+}
+
+body.dark-theme .header .search-bar input {
+  background-color: #2d2d2d;
+  color: #ffffff;
+  border: 1px solid #3d3d3d;
+}
+
+body.dark-theme .header .search-bar input::placeholder {
+  color: #b0b0b0;
+}
+
+body.dark-theme .header .search-results {
+  background-color: #2d2d2d;
+  border: 1px solid #3d3d3d;
+}
+
+body.dark-theme .header .search-result-item {
+  border-bottom: 1px solid #3d3d3d;
+}
+
+body.dark-theme .header .search-result-item h4 {
+  color: #ffffff;
+}
+
+body.dark-theme .header .search-result-item p {
+  color: #b0b0b0;
+}
+
+body.dark-theme .header .nav-item {
+  color: #ffffff;
+}
+
+body.dark-theme .header .nav-item:hover {
+  color: #ff6b9d;
+}
+
+body.dark-theme .header .dropdown-menu {
+  background-color: #2d2d2d;
+  border: 1px solid #3d3d3d;
+}
+
+body.dark-theme .header .dropdown-menu a {
+  color: #ffffff;
+}
+
+body.dark-theme .header .dropdown-menu a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Pied de page */
+body.dark-theme .footer {
+  background-color: #1e1e1e;
+  border-top: 1px solid #3d3d3d;
+}
+
+body.dark-theme .footer .footer-title {
+  color: #ffffff;
+}
+
+body.dark-theme .footer .footer-links a {
+  color: #b0b0b0;
+}
+
+body.dark-theme .footer .footer-links a:hover {
+  color: #ff6b9d;
+}
+
+/* Cartes et conteneurs */
+body.dark-theme .card,
+body.dark-theme .container-card {
+  background-color: #1e1e1e;
+  border: 1px solid #3d3d3d;
+}
+
+body.dark-theme .card .card-title,
+body.dark-theme .container-card .card-title {
+  color: #ffffff;
+}
+
+body.dark-theme .card .card-text,
+body.dark-theme .container-card .card-text {
+  color: #b0b0b0;
+}
+
+/* Boutons */
+body.dark-theme .btn-primary {
+  background-color: #ff6b9d;
+  border-color: #ff6b9d;
+}
+
+body.dark-theme .btn-primary:hover {
+  background-color: #e55c8d;
+  border-color: #e55c8d;
+}
+
+body.dark-theme .btn-secondary {
+  background-color: #2d2d2d;
+  border-color: #3d3d3d;
+  color: #ffffff;
+}
+
+body.dark-theme .btn-secondary:hover {
+  background-color: #3a3a3a;
+  border-color: #4a4a4a;
+}
+
+/* Formulaires */
+body.dark-theme input,
+body.dark-theme select,
+body.dark-theme textarea {
+  background-color: #2d2d2d;
+  border: 1px solid #3d3d3d;
+  color: #ffffff;
+}
+
+body.dark-theme input::placeholder,
+body.dark-theme select::placeholder,
+body.dark-theme textarea::placeholder {
+  color: #b0b0b0;
+}
+
+/* Page des paramètres */
+body.dark-theme .settings-container {
+  background-color: #1e1e1e;
+}
+
+body.dark-theme .settings-container .settings-header h1 {
+  color: #ff6b9d;
+}
+
+body.dark-theme .settings-container .settings-header p {
+  color: #b0b0b0;
+}
+
+body.dark-theme .settings-container .settings-tabs button {
+  color: #b0b0b0;
+}
+
+body.dark-theme .settings-container .settings-tabs button.active {
+  color: #ff6b9d;
+}
+
+body.dark-theme .settings-container .settings-tabs button:hover:not(.active) {
+  color: #4a90e2;
+}
+
+body.dark-theme .settings-container .settings-section h2 {
+  color: #4a90e2;
+}
+
+body.dark-theme .settings-container .settings-section .setting-description {
+  color: #b0b0b0;
+}
+
+body.dark-theme .settings-container .setting-item {
+  border-bottom: 1px solid #3d3d3d;
+}
+
+body.dark-theme .settings-container .setting-item .setting-label label {
+  color: #ffffff;
+}
+
+body.dark-theme .settings-container .toggle .slider {
+  background-color: #555;
+}
+
+body.dark-theme .settings-container .cuisine-item {
+  background-color: #2d2d2d;
+}
+
+body.dark-theme .settings-container .cuisine-item:hover {
+  background-color: rgba(74, 144, 226, 0.2);
+}
+
+body.dark-theme .settings-container .cuisine-item.selected {
+  background-color: rgba(255, 107, 157, 0.2);
+  color: #ff6b9d;
+}
+
+/* Modales */
+body.dark-theme .modal-content {
+  background-color: #1e1e1e;
+  border: 1px solid #3d3d3d;
+}
+
+body.dark-theme .modal-content .modal-header {
+  border-bottom: 1px solid #3d3d3d;
+}
+
+body.dark-theme .modal-content .modal-title {
+  color: #ffffff;
+}
+
+body.dark-theme .modal-content .modal-footer {
+  border-top: 1px solid #3d3d3d;
+}
