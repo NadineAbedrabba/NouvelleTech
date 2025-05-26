@@ -26,6 +26,7 @@ export interface ReviewDTO {
   certified?: boolean;
   clientId: number; // Doit être un nombre valide lors de l'envoi au backend
   entrepriseId: number;
+  
 }
 
 export interface Review {

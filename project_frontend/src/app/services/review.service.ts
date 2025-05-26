@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { ReviewDTO } from '../models/review.model';
+import { forkJoin, map, Observable, switchMap } from 'rxjs';
+import { Review, ReviewDTO } from '../models/review.model';
 import { environment } from '../../environments/environment';
+import { Client } from '../user-profile/user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReviewService {
+
+  private apiUrl = 'http://localhost:8081/review/api/reviews';
+  private clientApiUrl = 'http://localhost:8081/review/client';
+
   private baseUrl = `${environment.apiBaseUrl}/review/api/reviews`;
   // Note: L'URL utilise le contexte de servlet /review configuré dans application.properties
   
@@ -75,11 +80,23 @@ export class ReviewService {
    * @param entrepriseId L'ID de l'entreprise
    * @returns La liste des reviews de l'entreprise
    */
-  getReviewsByEntreprise(entrepriseId: number): Observable<ReviewDTO[]> {
-    // Utiliser la méthode utilitaire pour obtenir les en-têtes HTTP
-    const httpOptions = this.getHttpOptions();
-    return this.http.get<ReviewDTO[]>(`${this.baseUrl}/entreprise/${entrepriseId}`, httpOptions);
+  getReviewsByEntreprise(entrepriseId: number): Observable<(Review & { clientName: string, clientPhoto: string })[]> {
+    return this.http.get<Review[]>(`${this.apiUrl}/entreprise/${entrepriseId}`).pipe(
+      switchMap(reviews => {
+        const enrichedReviews$ = reviews.map(review =>
+          this.http.get<Client>(`${this.clientApiUrl}/${review.clientId}`).pipe(
+            map(client => ({
+              ...review,
+              clientName: client.nom, 
+              clientPhoto: client.photoUrl || 'assets/images/default-avatar.png'
+            }))
+          )
+        );
+        return forkJoin(enrichedReviews$);
+      })
+    );
   }
+
 
   /**
    * Récupère toutes les reviews d'un client
