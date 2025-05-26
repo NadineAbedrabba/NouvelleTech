@@ -25,6 +25,7 @@ export class ReviewContainerComponent implements OnInit {
   occasion: string = '';
   isCertified: boolean = false;
   isSubmitting: boolean = false;
+  id: number = 0;
   
   // Options pour les sélecteurs
   companionOptions = Object.values(Companion);
@@ -195,6 +196,7 @@ export class ReviewContainerComponent implements OnInit {
       
       // Créer l'objet ReviewDTO à envoyer au backend
       const reviewDTO: ReviewDTO = {
+        id: this.id,
         rating: this.overallRating,
         foodRating: this.ratingCategories[0].rating,
         serviceRating: this.ratingCategories[1].rating,

@@ -1,4 +1,3 @@
-<!-- reservation-details.component.html -->
 <div class="glass-container">
   <div class="glass-card">
     <div class="reservation-header">
@@ -6,7 +5,7 @@
         <i class="fas fa-arrow-left"></i>
       </button>
       <h1 class="soft-title">Réservation #{{reservation.id}}</h1>
-      <div class="status-chip" [ngClass]="reservation.statut.toLowerCase()">
+      <div class="status-chip" [ngClass]="reservation.statut?.toLowerCase()">
         {{reservation.statut}}
       </div>
     </div>
@@ -19,23 +18,24 @@
         </div>
         <div class="card-content">
           <h3>Date & Heure</h3>
-          <p>{{reservation.date | date:'fullDate'}}</p>
-          <p class="highlight">{{reservation.tempsArrivee}}</p>
+          <!-- Affichage combiné date + heure -->
+          <p>{{ reservation.fullDateTime | date:'fullDate' }}</p>
+          <p class="highlight">{{ reservation.fullDateTime | date:'shortTime' }}</p>
         </div>
       </div>
 
       <!-- Carte Client -->
       <div class="glass-card info-card" style="--accent-color: #a82d4d; --card-bg: rgba(168, 45, 77, 0.08)">
-          <div class="card-icon">
-            <i class="fas fa-user-tie"></i>
-          </div>
-          <div class="card-content">
-            <h3>Client</h3>
-            <p>{{reservation.clientNom}}</p>
-            <p>{{reservation.clientEmail}}</p>
-            <p>{{reservation.clientTelephone}}</p>
-          </div>
+        <div class="card-icon">
+          <i class="fas fa-user-tie"></i>
         </div>
+        <div class="card-content">
+          <h3>Client</h3>
+          <p>{{reservation.clientNom}}</p>
+          <p>{{reservation.clientEmail}}</p>
+          <p>{{reservation.clientTelephone}}</p>
+        </div>
+      </div>
 
       <!-- Carte Invités -->
       <div class="glass-card info-card" style="--accent-color: #c04566; --card-bg: rgba(192, 69, 102, 0.08)">
@@ -43,7 +43,7 @@
           <i class="fas fa-users"></i>
         </div>
         <div class="card-content">
-          <h3>Invites</h3>
+          <h3>Invités</h3>
           <p class="highlight">{{reservation.nbPersonnes}} personnes</p>
         </div>
       </div>

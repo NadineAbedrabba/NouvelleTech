@@ -17,6 +17,7 @@ export class LeftSidebarComponent {
     { routeLink: 'restaurants', icon: 'fal fa-hourglass-half', label: 'Inscriptions en attente' },
     { routeLink: 'pages', icon: 'fal fa-utensils', label: 'Restaurants' },
     
+    
   ];
 
   toggleCollapse(): void {

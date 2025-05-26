@@ -1,8 +1,10 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, tap, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { HttpErrorResponse } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root'
@@ -34,19 +36,19 @@ export class AuthService {
     );
   }
 
-  authenticate(userData: any): Observable<any> {
-    console.log('Tentative d\'authentification avec:', userData);
-    return this.http.post(`${this.apiUrl}/authenticate`, userData,
-      { headers: new HttpHeaders({ 'Content-Type': 'application/json' }), withCredentials: true }
-    ).pipe(
+  authenticate(credentials: any): Observable<any> {
+    return this.http.post<any>('http://localhost:8081/review/authenticate', credentials).pipe(
       tap(response => {
-        console.log('Réponse complète d\'authentification:', response);
+        if (response.token && response.entrepriseId) {
+          localStorage.setItem('auth_token', response.token);
+          localStorage.setItem('entrepriseId', response.entrepriseId.toString());
+        }
       })
     );
   }
-  
-  // Récupérer les informations de l'utilisateur par son ID
-  getUserInfo(userId: number): Observable<any> {
+
+   // Récupérer les informations de l'utilisateur par son ID
+   getUserInfo(userId: number): Observable<any> {
     console.log(`Récupération des informations utilisateur pour l'ID: ${userId}`);
     const token = localStorage.getItem('authToken');
     const headers = token ? new HttpHeaders({ 'Authorization': `Bearer ${token}` }) : undefined;
@@ -105,5 +107,6 @@ export class AuthService {
       })
     );
   }
+  
 
 }

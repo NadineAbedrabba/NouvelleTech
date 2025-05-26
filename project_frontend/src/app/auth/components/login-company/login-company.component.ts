@@ -1,38 +1,43 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-company',
   templateUrl: './login-company.component.html',
-  styleUrls: ['./login-company.component.css']
+  styleUrls: ['./login-company.component.css'],
+  standalone:true
+,
+imports:[ ReactiveFormsModule]
 })
 export class LoginCompanyComponent {
+
+  @Output() closeModal = new EventEmitter<void>();
   loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
   
-    constructor(private fb: FormBuilder , private authService:AuthService) {}
+    constructor(private fb: FormBuilder , private authService:AuthService,private router: Router) {}
   
     onSubmit() {
       if (this.loginForm.valid) {
-        console.log('Compaany login data:', this.loginForm.value);
-        
-        if (this.loginForm.valid) {
-          console.log('Company login data:', this.loginForm.value);
-    
-            this.authService.authenticate(this.loginForm.value).subscribe({
-              next: (response) => {
-                console.log('Login réussie', response);
-              },
-              error: (err) => {
-                console.error('Erreur lors du login', err);
-              }
-            });
+        this.authService.authenticate(this.loginForm.value).subscribe({
+          next: (response) => {
+            console.log('Login réussi', response);
+            if (response.entrepriseId) {
+              localStorage.setItem('entrepriseId', response.entrepriseId.toString());
+              this.router.navigate(['/EspaceEntreprise', response.entrepriseId, 'dashboard']);
+              
+              // Émettre l'événement pour fermer la modal
+              this.closeModal.emit();
+            }
+          },
+          error: (err) => {
+            console.error('Erreur de connexion', err);
           }
-
+        });
       }
     }
-   
 }

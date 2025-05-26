@@ -29,8 +29,12 @@
       
       <div class="form-container">
         <!-- Formulaire de login -->
-        <app-login-user *ngIf="activeTab === 'user' && activeForm === 'login'" (switchToSignup)="switchForm('signup')" (closeModal)="onClose()"></app-login-user>
-        <app-login-company *ngIf="activeTab === 'restaurant' && activeForm === 'login'" (closeModal)="onClose()"></app-login-company>
+        <app-login-user *ngIf="activeTab === 'user' && activeForm === 'login'"  (switchToSignup)="switchForm('signup')"></app-login-user>
+        <app-login-company 
+  *ngIf="activeTab === 'restaurant' && activeForm === 'login'"
+  (closeModal)="onChildClose()"
+></app-login-company>
+
         
         <!-- Formulaire d'inscription -->
         <app-register-user *ngIf="activeTab === 'user' && activeForm === 'signup'"></app-register-user>

@@ -12,13 +12,14 @@ import { UserProfileComponent } from '../user-profile/user-profile.component';
 import { SearchService } from './search.service';
 import { EntrepriseDTO } from '../services/entreprise.service';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
+import { AuthSelectionComponent } from '../auth/components/auth-selection/auth-selection.component';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, AuthModule, UserProfileComponent],
+  imports: [CommonModule, FormsModule, RouterModule, AuthModule, UserProfileComponent,AuthSelectionComponent],
   animations: [
     trigger('dropdownAnimation', [
       state('void', style({

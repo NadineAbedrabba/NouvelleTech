@@ -1,12 +1,11 @@
-
 export interface Image {
+  id?: number | undefined;
   lien: string;
   categorie?: string;
 }
 
 export interface HoraireJournalier {
-      jour: string;
-
+  jour: string;
   heureOuverture: string;
   heureFermeture: string;
   estFerme: boolean;
@@ -30,6 +29,7 @@ export interface Restaurant {
   optionsAlimentaires: string[];
   experiences: string[];
   accesibilite: string[];
+  
   imagesParCategories: {
     categorie: string;
     images: Image[];
@@ -38,6 +38,4 @@ export interface Restaurant {
   profileImage?: Image;
   statut: 'EN_ATTENTE' | 'ACCEPTEE' | 'NON_ACCEPTEE';
   dateDemande?: Date;
-      tags?: string[]; 
-
 }
