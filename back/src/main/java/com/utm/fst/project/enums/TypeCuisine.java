@@ -9,4 +9,13 @@ public enum TypeCuisine {
     LIBANAIS,
     BUFFET,
     CAFE_RESTAURANT,
+    FRANCAISE,
+    ITALIENNE,
+    CHINOISE,
+    JAPONAISE,
+    TUNISIENNE,
+    INDIENNE,
+    MAROCAINE,
+    LIBANAISE,
+    AMERICAINE
 }

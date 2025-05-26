@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import com.utm.fst.project.entities.Entreprise;
 
+
 @RestController
 @RequestMapping("/api/images")
 @RequiredArgsConstructor
@@ -30,11 +31,12 @@ public class ImageController {
     public ResponseEntity<Image> createImage(
             @RequestParam("file") MultipartFile file,
             @RequestParam("categorie") String categorie,
-            @RequestParam("entrepriseId") Long entrepriseId) {
+            @RequestParam("entrepriseId") String entrepriseId) {
         try {
-            Image image = imageService.saveImage(file, categorie, entrepriseId);
+            Long entrepriseIdLong = Long.parseLong(entrepriseId);
+            Image image = imageService.saveImage(file, categorie, entrepriseIdLong);
             return ResponseEntity.status(HttpStatus.CREATED).body(image);
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().body(null);
         }
     }
@@ -67,10 +69,12 @@ public class ImageController {
         return ResponseEntity.ok(imageService.getImagesByEntrepriseAndCategorie(entrepriseId, categorie));
     }
 
+
+
     @GetMapping("/files/{filename:.+}")
     public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
         try {
-            Path filePath = storagePath.resolve(filename);
+            Path filePath = Paths.get("uploads").toAbsolutePath().normalize().resolve(filename);
             Resource resource = new UrlResource(filePath.toUri());
             if (resource.exists() && resource.isReadable()) {
                 String contentType = Files.probeContentType(filePath);
@@ -78,12 +82,15 @@ public class ImageController {
                         .contentType(MediaType.parseMediaType(contentType != null ? contentType : "application/octet-stream"))
                         .body(resource);
             } else {
+                System.err.println("File not found or not readable: " + filePath);
                 return ResponseEntity.notFound().build();
             }
         } catch (Exception e) {
+            System.err.println("Error serving file " + filename + ": " + e.getMessage());
             return ResponseEntity.status(500).build();
         }
     }
+
 
     @PostMapping("/addLink")
     public ResponseEntity<Image> addImageByLink(
@@ -92,14 +99,11 @@ public class ImageController {
             @RequestParam("entrepriseId") Long entrepriseId) {
 
         Image image = new Image();
-        image.setLien(url);
+        image.setLien(url);  // ici on stocke l'URL externe ou chemin local en tant que string
         image.setCategorie(categorie);
-
-        Entreprise entreprise = new Entreprise();
-        entreprise.setId(entrepriseId); // ✔️ on utilise setId hérité de User
-        image.setEntreprise(entreprise);
-
+        image.setEntreprise(new Entreprise(entrepriseId));
         Image savedImage = imageService.saveImageLink(image);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedImage);
     }
+
 }

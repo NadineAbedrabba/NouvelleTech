@@ -50,7 +50,6 @@ public class WebSecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Now this will work
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.GET, "/entreprise/**").permitAll()
                         .requestMatchers("/authenticate", "/sign-up", "/entreprise/register",
                                 "/swagger-ui/index.html",
                                 "/entreprise/**",

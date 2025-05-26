@@ -1,13 +1,16 @@
 package com.utm.fst.project.controller;
-
+import java.util.Map;
+import java.util.HashMap;
+import java.util.stream.Collectors;
+import java.util.Map;
+import java.util.stream.Collectors;
 import com.utm.fst.project.dto.EntrepriseDto;
 import com.utm.fst.project.dto.EntrepriseSignupDTO;
-import com.utm.fst.project.dto.UpdateEntrepriseUserDTO;
 import com.utm.fst.project.dto.UserDTO;
 import com.utm.fst.project.enums.StatutEntreprise;
 import com.utm.fst.project.service.Entreprise.EntrepriseService;
 import com.utm.fst.project.service.user.UserService;
-
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -64,36 +63,11 @@ public class EntrepriseController {
         return ResponseEntity.ok(entrepriseService.getById(id));
     }
 
-    @GetMapping("/accepted")
-    public ResponseEntity<List<EntrepriseDto>> getEntreprisesAcceptees() {
-        List<EntrepriseDto> entreprisesAcceptees = entrepriseService.getByStatut(StatutEntreprise.ACCEPTEE);
-        return ResponseEntity.ok(entreprisesAcceptees);
-    }
-
     // 📄 Récupérer toutes les entreprises
     @GetMapping
     public ResponseEntity<List<EntrepriseDto>> getAllEntreprises() {
         return ResponseEntity.ok(entrepriseService.getAll());
     }
-
-    @GetMapping("/sorted")
-    public ResponseEntity<List<EntrepriseDto>> getAllSortedByRatingDesc() {
-        List<EntrepriseDto> entreprises = entrepriseService.getByStatut(StatutEntreprise.ACCEPTEE);
-        entreprises = entreprises.stream()
-                .sorted(Comparator.comparing(EntrepriseDto::getRating).reversed())
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(entreprises);
-    }
-
-    @GetMapping("/latest")
-    public ResponseEntity<List<EntrepriseDto>> getEntreprisesAddedLastHour() {
-        return ResponseEntity.ok(entrepriseService.getEntreprisesAcceptedAddedLastHour());
-    }
-
-
-
-
-
 
     // ✏️ Mettre à jour une entreprise
     @PutMapping("/{id}")
@@ -131,62 +105,16 @@ public class EntrepriseController {
     }
 
     // 🔎 Filtrer par type de cuisine
-    @GetMapping("/types")
-    public List<EntrepriseDto> getByTypesCuisine(@RequestParam List<String> typesCuisine) {
-        return entrepriseService.getByTypesCuisine(typesCuisine);
-    }
-    @GetMapping("/by-services")
-    public ResponseEntity<List<EntrepriseDto>> getByServices(
-            @RequestParam(required = false) List<String> services) {
-        return ResponseEntity.ok(entrepriseService.getByServices(services));
-    }
     @GetMapping("/type-cuisine/{type}")
     public ResponseEntity<List<EntrepriseDto>> getByTypeCuisine(@PathVariable String type) {
         return ResponseEntity.ok(entrepriseService.getByTypeCuisine(type));
     }
 
-    @GetMapping("/by-options")
-    public ResponseEntity<List<EntrepriseDto>> getByOptions(
-            @RequestParam(required = false) List<String> options) {
-        return ResponseEntity.ok(entrepriseService.getByOptionsAlimentaires(options));
-    }
-    @PutMapping("/entreprise/update-credentials/{id}")
-    public ResponseEntity<UserDTO> updateEntrepriseCredentials(
-            @PathVariable Long id,
-            @RequestBody UpdateEntrepriseUserDTO dto) {
-        UserDTO updatedUser = entrepriseService.updateEntrepriseCredentials(id, dto);
-        return ResponseEntity.ok(updatedUser);
-    }
-
-    @GetMapping("/services")
-    public ResponseEntity<List<String>> getServicesDistincts() {
-        List<String> services = entrepriseService.getAllServicesDistincts();
-        return ResponseEntity.ok(services);
-    }
-
-    @GetMapping("/optionsAlimentaires")
-    public ResponseEntity<List<String>> getOptionsAlimenatairesDistincts() {
-        List<String> optionsAlimentaires = entrepriseService.getAllOptionsAlimentairesDistincts();
-        return ResponseEntity.ok(optionsAlimentaires);
-    }
-
-    @GetMapping("/accesibilite")
-    public ResponseEntity<List<String>> getAccesibiliteDistincts() {
-        List<String> accesibilite = entrepriseService.getAllAccesibiliteDistincts();
-        return ResponseEntity.ok(accesibilite);
-    }
-
-    @GetMapping("/experiences")
-    public ResponseEntity<List<String>> getexperiencesDistincts() {
-        List<String> experiences = entrepriseService.getAllExperiencesDistincts();
-        return ResponseEntity.ok(experiences);
-    }
-
-    @GetMapping("/{id}/tags")
-    public ResponseEntity<List<String>> getTags(@PathVariable Long id) {
-        List<String> tags = entrepriseService.genererTagsParId(id);
-        return ResponseEntity.ok(tags);
-    }
+    // 🔎 Filtrer par localisation
+    //@GetMapping("/localisation/{localisation}")
+    //public ResponseEntity<List<EntrepriseDto>> getByLocalisation(@PathVariable String localisation) {
+    //  return ResponseEntity.ok(entrepriseService.getByLocalisation(localisation));
+    //}
 
 
     @PatchMapping("/{id}/complet")
@@ -249,4 +177,6 @@ public class EntrepriseController {
     public Map<String, Long> getCountByCuisine() {
         return entrepriseService.countByTypeCuisine();
     }
+
+
 }

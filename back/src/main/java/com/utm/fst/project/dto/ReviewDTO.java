@@ -17,7 +17,16 @@ public class ReviewDTO {
     private String commentaire;
     private Companion companion;
     private Occasion occasion;
-    private boolean certified;
+    private Boolean certified;
     private Long clientId;
     private Long entrepriseId;
+
+    public boolean isCertified() {
+        return certified;
+    }
+
+    // Setter
+    public void setCertified(boolean certified) {
+        this.certified = certified;
+    }
 }

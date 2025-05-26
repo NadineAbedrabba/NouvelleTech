@@ -65,9 +65,11 @@ public class ReviewServiceImpl implements ReviewService {
         review.setServiceRating(dto.getServiceRating());
         review.setAmbianceRating(dto.getAmbianceRating());
         review.setCommentaire(dto.getCommentaire());
+        review.setOccasion(dto.getOccasion());
+        review.setCertified(dto.isCertified());
+        review.setCompanion(dto.getCompanion());  // Changed from getCompanion to setCompanion
         review.setClient(client);
         review.setEntreprise(entreprise);
-
         // Définir les valeurs pour companion et occasion si elles sont présentes dans le DTO
         if (dto.getCompanion() != null) {
             review.setCompanion(dto.getCompanion());

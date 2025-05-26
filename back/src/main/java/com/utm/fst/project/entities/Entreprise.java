@@ -18,86 +18,94 @@ import java.util.Date;
 @DiscriminatorValue("ENTREPRISE")
 public class Entreprise extends User {
 
-//        @Id
+   //        @Id
 //        @GeneratedValue(strategy = GenerationType.IDENTITY)
 //        private Long id;
-        private String matricule;
+   private String matricule;
 
-        @Column(nullable = false)
-        private String nomEntreprise;
+   @Column(nullable = false)
+   private String nomEntreprise;
 
-        private String adresse;
-        private String telephone;
+   private String adresse;
+   private String telephone;
 
-        @Enumerated(EnumType.STRING)
-        @Column(name = "type_cuisine")
-        private TypeCuisine typeCuisine;
-        private String description;
+   @Enumerated(EnumType.STRING)
+   @Column(name = "type_cuisine")
+   private TypeCuisine typeCuisine;
+   private String description;
 
-        @Enumerated(EnumType.STRING)
-        private StatutEntreprise statut = StatutEntreprise.EN_ATTENTE;
+   @Enumerated(EnumType.STRING)
+   private StatutEntreprise statut = StatutEntreprise.EN_ATTENTE;
 
-        private boolean complet;
-        @Column(name = "accept_reservation")
-        private boolean acceptReservation;
+   private boolean complet;
+   @Column(name = "accept_reservation")
+   private boolean acceptReservation;
 
-        @Column(name = "livraison_disponible")
-        private boolean livraisonDisponible;
-        private String gammePrix;
+   @Column(name = "livraison_disponible")
+   private boolean livraisonDisponible;
+   private String gammePrix;
 
-        @ElementCollection
-        @CollectionTable(name = "entreprise_horaires", joinColumns = @JoinColumn(name = "entreprise_id"))
-        @MapKeyColumn(name = "jour_semaine")
-        private Map<String, HoraireJournalier> horaires;
+   @ElementCollection
+   @CollectionTable(name = "entreprise_horaires", joinColumns = @JoinColumn(name = "entreprise_id"))
+   @MapKeyColumn(name = "jour_semaine")
+   private Map<String, HoraireJournalier> horaires;
 
-        @Min(0)
-        @Max(5)
-        private Double rating;
+   @Min(0)
+   @Max(5)
+   private Double rating;
 
-        // Fixing the mappings here: Remove @OneToMany, use @ElementCollection only for simple collections
-        @ElementCollection
-        @CollectionTable(name = "entreprise_services", joinColumns = @JoinColumn(name = "entreprise_id"))
-        @Column(name = "services")
-        private List<String> services;
+   // Fixing the mappings here: Remove @OneToMany, use @ElementCollection only for simple collections
+   @ElementCollection
+   @CollectionTable(name = "entreprise_services", joinColumns = @JoinColumn(name = "entreprise_id"))
+   @Column(name = "services")
+   private List<String> services;
 
-        @ElementCollection
-        @CollectionTable(name = "entreprise_optionsAlimentaires", joinColumns = @JoinColumn(name = "entreprise_id"))
-        @Column(name = "optionsAlimentaires")
-        private List<String> optionsAlimentaires;
+   @ElementCollection
+   @CollectionTable(name = "entreprise_optionsAlimentaires", joinColumns = @JoinColumn(name = "entreprise_id"))
+   @Column(name = "optionsAlimentaires")
+   private List<String> optionsAlimentaires;
 
-        @ElementCollection
-        @CollectionTable(name = "entreprise_experiences", joinColumns = @JoinColumn(name = "entreprise_id"))
-        @Column(name = "experiences")
-        private List<String> experiences;
+   @ElementCollection
+   @CollectionTable(name = "entreprise_experiences", joinColumns = @JoinColumn(name = "entreprise_id"))
+   @Column(name = "experiences")
+   private List<String> experiences;
 
-        @ElementCollection
-        @CollectionTable(name = "entreprise_caracteristiqueRepas", joinColumns = @JoinColumn(name = "entreprise_id"))
-        @Column(name = "caracteristiqueRepas")
-        private List<String> caracteristiqueRepas;
+   @ElementCollection
+   @CollectionTable(name = "entreprise_caracteristiqueRepas", joinColumns = @JoinColumn(name = "entreprise_id"))
+   @Column(name = "caracteristiqueRepas")
+   private List<String> caracteristiqueRepas;
 
-        @ElementCollection
-        @CollectionTable(name = "entreprise_accesibilite", joinColumns = @JoinColumn(name = "entreprise_id"))
-        @Column(name = "accesibilite")
-        private List<String> accesibilite;
+   @ElementCollection
+   @CollectionTable(name = "entreprise_accesibilite", joinColumns = @JoinColumn(name = "entreprise_id"))
+   @Column(name = "accesibilite")
+   private List<String> accesibilite;
 
-        @OneToMany(mappedBy = "entreprise")
-        private List<Client> clients;
+   @OneToMany(mappedBy = "entreprise")
+   private List<Client> clients;
 
-        @OneToMany(mappedBy = "entreprise", cascade = CascadeType.ALL, orphanRemoval = true)
-        private List<Image> images;
+   @OneToMany(mappedBy = "entreprise", cascade = CascadeType.ALL, orphanRemoval = true)
+   private List<Image> images;
 
-        @OneToMany(mappedBy = "entreprise", cascade = CascadeType.ALL, orphanRemoval = true)
-        private List<Review> reviews;
+   @OneToMany(mappedBy = "entreprise", cascade = CascadeType.ALL, orphanRemoval = true)
+   private List<Review> reviews;
 
 
-        // Add the createdAt field
-        @Temporal(TemporalType.TIMESTAMP)
-        @Column(name = "created_at", nullable = false, updatable = false)
-        private Date dateDemande;
+   // Add the createdAt field
+   @Temporal(TemporalType.TIMESTAMP)
+   @Column(name = "created_at", nullable = false, updatable = false)
+   private Date dateDemande;
 
-        // Set the createdAt field before persisting the entity
-        @PrePersist
-        public void prePersist() {
-                this.dateDemande = new Date();
-        }
+   // Set the createdAt field before persisting the entity
+   @PrePersist
+   public void prePersist() {
+      this.dateDemande = new Date();
+   }
+
+   public Entreprise(Long id) {
+      this.setId(id); // ✅ Accès via le setter
+   }
+
+   public Entreprise() {}
+
+
 }

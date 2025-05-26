@@ -21,6 +21,16 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
+
 //    @ManyToOne
 //    @JoinColumn(name = "entreprise_id")
 //    private Entreprise entreprise;

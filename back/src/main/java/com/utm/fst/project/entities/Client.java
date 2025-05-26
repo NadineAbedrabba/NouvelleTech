@@ -42,4 +42,3 @@ public class Client extends User {
         // constructeur par défaut requis par Hibernate
     }
 }
-
