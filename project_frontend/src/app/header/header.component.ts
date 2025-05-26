@@ -9,6 +9,9 @@ import { AuthModule } from '../auth/auth.module';
 import { AuthModalService } from '../shared/auth-modal.service';
 import { UserService } from '../user-profile/user.service';
 import { UserProfileComponent } from '../user-profile/user-profile.component';
+import { SearchService } from './search.service';
+import { EntrepriseDTO } from '../services/entreprise.service';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -30,7 +33,7 @@ import { UserProfileComponent } from '../user-profile/user-profile.component';
     ])
   ]
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   searchQuery: string = '';
   showSearchResults: boolean = false;
   showDropdown: boolean = false;
@@ -38,12 +41,18 @@ export class HeaderComponent {
   keepDropdownOpen = false;
   showAuthModal = false; // Propriété pour le modal d'authentification
   isUserLoggedIn = false; // Propriété pour suivre l'état de connexion
+  
+  // Propriétés pour la recherche
+  searchResults: EntrepriseDTO[] = [];
+  private searchTerms = new Subject<string>();
+  isSearching = false;
 
   constructor(
     private categoriesService: RestaurantCategoriesService, 
     private router: Router,
     private authModalService: AuthModalService,
-    public userService: UserService
+    public userService: UserService,
+    private searchService: SearchService
   ) {}
 
   ngOnInit(): void {
@@ -57,6 +66,22 @@ export class HeaderComponent {
       console.log('État de connexion mis à jour:', user ? 'Connecté' : 'Déconnecté');
       this.isUserLoggedIn = !!user;
     });
+    
+    // Configurer la recherche avec debounce
+    this.searchTerms.pipe(
+      // Attendre 300ms après chaque frappe
+      debounceTime(300),
+      
+      // Ignorer si le terme de recherche est le même que le précédent
+      distinctUntilChanged()
+    ).subscribe(term => {
+      this.isSearching = true;
+      this.searchService.search(term).subscribe(results => {
+        this.searchResults = results;
+        this.showSearchResults = results.length > 0;
+        this.isSearching = false;
+      });
+    });
   }
 
   loadRestaurantCategories(): void {
@@ -66,8 +91,28 @@ export class HeaderComponent {
     );
   }
 
+  /**
+   * Méthode appelée à chaque frappe dans la barre de recherche
+   */
   onSearch() {
-    this.showSearchResults = this.searchQuery.length > 0;
+    // Envoyer le terme de recherche au Subject
+    this.searchTerms.next(this.searchQuery);
+    
+    // Masquer les résultats si la requête est vide
+    if (!this.searchQuery.trim()) {
+      this.showSearchResults = false;
+      this.searchResults = [];
+    }
+  }
+  
+  /**
+   * Naviguer vers la page d'un restaurant
+   * @param entrepriseId L'ID de l'entreprise
+   */
+  goToRestaurant(entrepriseId: number) {
+    this.router.navigate(['/restaurant', entrepriseId]);
+    this.showSearchResults = false;
+    this.searchQuery = '';
   }
 
   onDropdownMouseLeave(event: MouseEvent) {

@@ -14,7 +14,31 @@
         <i class="fas fa-search search-icon"></i>
       </div>
       <div class="search-results" *ngIf="showSearchResults">
-        <!-- Les résultats de recherche apparaîtront ici -->
+        <div *ngIf="isSearching" class="search-loading">
+          <i class="fas fa-spinner fa-spin"></i> Recherche en cours...
+        </div>
+        <ul *ngIf="!isSearching && searchResults.length > 0">
+          <li *ngFor="let result of searchResults" (click)="goToRestaurant(result.id)">
+            <div class="search-result-item">
+              <div class="search-result-image" *ngIf="result.images && result.images.length > 0">
+                <img [src]="result.images[0].lien" alt="{{ result.nomEntreprise }}">
+              </div>
+              <div class="search-result-image" *ngIf="!result.images || result.images.length === 0">
+                <div class="placeholder-image">🍽️</div>
+              </div>
+              <div class="search-result-info">
+                <h4>{{ result.nomEntreprise }}</h4>
+                <p *ngIf="result.typeCuisine">{{ result.typeCuisine }}</p>
+                <div class="search-result-rating" *ngIf="result.rating">
+                  <span class="stars">⭐</span> {{ result.rating | number:'1.1-1' }}
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <div *ngIf="!isSearching && searchResults.length === 0 && searchQuery.trim().length > 0" class="no-results">
+          Aucun résultat trouvé pour "{{ searchQuery }}"
+        </div>
       </div>
     </div>
     

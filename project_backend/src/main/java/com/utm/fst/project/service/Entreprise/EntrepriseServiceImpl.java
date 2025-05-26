@@ -216,5 +216,29 @@ public class EntrepriseServiceImpl implements EntrepriseService {
         }*/
     }
 
-
+    @Override
+    public java.util.Map<String, Long> countByTypeCuisine() {
+        // Récupérer toutes les entreprises
+        List<Entreprise> entreprises = entrepriseRepository.findAll();
+        
+        // Créer une map pour stocker le nombre d'entreprises par type de cuisine
+        java.util.Map<String, Long> countMap = new java.util.HashMap<>();
+        
+        // Initialiser la map avec tous les types de cuisine de l'enum à 0
+        for (TypeCuisine typeCuisine : TypeCuisine.values()) {
+            countMap.put(typeCuisine.name(), 0L);
+        }
+        
+        // Compter les entreprises par type de cuisine
+        for (Entreprise entreprise : entreprises) {
+            if (entreprise.getTypeCuisine() != null) {
+                // Récupérer le nom de l'enum comme clé pour la map
+                String typeCuisineName = entreprise.getTypeCuisine().name();
+                // Incrémenter le compteur pour ce type de cuisine
+                countMap.put(typeCuisineName, countMap.getOrDefault(typeCuisineName, 0L) + 1);
+            }
+        }
+        
+        return countMap;
+    }
 }

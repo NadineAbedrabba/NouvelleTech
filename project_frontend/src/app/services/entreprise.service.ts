@@ -82,4 +82,12 @@ export class EntrepriseService {
   searchEntreprisesByNom(nom: string): Observable<EntrepriseDTO[]> {
     return this.http.get<EntrepriseDTO[]>(`${this.baseUrl}/search?nom=${nom}`);
   }
+  
+  /**
+   * Récupère le nombre d'entreprises par type de cuisine
+   * @returns Une map contenant le nombre d'entreprises pour chaque type de cuisine
+   */
+  getCountByTypeCuisine(): Observable<Record<string, number>> {
+    return this.http.get<Record<string, number>>(`${this.baseUrl}/count-by-type-cuisine`);
+  }
 }

@@ -19,4 +19,10 @@ public interface EntrepriseService {
     List<EntrepriseDto> searchByNom(String nom);
     List<EntrepriseDto> getByTypeCuisine(String typeCuisine);
    // List<EntrepriseDto> getByLocalisation(String localisation);
+    
+    /**
+     * Compte le nombre d'entreprises par type de cuisine
+     * @return Une map contenant le nombre d'entreprises pour chaque type de cuisine
+     */
+    java.util.Map<String, Long> countByTypeCuisine();
 }

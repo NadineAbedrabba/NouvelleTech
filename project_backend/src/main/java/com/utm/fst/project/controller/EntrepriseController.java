@@ -111,4 +111,10 @@ public class EntrepriseController {
     public ResponseEntity<List<EntrepriseDto>> getByLocalisation(@PathVariable String localisation) {
         return ResponseEntity.ok(entrepriseService.getByLocalisation(localisation));
     }*/
+    
+    // 📊 Compter les entreprises par type de cuisine
+    @GetMapping("/count-by-type-cuisine")
+    public ResponseEntity<java.util.Map<String, Long>> countByTypeCuisine() {
+        return ResponseEntity.ok(entrepriseService.countByTypeCuisine());
+    }
 }
