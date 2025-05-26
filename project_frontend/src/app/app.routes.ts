@@ -10,8 +10,10 @@ import { ReservationsComponent } from './entreprise/components/resevations/resev
 import { ReservationDetailsComponent } from './entreprise/components/reservation-details/reservation-details.component';
 import { HomeComponent } from './home/home.component';
 import { ReviewContainerComponent } from './review-container/review-container.component';
-import { MyReviewsComponent } from './my-reviews/my-reviews.component';
+import { MyReviewsComponent } from './reviews/my-reviews/my-reviews.component';
 import { FavoritesComponent } from './favorites/favorites.component';
+import { ProfileEditComponent } from './user-profile/profile-edit/profile-edit.component';
+import { AuthGuard } from './auth/auth.guard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -23,10 +25,15 @@ export const routes: Routes = [
   { path: 'restaurantsPending/:id', component: RestaurantPendingComponent },
   { path: 'reviews/:id', component: ReviewsComponent },
   { path: 'profil', component: RestaurantProfileComponent },
+  { path: 'profile', component: ProfileEditComponent },
   { path: 'reservations', component: ReservationsComponent },
   { path: 'reservations/:id', component: ReservationDetailsComponent },
   { path: 'review', component: ReviewContainerComponent },
   { path: 'review/:id', component: ReviewContainerComponent },
-  { path: 'my-reviews', component: MyReviewsComponent },
+  { 
+    path: 'my-reviews', 
+    component: MyReviewsComponent,
+    canActivate: [AuthGuard] 
+  },
   { path: 'favorites', component: FavoritesComponent },
 ];

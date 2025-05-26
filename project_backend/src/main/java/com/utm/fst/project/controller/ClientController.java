@@ -59,4 +59,17 @@ public class ClientController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateClient(@PathVariable Long id, @RequestBody ClientInfoDTO clientInfoDTO) {
+        try {
+            ClientInfoDTO updatedClient = clientService.updateClient(id, clientInfoDTO);
+            if (updatedClient != null) {
+                return new ResponseEntity<>(updatedClient, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Client non trouvé ou email déjà utilisé", HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(Map.of("error", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

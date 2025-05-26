@@ -66,7 +66,11 @@ public class WebSecurityConfiguration {
                                 "/api/reservations/**",
                                 "/api/site-reviews/**",
                                 "/review/api/site-reviews/**",
+                                "/images/upload",
+                                "/images/**",
                                 "/api/images").permitAll()
+                        // Autoriser explicitement les requêtes PUT sur l'endpoint /client/{id}
+                        .requestMatchers(HttpMethod.PUT, "/client/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/api/**").authenticated()
                 )

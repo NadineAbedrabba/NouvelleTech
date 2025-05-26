@@ -114,6 +114,10 @@ public class ReviewServiceImpl implements ReviewService {
         dto.setCommentaire(r.getCommentaire());
         dto.setClientId(r.getClient().getId());
         dto.setEntrepriseId(r.getEntreprise().getId());
+        dto.setCompanion(r.getCompanion());
+        dto.setOccasion(r.getOccasion());
+        dto.setCertified(r.isCertified());
+        dto.setCreatedAt(r.getCreatedAt());
         return dto;
     }
 }

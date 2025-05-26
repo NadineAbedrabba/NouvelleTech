@@ -9,4 +9,5 @@ public interface ClientService {
     UserDTO registerClient(ClientSignupDTO dto);
     ClientInfoDTO getClientInfo(Long id);
     Long getClientIdByEmail(String email);
+    ClientInfoDTO updateClient(Long id, ClientInfoDTO clientInfoDTO);
 }

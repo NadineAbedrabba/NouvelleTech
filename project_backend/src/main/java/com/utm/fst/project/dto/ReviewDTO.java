@@ -4,6 +4,7 @@ import com.utm.fst.project.enums.Companion;
 import com.utm.fst.project.enums.Occasion;
 import lombok.Getter;
 import lombok.Setter;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -20,4 +21,5 @@ public class ReviewDTO {
     private boolean certified;
     private Long clientId;
     private Long entrepriseId;
+    private Date createdAt;
 }

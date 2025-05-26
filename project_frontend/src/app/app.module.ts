@@ -20,7 +20,7 @@ import { CreativeSplitComponent } from './components/creative-split/creative-spl
 import { SectionTransitionComponent } from './components/section-transition/section-transition.component';
 import { ReviewHighlightComponent } from './components/review-highlight/review-highlight.component';
 import { ReviewContainerComponent } from './review-container/review-container.component';
-import { MyReviewsComponent } from './my-reviews/my-reviews.component';
+import { MyReviewsComponent } from './reviews/my-reviews/my-reviews.component';
 import { RatingStarsComponent } from './rating-stars/rating-stars.component';
 import { FavoritesComponent } from './favorites/favorites.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -39,7 +39,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SectionTransitionComponent,
     ReviewHighlightComponent,
     ReviewContainerComponent,
-    MyReviewsComponent,
     RatingStarsComponent,
     FavoritesComponent
   ],
@@ -53,7 +52,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     HttpClientModule,
     AuthModule,
-    UserProfileModule
+    UserProfileModule,
+    MyReviewsComponent
   ],
   exports: [
     HeaderComponent,

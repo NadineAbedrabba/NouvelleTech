@@ -156,6 +156,10 @@ export class ReviewContainerComponent implements OnInit {
     if (this.isFormValid()) {
       this.isSubmitting = true;
       
+      // Récupérer l'ID client directement depuis le localStorage
+      const clientIdFromStorage = localStorage.getItem('clientId');
+      console.log('ID client récupéré du localStorage:', clientIdFromStorage);
+      
       // Vérifier à nouveau les informations client les plus récentes
       const clientActuel = this.userService.getClientInfo();
       if (clientActuel && clientActuel.id) {
@@ -164,6 +168,10 @@ export class ReviewContainerComponent implements OnInit {
           console.log(`Mise à jour de l'ID client: ${this.clientId} -> ${clientActuel.id}`);
           this.clientId = clientActuel.id;
         }
+      } else if (clientIdFromStorage) {
+        // Utiliser l'ID client du localStorage si disponible
+        console.log(`Utilisation de l'ID client du localStorage: ${clientIdFromStorage}`);
+        this.clientId = Number(clientIdFromStorage);
       }
       
       // Vérifier si l'utilisateur est connecté
@@ -175,7 +183,7 @@ export class ReviewContainerComponent implements OnInit {
         return;
       }
       
-      // Si nous n'avons pas d'ID client valide mais que l'utilisateur est connecté
+      // Si nous n'avons toujours pas d'ID client valide mais que l'utilisateur est connecté
       // utiliser un ID temporaire pour le développement
       if (!this.clientId) {
         console.warn('ID client non disponible. Utilisation d\'un ID temporaire pour le développement.');

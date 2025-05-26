@@ -47,7 +47,20 @@ export class ReviewService {
     }
     if (!review.clientId) {
       console.warn('Attention: clientId est null ou non défini');
+      
+      // Vérifier si l'ID client est disponible dans le localStorage
+      const clientIdFromStorage = localStorage.getItem('clientId');
+      if (clientIdFromStorage) {
+        console.log(`ID client trouvé dans localStorage: ${clientIdFromStorage}. Mise à jour de la review.`);
+        review.clientId = Number(clientIdFromStorage);
+      } else {
+        console.error('Aucun ID client trouvé dans localStorage. La requête risque d\'échouer.');
+      }
     }
+    
+    // Afficher les informations de débogage
+    console.log('ID client final utilisé pour la review:', review.clientId);
+    console.log('ID entreprise final utilisé pour la review:', review.entrepriseId);
     
     // Utiliser la méthode utilitaire pour obtenir les en-têtes HTTP
     const httpOptions = this.getHttpOptions();

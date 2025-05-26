@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { UserService, User, Client } from './user.service';
 
 @Component({
@@ -7,7 +8,7 @@ import { UserService, User, Client } from './user.service';
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule, RouterModule]
 })
 export class UserProfileComponent implements OnInit {
   user: User | null = null;

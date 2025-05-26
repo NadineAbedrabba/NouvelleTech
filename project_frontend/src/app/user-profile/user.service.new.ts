@@ -30,7 +30,6 @@ export interface Client {
   pays?: string;
   image?: Image;
   imageUrl?: string; // Gardé pour compatibilité avec le code existant
-  photoUrl?: string; // URL de l'image de profil
 }
 
 @Injectable({
@@ -117,7 +116,7 @@ export class UserService {
     };
     
     // Ajouter le token JWT à la requête
-    this.http.get<any>(`${this.apiUrl}/review/client/by-user/${userId}`, httpOptions).subscribe({
+    this.http.get<any>(`${this.apiUrl}/client/by-user/${userId}`, httpOptions).subscribe({
       next: (response) => {
         console.log('Réponse complète de loadClientInfo:', response);
         
@@ -204,7 +203,7 @@ export class UserService {
       })
     };
     
-    return this.http.get<any>(`${this.apiUrl}/review/client/by-user/${userId}`, httpOptions)
+    return this.http.get<any>(`${this.apiUrl}/client/by-user/${userId}`, httpOptions)
       .pipe(
         map((response: any) => {
           console.log('Réponse complète de getClientByUserId:', response);
@@ -310,7 +309,7 @@ export class UserService {
     
     console.log(`Mise à jour du client avec ID: ${client.id} via l'URL: ${this.apiUrl}/client/${client.id}`);
     
-    return this.http.put<any>(`${this.apiUrl}/review/client/${client.id}`, client, httpOptions)
+    return this.http.put<any>(`${this.apiUrl}/client/${client.id}`, client, httpOptions)
       .pipe(
         map((response: any) => {
           console.log('Réponse de updateClient:', response);
@@ -353,7 +352,7 @@ export class UserService {
     console.log(`Mise à jour du client par ID utilisateur: ${userId}`);
     
     // Utiliser une URL différente qui accepte les mises à jour par ID utilisateur
-    return this.http.put<any>(`${this.apiUrl}/review/client/update-by-user/${userId}`, client, httpOptions)
+    return this.http.put<any>(`${this.apiUrl}/client/update-by-user/${userId}`, client, httpOptions)
       .pipe(
         map((response: any) => {
           console.log('Réponse de updateClientByUserId:', response);
@@ -405,7 +404,7 @@ export class UserService {
     console.log('Tentative de création/mise à jour du client avec les données:', clientData);
     
     // Utiliser une méthode POST pour créer un nouveau client si nécessaire
-    return this.http.post<any>(`${this.apiUrl}/review/client/create-or-update`, clientData, httpOptions)
+    return this.http.post<any>(`${this.apiUrl}/client/create-or-update`, clientData, httpOptions)
       .pipe(
         map((response: any) => {
           console.log('Réponse de createOrUpdateClient:', response);
