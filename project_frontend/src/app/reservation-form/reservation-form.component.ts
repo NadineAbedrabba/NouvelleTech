@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { ReservationService } from '../services/reservation.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 enum ReservationStatus {
   PENDING = 'PENDING',
@@ -26,8 +27,9 @@ export class ReservationFormComponent implements OnInit {
   
   reservationDate: string = '';
   tempsArrive: string = '';
+  companyId: any;
 
-  constructor(private fb: FormBuilder , private reservationService : ReservationService) {
+  constructor(private fb: FormBuilder , private reservationService : ReservationService,private route: ActivatedRoute, private router: Router) {
     this.today = formatDate(new Date(), 'yyyy-MM-dd', 'en');
     
   }
@@ -41,15 +43,21 @@ export class ReservationFormComponent implements OnInit {
       clientNom: ['', Validators.required],
       // clientEmail: ['', [Validators.required, Validators.email]],
       clientTelephone: ['', Validators.required],
+      
+    });
+    this.route.queryParams.subscribe(params => {
+      this.companyId = +params['companyId'];
     });
   }
 
 
   onSubmit(): void {
+    
+    
     if (this.reservationForm.valid) {
       const reservationData = {
         ...this.reservationForm.value,
-        companyId: 2
+        companyId: this.companyId
       };
       this.reservationService.createReservation(reservationData).subscribe({
         next: (res) => {

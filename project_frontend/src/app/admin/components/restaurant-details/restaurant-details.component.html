@@ -2,7 +2,7 @@
   <div class="restaurant-header">
     <div class="image-gallery">
       <div class="image-category-label">{{ getCurrentCategory() }}</div>
-      <img [src]="getCurrentImage().lien" class="main-image" (error)="handleImageError($event)">
+      <!-- <img [src]="getCurrentImage().lien" class="main-image" (error)="handleImageError($event)"> -->
       <button class="nav-btn prev" (click)="prevImage()">❮</button>
       <button class="nav-btn next" (click)="nextImage()">❯</button>
 

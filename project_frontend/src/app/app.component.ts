@@ -4,6 +4,8 @@ import { NgIf } from '@angular/common'; // ✅ import NgIf
 import { RouterOutlet } from '@angular/router';
 import { ReservationFormComponent } from "./reservation-form/reservation-form.component";
 import { MesReservationsComponent } from "./mes-reservations/mes-reservations.component";
+import { RestaurantDetailsComponent } from './admin/components/restaurant-details/restaurant-details.component';
+import { DetailRestoComponent } from './detail-resto/detail-resto.component';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +17,8 @@ import { MesReservationsComponent } from "./mes-reservations/mes-reservations.co
     NgIf,
     RouterOutlet,
     ReservationFormComponent,
-    MesReservationsComponent
+    MesReservationsComponent,
+   DetailRestoComponent
 ] //
  //
  //

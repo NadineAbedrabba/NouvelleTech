@@ -10,6 +10,7 @@ import { forkJoin } from 'rxjs';
   selector: 'app-restaurant-details',
   standalone: true,
   imports: [CommonModule],
+  exportAs: 'restaurantDetails',
   templateUrl: './restaurant-details.component.html',
   styleUrls: ['./restaurant-details.component.scss']
 })
