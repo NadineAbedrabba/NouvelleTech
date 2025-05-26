@@ -6,20 +6,26 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthModule } from './auth/auth.module';
 import { CommonModule, NgIf } from '@angular/common';
+import { EntrepriseLayoutComponent } from './entreprise/components/entreprise-layout/entreprise-layout.component';
+import { StartComponent } from './start/start/start.component';
+import { AuthSelectionComponent } from "./auth/components/auth-selection/auth-selection.component";
 
 @NgModule({
   declarations: [
      // Declare the AppComponent
+  
+  
   ],
   imports: [
     BrowserAnimationsModule,
-    BrowserModule,  // Import BrowserModule for bootstrapping the application
+    BrowserModule, // Import BrowserModule for bootstrapping the application
     RouterModule,
     FormsModule,
     AuthModule,
     CommonModule,
-    NgIf
-  ],
+    NgIf,
+    AuthSelectionComponent
+],
   bootstrap: [],  // Declare that AppComponent should be bootstrapped
 })
 export class AppModule {}

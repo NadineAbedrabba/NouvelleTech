@@ -8,6 +8,12 @@ import com.utm.fst.project.service.user.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 
 @RestController
 @RequestMapping("/client")
@@ -43,4 +49,31 @@ public class ClientController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+
+    @GetMapping("/stats/total")
+    public Long getTotalClients() {
+        return clientService.countTotalClients();
+    }
+
+    @GetMapping("/stats/monthly-comparison")
+    public Map<String, Long> getMonthlyClientComparison() {
+        Map<String, Long> stats = new HashMap<>();
+        stats.put("current", clientService.countClientsThisMonth());
+        stats.put("previous", clientService.countClientsLastMonth());
+        return stats;
+    }
+
+    @GetMapping("/stats/monthly")
+    public List<Map<String, Object>> getMonthlyClients() {
+        return clientService.getMonthlyClients().stream()
+                .map(arr -> {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("month", arr[0]);
+                    map.put("count", arr[1]);
+                    return map;
+                })
+                .collect(Collectors.toList());
+    }
+
 }

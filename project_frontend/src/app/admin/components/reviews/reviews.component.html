@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
-        /* Styles existants */
+        /* Existing styles remain unchanged */
         .testimonial-card {
             border-radius: 0.25rem;
             overflow: hidden;
@@ -19,7 +19,7 @@
             cursor: pointer;
             position: relative;
         }
-        
+
         .testimonial-card .card-up {
             height: 100px;
             overflow: hidden;
@@ -28,7 +28,7 @@
         }
         
         .testimonial-card .avatar {
-            width: 80px;
+            width: 100px;
             margin-top: -45px;
             overflow: hidden;
             border: 3px solid #fff;
@@ -39,7 +39,7 @@
         
         .testimonial-card .avatar img {
             width: 100%;
-            height: auto;
+            height: 100px;
         }
         
         .dark-grey-text {
@@ -121,7 +121,6 @@
             margin: 0.8rem 0;
         }
 
-        /* Nouveaux styles pour le menu contextuel */
         .context-menu {
             position: fixed;
             background: white;
@@ -176,59 +175,118 @@
                     <h2 class="display-6 fw-bold mb-3">Ce que les clients disent</h2>
                 </div>
             </div>
-            
+
             <div class="row text-center d-flex align-items-stretch">
-                <!-- Carte 1 -->
-                <div class="col-md-4 mb-4 mb-md-0 d-flex align-items-stretch">
-                    <div class="card testimonial-card" (contextmenu)="showContextMenu($event, 1)">
+                <!-- Boucle sur les avis -->
+                <div *ngFor="let review of reviews" class="col-md-4 mb-4 mb-md-0 d-flex align-items-stretch">
+                    <div class="card testimonial-card" (contextmenu)="showContextMenu($event, review.id)">
                         <div class="card-up" style="background-color: #4A81A8;"></div>
                         <div class="avatar mx-auto bg-white">
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(1).webp"
-                                class="rounded-circle img-fluid" />
+                            <img [src]="getClientPhoto(review.clientPhoto)" 
+                                 (error)="handleImageError($event, review.clientPhoto)"
+                                 class="rounded-circle img-fluid"
+                                 alt="Photo de {{review.clientName}} ou image par défaut" />
                         </div>
                         <div class="card-body">
-                            <h4 class="mb-3" style="color:#901430;">Maria Smantha</h4>
+                            <h4 class="mb-3" style="color:#901430;">{{ review.clientName }}</h4>
                             
                             <div class="star-rating">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-half"></i>
-                                <span class="rating-value">4.5</span>
+                                <i *ngIf="review.rating >= 1" class="bi bi-star-fill"></i>
+                                <i *ngIf="review.rating < 1 && review.rating >= 0.5" class="bi bi-star-half"></i>
+                                <i *ngIf="review.rating < 0.5" class="bi bi-star"></i>
+                                
+                                <i *ngIf="review.rating >= 2" class="bi bi-star-fill"></i>
+                                <i *ngIf="review.rating < 2 && review.rating >= 1.5" class="bi bi-star-half"></i>
+                                <i *ngIf="review.rating < 1.5" class="bi bi-star"></i>
+                                
+                                <i *ngIf="review.rating >= 3" class="bi bi-star-fill"></i>
+                                <i *ngIf="review.rating < 3 && review.rating >= 2.5" class="bi bi-star-half"></i>
+                                <i *ngIf="review.rating < 2.5" class="bi bi-star"></i>
+                                
+                                <i *ngIf="review.rating >= 4" class="bi bi-star-fill"></i>
+                                <i *ngIf="review.rating < 4 && review.rating >= 3.5" class="bi bi-star-half"></i>
+                                <i *ngIf="review.rating < 3.5" class="bi bi-star"></i>
+                                
+                                <i *ngIf="review.rating >= 5" class="bi bi-star-fill"></i>
+                                <i *ngIf="review.rating < 5 && review.rating >= 4.5" class="bi bi-star-half"></i>
+                                <i *ngIf="review.rating < 4.5" class="bi bi-star"></i>
+                                
+                                <span class="rating-value">{{ review.rating?.toFixed(1) || '0.0' }}</span>
                             </div>
                             
                             <div class="detail-rating">
                                 <div class="rating-category">
-                                    <span class="rating-label">Food</span>
+                                    <span class="rating-label">Nourriture</span>
                                     <div class="rating-stars">
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-half"></i>
+                                        <i *ngIf="review.foodRating >= 1" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.foodRating < 1 && review.foodRating >= 0.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.foodRating < 0.5" class="bi bi-star"></i>
+                                        
+                                        <i *ngIf="review.foodRating >= 2" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.foodRating < 2 && review.foodRating >= 1.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.foodRating < 1.5" class="bi bi-star"></i>
+                                        
+                                        <i *ngIf="review.foodRating >= 3" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.foodRating < 3 && review.foodRating >= 2.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.foodRating < 2.5" class="bi bi-star"></i>
+                                        
+                                        <i *ngIf="review.foodRating >= 4" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.foodRating < 4 && review.foodRating >= 3.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.foodRating < 3.5" class="bi bi-star"></i>
+                                        
+                                        <i *ngIf="review.foodRating >= 5" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.foodRating < 5 && review.foodRating >= 4.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.foodRating < 4.5" class="bi bi-star"></i>
                                     </div>
                                 </div>
                                 
                                 <div class="rating-category">
                                     <span class="rating-label">Service</span>
                                     <div class="rating-stars">
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star"></i>
+                                        <i *ngIf="review.serviceRating >= 1" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.serviceRating < 1 && review.serviceRating >= 0.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.serviceRating < 0.5" class="bi bi-star"></i>
+                                        
+                                        <i *ngIf="review.serviceRating >= 2" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.serviceRating < 2 && review.serviceRating >= 1.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.serviceRating < 1.5" class="bi bi-star"></i>
+                                        
+                                        <i *ngIf="review.serviceRating >= 3" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.serviceRating < 3 && review.serviceRating >= 2.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.serviceRating < 2.5" class="bi bi-star"></i>
+                                        
+                                        <i *ngIf="review.serviceRating >= 4" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.serviceRating < 4 && review.serviceRating >= 3.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.serviceRating < 3.5" class="bi bi-star"></i>
+                                        
+                                        <i *ngIf="review.serviceRating >= 5" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.serviceRating < 5 && review.serviceRating >= 4.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.serviceRating < 4.5" class="bi bi-star"></i>
                                     </div>
                                 </div>
                                 
                                 <div class="rating-category">
                                     <span class="rating-label">Ambiance</span>
                                     <div class="rating-stars">
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.ambianceRating >= 1" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.ambianceRating < 1 && review.ambianceRating >= 0.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.ambianceRating < 0.5" class="bi bi-star"></i>
+                                        
+                                        <i *ngIf="review.ambianceRating >= 2" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.ambianceRating < 2 && review.ambianceRating >= 1.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.ambianceRating < 1.5" class="bi bi-star"></i>
+                                        
+                                        <i *ngIf="review.ambianceRating >= 3" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.ambianceRating < 3 && review.ambianceRating >= 2.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.ambianceRating < 2.5" class="bi bi-star"></i>
+                                        
+                                        <i *ngIf="review.ambianceRating >= 4" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.ambianceRating < 4 && review.ambianceRating >= 3.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.ambianceRating < 3.5" class="bi bi-star"></i>
+                                        
+                                        <i *ngIf="review.ambianceRating >= 5" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.ambianceRating < 5 && review.ambianceRating >= 4.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.ambianceRating < 4.5" class="bi bi-star"></i>
                                     </div>
                                 </div>
                             </div>
@@ -236,144 +294,17 @@
                             <hr />
                             <div class="quote-section">
                                 <p class="dark-grey-text mt-3">
-                                    <i class="fas fa-quote-left pe-2" style="color:#4A81A8"></i>Lorem ipsum dolor sit amet eos adipisci,
-                                    consectetur adipisicing elit.
+                                    <i class="bi bi-quote pe-2" style="color:#4A81A8"></i>{{review.commentaire || 'Aucun commentaire'}}
                                 </p>
+                                <small class="text-muted">{{review.createdAt | date:'dd/MM/yyyy HH:mm'}}</small>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Carte 2 -->
-                <div class="col-md-4 mb-4 mb-md-0 d-flex align-items-stretch">
-                    <div class="card testimonial-card" (contextmenu)="showContextMenu($event, 2)">
-                        <div class="card-up" style="background-color: #991e2a;"></div>
-                        <div class="avatar mx-auto bg-white">
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(2).webp"
-                                class="rounded-circle img-fluid" />
-                        </div>
-                        <div class="card-body">
-                            <h4 class="mb-3" style="color:#901430">Lisa Cudrow</h4>
-                            
-                            <div class="star-rating">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <span class="rating-value">5.0</span>
-                            </div>
-                            
-                            <div class="detail-rating">
-                                <div class="rating-category">
-                                    <span class="rating-label">Food</span>
-                                    <div class="rating-stars">
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                    </div>
-                                </div>
-                                
-                                <div class="rating-category">
-                                    <span class="rating-label">Service</span>
-                                    <div class="rating-stars">
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-half"></i>
-                                    </div>
-                                </div>
-                                
-                                <div class="rating-category">
-                                    <span class="rating-label">Ambiance</span>
-                                    <div class="rating-stars">
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <hr />
-                            <div class="quote-section">
-                                <p class="dark-grey-text mt-3">
-                                    <i class="fas fa-quote-left pe-2" style="color:#4A81A8"></i>Neque cupiditate assumenda in maiores
-                                    repudi mollitia architecto.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Carte 3 -->
-                <div class="col-md-4 mb-0 d-flex align-items-stretch">
-                    <div class="card testimonial-card" (contextmenu)="showContextMenu($event, 3)">
-                        <div class="card-up" style="background-color: #4A81A8;"></div>
-                        <div class="avatar mx-auto bg-white">
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(9).webp"
-                                class="rounded-circle img-fluid" />
-                        </div>
-                        <div class="card-body">
-                            <h4 class="mb-3" style="color:#901430">John Smith</h4>
-                            
-                            <div class="star-rating">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star"></i>
-                                <i class="bi bi-star"></i>
-                                <span class="rating-value">3.0</span>
-                            </div>
-                            
-                            <div class="detail-rating">
-                                <div class="rating-category">
-                                    <span class="rating-label">Food</span>
-                                    <div class="rating-stars">
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star"></i>
-                                        <i class="bi bi-star"></i>
-                                    </div>
-                                </div>
-                                
-                                <div class="rating-category">
-                                    <span class="rating-label">Service</span>
-                                    <div class="rating-stars">
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star"></i>
-                                    </div>
-                                </div>
-                                
-                                <div class="rating-category">
-                                    <span class="rating-label">Ambiance</span>
-                                    <div class="rating-stars">
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star"></i>
-                                        <i class="bi bi-star"></i>
-                                        <i class="bi bi-star"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <hr />
-                            <div class="quote-section">
-                                <p class="dark-grey-text mt-3">
-                                    <i class="fas fa-quote-left pe-2" style="color:#4A81A8"></i>Delectus impedit saepe officiis ab
-                                    aliquam repellat rem unde ducimus.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                <!-- Message si aucun avis -->
+                <div *ngIf="reviews.length === 0" class="col-12 text-center py-5">
+                    <p class="lead">Aucun témoignage disponible pour le moment.</p>
                 </div>
             </div>
         </div>

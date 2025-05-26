@@ -2,6 +2,7 @@ package com.utm.fst.project.service;
 
 import com.utm.fst.project.dto.ReviewDTO;
 import java.util.List;
+import java.util.Map;
 
 public interface ReviewService {
 
@@ -10,6 +11,10 @@ public interface ReviewService {
     List<ReviewDTO> getReviewsByEntreprise(Long entrepriseId);
 
     List<ReviewDTO> getReviewsByClient(Long clientId);
-
     void deleteReview(Long reviewId);
+    // Nouvelles méthodes pour les stats
+    Long countTotalReviews();
+    Double getAverageRating();
+    Map<Long, Double> getAverageRatingByEntreprise();
+    Map<Integer, Long> getCountByRating();
 }

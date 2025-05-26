@@ -1,12 +1,16 @@
 package com.utm.fst.project.controller;
-
+import java.util.Map;
+import java.util.HashMap;
+import java.util.stream.Collectors;
+import java.util.Map;
+import java.util.stream.Collectors;
 import com.utm.fst.project.dto.EntrepriseDto;
 import com.utm.fst.project.dto.EntrepriseSignupDTO;
 import com.utm.fst.project.dto.UserDTO;
 import com.utm.fst.project.enums.StatutEntreprise;
 import com.utm.fst.project.service.Entreprise.EntrepriseService;
 import com.utm.fst.project.service.user.UserService;
-
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -107,8 +111,72 @@ public class EntrepriseController {
     }
 
     // 🔎 Filtrer par localisation
-    @GetMapping("/localisation/{localisation}")
-    public ResponseEntity<List<EntrepriseDto>> getByLocalisation(@PathVariable String localisation) {
-        return ResponseEntity.ok(entrepriseService.getByLocalisation(localisation));
+    //@GetMapping("/localisation/{localisation}")
+    //public ResponseEntity<List<EntrepriseDto>> getByLocalisation(@PathVariable String localisation) {
+      //  return ResponseEntity.ok(entrepriseService.getByLocalisation(localisation));
+    //}
+
+
+    @PatchMapping("/{id}/complet")
+    public ResponseEntity<EntrepriseDto> updateCompletStatus(
+            @PathVariable Long id,
+            @RequestBody Map<String, Boolean> payload) {
+
+        Boolean complet = payload.get("complet");
+
+        if (complet == null) {
+            return ResponseEntity.badRequest().body(null); // Ou vous pouvez lancer une exception personnalisée
+        }
+
+        EntrepriseDto updatedEntreprise = entrepriseService.updateCompletStatus(id, complet);
+        return ResponseEntity.ok(updatedEntreprise);
     }
+
+    @GetMapping("/stats/total")
+    public Long getTotalEntreprises() {
+        return entrepriseService.countTotalEntreprises();
+    }
+
+    @GetMapping("/stats/monthly-comparison")
+    public Map<String, Long> getMonthlyComparison() {
+        Map<String, Long> stats = new HashMap<>();
+        stats.put("current", entrepriseService.countEntreprisesThisMonth());
+        stats.put("previous", entrepriseService.countEntreprisesLastMonth());
+        return stats;
+    }
+
+    @GetMapping("/stats/monthly")
+    public List<Map<String, Object>> getMonthlyEntreprises() {
+        return entrepriseService.getMonthlyEntreprises().stream()
+                .map(arr -> {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("month", arr[0]);  // ex: "2025-05"
+                    map.put("count", arr[1]);
+                    return map;
+                })
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/stats/by-status")
+    public ResponseEntity<Map<String, Long>> getEntreprisesByStatus() {
+        Map<StatutEntreprise, Long> statusMap = entrepriseService.getEntreprisesByStatus();
+        Map<String, Long> result = statusMap.entrySet().stream()
+                .collect(Collectors.toMap(
+                        entry -> entry.getKey().name().toLowerCase(),
+                        Map.Entry::getValue
+                ));
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/stats/top5-rating")
+    public List<EntrepriseDto> getTop5ByRating() {
+        return entrepriseService.getTop5ByRating();
+    }
+
+    @GetMapping("/stats/count-by-cuisine")
+    public Map<String, Long> getCountByCuisine() {
+        return entrepriseService.countByTypeCuisine();
+    }
+
+
 }

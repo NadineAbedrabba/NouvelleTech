@@ -1,99 +1,84 @@
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { CommonModule, DatePipe } from '@angular/common';
+
 import { Restaurant } from 'src/app/models/restaurant.model';
 import { RestaurantService } from 'src/app/services/restaurant.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-restaurant-pending',
-  standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './restaurant-pending.component.html',
-  styleUrls: ['./restaurant-pending.component.scss']
+  standalone: true,
+  imports: [CommonModule],
+  styleUrls: ['./restaurant-pending.component.scss'],
+  providers: [DatePipe]
 })
 export class RestaurantPendingComponent implements OnInit {
   restaurant?: Restaurant;
   isLoading: boolean = true;
 
-  safeMapUrl!: SafeResourceUrl;
-  adminNotes = '';
-  showDecisionForm = false;
-  currentDecision: 'approve' | 'reject' | null = null;
-  
-
   constructor(
     private route: ActivatedRoute,
     private restaurantService: RestaurantService,
-    private sanitizer: DomSanitizer
+    private datePipe: DatePipe
   ) {}
 
-  ngOnInit() {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    if (id) {
-      this.restaurantService.getRestaurantById(id).subscribe({
-        next: (data) => {
-          this.restaurant = data;
-          this.isLoading = false;
-        },
-        error: (err) => {
-          console.error('Erreur lors du chargement du restaurant', err);
-          this.isLoading = false;
-        }
-      });
-    }
-  }
-  
+  ngOnInit(): void {
+    const idParam: string | null = this.route.snapshot.paramMap.get('id');
+    const id: number | undefined = idParam !== null && !isNaN(+idParam) ? +idParam : undefined;
 
-  
-
-  prepareDecision(decision: 'approve' | 'reject') {
-    this.currentDecision = decision;
-    this.showDecisionForm = true;
-  }
-
-  submitDecision() {
-    if (this.currentDecision === 'reject' && !this.adminNotes.trim()) {
-      alert('Veuillez saisir un motif de refus');
+    if (id === undefined) {
+      console.error("ID invalide ou manquant dans l'URL.");
+      this.isLoading = false;
       return;
     }
 
-    if (this.currentDecision === 'approve') {
-      console.log('Restaurant approuvé');
-      // Logique d'approbation
-    } else {
-      console.log('Restaurant rejeté avec motif:', this.adminNotes);
-      // Logique de rejet
-    }
-
-    this.resetDecisionForm();
+    this.loadRestaurant(id);
   }
 
-  cancelDecision() {
-    this.resetDecisionForm();
+  loadRestaurant(id: number): void {
+    this.isLoading = true;
+    this.restaurantService.getRestaurantById(id)
+      .pipe(finalize(() => this.isLoading = false))
+      .subscribe({
+        next: (data: Restaurant) => {
+          this.restaurant = data;
+        },
+        error: (error: any) => {
+          console.error("Erreur lors du chargement du restaurant :", error);
+        }
+      });
   }
 
-  private resetDecisionForm() {
-    this.adminNotes = '';
-    this.showDecisionForm = false;
-    this.currentDecision = null;
+  formatDate(date: string | Date | undefined): string | null | undefined {
+    if (!date) return undefined;
+    return this.datePipe.transform(date, 'dd/MM/yyyy');
   }
 
-  parseHours(hours: string) {
-    return hours.split('\n').map(line => {
-      const [day, ...timeParts] = line.split(': ');
-      return {
-        day: day.trim(),
-        hours: timeParts.join(': ')
-      };
-    });
+  accept(): void {
+    if (!this.restaurant) return;
+    this.isLoading = true;
+    this.restaurantService.updateRestaurantStatus(this.restaurant.id!, 'ACCEPTEE')
+      .pipe(finalize(() => this.isLoading = false))
+      .subscribe({
+        next: (updated) => {
+          this.restaurant = updated;
+        },
+        error: (err) => console.error('Erreur lors de l\'acceptation:', err)
+      });
   }
 
-  setMapUrl(address: string): void {
-    const encodedAddress = encodeURIComponent(address);
-    this.safeMapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-      `https://maps.google.com/maps?q=${encodedAddress}&output=embed&zoom=15`
-    );
+  reject(): void {
+    if (!this.restaurant) return;
+    this.isLoading = true;
+    this.restaurantService.updateRestaurantStatus(this.restaurant.id!, 'NON_ACCEPTEE')
+      .pipe(finalize(() => this.isLoading = false))
+      .subscribe({
+        next: (updated) => {
+          this.restaurant = updated;
+        },
+        error: (err) => console.error('Erreur lors du rejet:', err)
+      });
   }
 }

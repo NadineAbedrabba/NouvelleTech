@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+
 
 @RestController
 @RequestMapping("/api/reviews")
@@ -33,5 +35,29 @@ public class ReviewController {
     @DeleteMapping("/{id}")
     public void deleteReview(@PathVariable Long id) {
         reviewService.deleteReview(id);
+    }
+
+    // Total des avis
+    @GetMapping("/stats/total")
+    public Long getTotalReviews() {
+        return reviewService.countTotalReviews();
+    }
+
+    // Moyenne générale des notes (rating global)
+    @GetMapping("/stats/average-rating")
+    public Double getAverageRating() {
+        return reviewService.getAverageRating();
+    }
+
+    // Moyenne des notes par entreprise
+    @GetMapping("/stats/average-rating-by-entreprise")
+    public Map<Long, Double> getAverageRatingByEntreprise() {
+        return reviewService.getAverageRatingByEntreprise();
+    }
+
+    // Distribution du nombre d’avis par note (ex: combien d’avis 1 étoile, 2 étoiles, etc.)
+    @GetMapping("/stats/count-by-rating")
+    public Map<Integer, Long> getCountByRating() {
+        return reviewService.getCountByRating();
     }
 }

@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-register-user',
   templateUrl: './register-user.component.html',
-  styleUrls: ['./register-user.component.css']
+  styleUrls: ['./register-user.component.css'],
+  standalone:true,
+  imports:[ ReactiveFormsModule]
 })
 export class RegisterUserComponent {
   passwordError = ''

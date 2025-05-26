@@ -7,9 +7,17 @@ import com.utm.fst.project.entities.Client;
 import com.utm.fst.project.entities.User;
 import com.utm.fst.project.enums.UserRole;
 import com.utm.fst.project.repository.UserRepository;
+import com.utm.fst.project.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.util.Map;
+import java.util.List;
+import java.time.LocalDateTime;
+
+import java.time.LocalDateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import java.time.LocalDateTime;
 
 import java.util.Optional;
 
@@ -20,6 +28,10 @@ public class ClientServiceImpl implements ClientService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private ClientRepository clientRepository;
+
+
     @Override
     public UserDTO registerClient(ClientSignupDTO dto) {
         Client client = new Client();
@@ -27,6 +39,8 @@ public class ClientServiceImpl implements ClientService {
         client.setPassword(passwordEncoder.encode(dto.getPassword()));
         client.setNom(dto.getNom());
         client.setUserRole(UserRole.CLIENT);
+        client.setDateCreation(LocalDateTime.now());
+
 
         Client savedClient = userRepository.save(client);
         return mapToUserDTO(savedClient);
@@ -52,5 +66,28 @@ public class ClientServiceImpl implements ClientService {
         dto.setEmail(user.getEmail());
         dto.setUserRole(user.getUserRole());
         return dto;
+    }
+
+    @Override
+    public Long countTotalClients() {
+        return clientRepository.countTotalClients();
+    }
+
+    @Override
+    public Long countClientsThisMonth() {
+        return clientRepository.countClientsThisMonth();
+    }
+
+    @Override
+    public Long countClientsLastMonth() {
+        LocalDateTime startOfThisMonth = LocalDateTime.now().withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
+        LocalDateTime startOfLastMonth = startOfThisMonth.minusMonths(1);
+        return clientRepository.countClientsLastMonth(startOfLastMonth, startOfThisMonth);
+    }
+
+
+    @Override
+    public List<Object[]> getMonthlyClients() {
+        return clientRepository.getMonthlyClients();
     }
 }

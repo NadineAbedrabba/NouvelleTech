@@ -6,6 +6,7 @@ import com.utm.fst.project.dto.UserDTO;
 import com.utm.fst.project.enums.StatutEntreprise;
 import com.utm.fst.project.enums.TypeCuisine;
 import java.util.List;
+import java.util.Map;
 
 public interface EntrepriseService {
     UserDTO registerEntreprise(EntrepriseSignupDTO entrepriseSignupDTO);
@@ -18,5 +19,15 @@ public interface EntrepriseService {
     EntrepriseDto updateStatut(Long id, StatutEntreprise statut);
     List<EntrepriseDto> searchByNom(String nom);
     List<EntrepriseDto> getByTypeCuisine(String typeCuisine);
-    List<EntrepriseDto> getByLocalisation(String localisation);
+    //List<EntrepriseDto> getByLocalisation(String localisation);
+    EntrepriseDto updateCompletStatus(Long entrepriseId, Boolean complet);
+    List<EntrepriseDto> getTop5ByRating();
+
+    Long countTotalEntreprises();
+    Long countEntreprisesThisMonth();
+    Long countEntreprisesLastMonth();
+    List<Object[]> getMonthlyEntreprises(); // Returns e.g., List<Object[]> { { "2025-05", 10L }, ... }
+
+    Map<StatutEntreprise, Long> getEntreprisesByStatus(); // Single declaration
+    Map<String, Long> countByTypeCuisine();
 }

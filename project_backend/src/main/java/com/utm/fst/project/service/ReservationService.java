@@ -9,7 +9,7 @@ import com.utm.fst.project.repository.ReservationRepository; // Package corrigé
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import java.time.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -86,5 +86,38 @@ public class ReservationService {
                 .companyId(reservation.getEntreprise().getId())
                 .companyName(reservation.getEntreprise().getNomEntreprise())
                 .build();
+    }
+
+
+
+    public Long countTotalReservations() {
+        return reservationRepository.count();
+    }
+
+
+    public Long countReservationsThisMonth() {
+        LocalDate now = LocalDate.now();
+        return reservationRepository.countByReservationDateBetween(
+                now.withDayOfMonth(1),
+                now.withDayOfMonth(now.lengthOfMonth())
+        );
+    }
+
+    public Long countReservationsLastMonth() {
+        LocalDate lastMonth = LocalDate.now().minusMonths(1);
+        return reservationRepository.countByReservationDateBetween(
+                lastMonth.withDayOfMonth(1),
+                lastMonth.withDayOfMonth(lastMonth.lengthOfMonth())
+        );
+    }
+
+
+    public List<Object[]> getMonthlyReservations() {
+        return reservationRepository.findMonthlyReservations();
+    }
+
+
+    public List<Object[]> getReservationsByStatus() {
+        return reservationRepository.countReservationsGroupedByReservationStatus();
     }
 }

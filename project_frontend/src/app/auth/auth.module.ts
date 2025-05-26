@@ -16,11 +16,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
-    AuthSelectionComponent,
-    LoginUserComponent,
-    RegisterUserComponent,
-    LoginCompanyComponent,
-    RegisterCompanyComponent,
+
     SharedComponent
   ],
   imports: [
@@ -32,10 +28,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 
   ],
   exports: [
-    AuthSelectionComponent, 
-    LoginUserComponent, 
-    LoginCompanyComponent, 
-    RegisterCompanyComponent
+   
   ]
 })
 export class AuthModule { }

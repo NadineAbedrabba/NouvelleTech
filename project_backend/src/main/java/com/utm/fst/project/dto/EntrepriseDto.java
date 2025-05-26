@@ -18,6 +18,7 @@ public class EntrepriseDto {
     private String telephone;
     private TypeCuisine typeCuisine;
     private String description;
+    private Double rating;
     private StatutEntreprise statut;
     private boolean complet;
     private boolean acceptReservation;

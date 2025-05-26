@@ -14,6 +14,7 @@
   justify-content: center;
   align-items: center;
   font-family: 'Poppins', sans-serif;
+  margin-top:-70px !important
 }
 
 .glass-card {
@@ -52,7 +53,38 @@
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+/* Couleurs pour les différents statuts */
+.status-chip.en-attente {
+  background-color: #f3d67a; /* Jaune pour "En attente" */
+  color: #8a6d3b;
+}
+
+.status-chip.confirmee {
+  background-color: #a3d8a5; /* Vert pour "Confirmée" */
+  color: #3c763d;
+}
+
+.status-chip.refusee {
+  background-color: #e8a5a5; /* Rouge pour "Refusée" */
+  color: #a94442;
+}
+
+/* Si vous utilisez les valeurs EN_ATTENTE/CONFIRMEE/REFUSEE */
+.status-chip.en_attente {
   background-color: #f3d67a;
+  color: #8a6d3b;
+}
+
+.status-chip.confirmee {
+  background-color: #a3d8a5;
+  color: #3c763d;
+}
+
+.status-chip.refusee {
+  background-color: #e8a5a5;
+  color: #a94442;
 }
 
 .status-chip.enattente {

@@ -4,9 +4,19 @@ import lombok.Data;
 
 @Data
 public class AuthenticationResponse {
-    private String jwtToken;
+    private final String token;
+    private final Long entrepriseId;
 
-    public AuthenticationResponse(String jwt) {
-        this.jwtToken = jwt;
+    public AuthenticationResponse(String token, Long entrepriseId) {
+        this.token = token;
+        this.entrepriseId = entrepriseId;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public Long getEntrepriseId() {
+        return entrepriseId;
     }
 }

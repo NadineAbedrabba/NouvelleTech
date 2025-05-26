@@ -14,7 +14,7 @@ export class EntrepriseLeftSidebarComponent {
   @Output() changeIsLeftSidebarCollapsed = new EventEmitter<boolean>();
   items = [
     { routeLink: 'dashboard', icon: 'fal fa-home', label: 'Dashboard' },
-    { routeLink: 'profil', icon: 'fal fa-user', label: 'Profil' },
+    { routeLink: ['profil'], icon: 'fal fa-user', label: 'Profil' }, // Utilisez un tableau pour les routes relatives
     { routeLink: 'reservations', icon: 'fal fa-clipboard-list', label: 'Réservations ' },
     { routeLink: 'reviews', icon: 'fal fa-comment-dots', label: 'Reviews' },
     

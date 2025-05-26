@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class HoraireJournalier {
-    private String jour; // "Lundi", "Mardi", etc.
     private String heureOuverture;
     private String heureFermeture;
     private boolean estFerme; // Si le restaurant est fermé ce jour-là

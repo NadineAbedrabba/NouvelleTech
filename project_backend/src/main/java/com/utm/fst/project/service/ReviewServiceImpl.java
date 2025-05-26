@@ -10,7 +10,7 @@ import com.utm.fst.project.repository.ReviewRepository;
 import com.utm.fst.project.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.Map;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -82,4 +82,43 @@ public class ReviewServiceImpl implements ReviewService {
         dto.setEntrepriseId(r.getEntreprise().getId());
         return dto;
     }
+
+
+    @Override
+    public Long countTotalReviews() {
+        return reviewRepository.count();
+    }
+
+    @Override
+    public Double getAverageRating() {
+        return reviewRepository.findAverageRating();
+    }
+
+    @Override
+    public Map<Long, Double> getAverageRatingByEntreprise() {
+        List<Object[]> results = reviewRepository.findAverageRatingGroupByEntreprise();
+        // Convertir la liste Object[] en Map<EntrepriseId, Moyenne>
+        return results.stream()
+                .collect(Collectors.toMap(
+                        r -> (Long) r[0],      // entrepriseId
+                        r -> (Double) r[1]     // moyenne
+                ));
+    }
+
+
+    @Override
+    public Map<Integer, Long> getCountByRating() {
+        List<Object[]> results = reviewRepository.getCountByRating();
+
+        return results.stream()
+                .filter(r -> r[0] != null && r[1] != null)  // filtre les lignes nulles
+                .collect(Collectors.toMap(
+                        r -> ((Number) r[0]).intValue(),  // rating
+                        r -> ((Number) r[1]).longValue(), // count
+                        (existing, replacement) -> existing // merge function en cas de doublon
+                ));
+    }
+
+
+
 }

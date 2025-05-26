@@ -1,1 +1,139 @@
-<p>entreprise-dashboard works!</p>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Entreprise</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="flex flex-col h-screen overflow-hidden">
+        <!-- Topbar -->
+        <header class="bg-white shadow-sm z-40">
+            <div class="flex items-center justify-between px-6 py-3">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-gray-800">Tableau de bord Entreprise</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Rechercher..." class="pl-10 pr-4 py-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                    </div>
+                    
+                </div>
+            </div>
+        </header>
+
+        <!-- Contenu principal -->
+        <main class="flex-1 overflow-y-auto p-6 bg-gray-50">
+            <!-- Cartes statistiques -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <!-- Carte Réservations -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg">
+                    <div class="p-6 flex items-center">
+                        <div class="bg-purple-100 p-4 rounded-full">
+                            <i class="fas fa-calendar-check text-purple-600 text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-gray-500">Réservations</p>
+                            <h3 class="text-2xl font-bold">324</h3>
+                            <p class="text-sm text-red-500 flex items-center">
+                                <i class="fas fa-arrow-down mr-1"></i> 3% ce mois
+                            </p>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-6 py-3">
+                        <div class="h-1 w-full bg-gray-200 rounded-full">
+                            <div class="h-1 bg-purple-500 rounded-full" style="width: 45%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Carte Avis -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg">
+                    <div class="p-6 flex items-center">
+                        <div class="bg-yellow-100 p-4 rounded-full">
+                            <i class="fas fa-star text-yellow-600 text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-gray-500">Avis</p>
+                            <h3 class="text-2xl font-bold">87</h3>
+                            <p class="text-sm text-green-500 flex items-center">
+                                <i class="fas fa-arrow-up mr-1"></i> 15% ce mois
+                            </p>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-6 py-3">
+                        <div class="h-1 w-full bg-gray-200 rounded-full">
+                            <div class="h-1 bg-yellow-500 rounded-full" style="width: 65%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Carte Note Moyenne -->
+                
+                
+                
+            </div>
+
+            <!-- Graphique des évaluations centré -->
+
+            <!-- Deuxième ligne de graphiques -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <!-- Graphique des réservations -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6 border-b border-gray-200">
+                        <h3 class="text-lg font-semibold">Réservations mensuelles</h3>
+                    </div>
+                    <div class="p-6" style="width: 100%; height: 300px;">
+                        <canvas id="reservationsChart" style="width: 100%; height: 100%;"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Graphique des statuts de réservations -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6 border-b border-gray-200">
+                        <h3 class="text-lg font-semibold">Statut des réservations</h3>
+                    </div>
+                    <div class="p-6" style="width: 100%; height: 300px;">
+                        <canvas id="statusChart" style="width: 100%; height: 100%;"></canvas>
+                    </div>
+                    <div class="mt-4 flex justify-center space-x-6 pb-6">
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+                            <span>Approuvées (85)</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-yellow-500 rounded-full mr-2"></div>
+                            <span>En attente (15)</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-red-500 rounded-full mr-2"></div>
+                            <span>Rejetées (5)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Graphique des évaluations - Version parfaitement centrée -->
+<div class="flex justify-center mb-8">
+    <div class="bg-white rounded-xl shadow-md overflow-hidden" style="width: 90%; max-width: 500px;">
+      <div class="p-4 border-b border-gray-200">
+        <h3 class="text-lg font-semibold text-center">Moyennes des évaluations</h3>
+      </div>
+      <div class="p-4">
+        <div class="chart-container" style="position: relative; height: 250px; width: 100%;">
+          <canvas id="ratingsChart"></canvas>
+        </div>
+      </div>
+      <div class="pb-3 px-4 text-center text-gray-500 text-sm">
+        <p>Évaluations moyennes sur 5 points</p>
+      </div>
+    </div>
+  </div>    </div>
+
+        </main>
+    </div>
+</body>
+</html>

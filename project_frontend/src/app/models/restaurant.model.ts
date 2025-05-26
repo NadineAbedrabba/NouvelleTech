@@ -1,4 +1,5 @@
 export interface Image {
+  id?: number | undefined;
   lien: string;
   categorie?: string;
 }
@@ -28,6 +29,7 @@ export interface Restaurant {
   optionsAlimentaires: string[];
   experiences: string[];
   accesibilite: string[];
+  
   imagesParCategories: {
     categorie: string;
     images: Image[];

@@ -1,6 +1,6 @@
 export interface HoraireJournalier {
     jour: string;
-    heureOuverture: string;
-    heureFermeture: string;
+    heureOuverture: string | null;
+    heureFermeture: string | null;
     estFerme: boolean;
   }

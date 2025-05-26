@@ -1,12 +1,14 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../auth.service';
 
 
 @Component({
   selector: 'app-login-user',
   templateUrl: './login-user.component.html',
-  styleUrls: ['./login-user.component.css']
+  styleUrls: ['./login-user.component.css'],
+  standalone:true,
+  imports:[ ReactiveFormsModule]
 })
 export class LoginUserComponent {
   loginForm = this.fb.group({

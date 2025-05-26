@@ -34,10 +34,13 @@ public class Entreprise extends User {
         private String description;
 
         @Enumerated(EnumType.STRING)
+        @Builder.Default
         private StatutEntreprise statut = StatutEntreprise.EN_ATTENTE;
 
         private boolean complet;
+        @Column(name = "accept_reservation")
         private boolean acceptReservation;
+        @Column(name = "livraison_disponible")
         private boolean livraisonDisponible;
         private String gammePrix;
 
@@ -92,8 +95,16 @@ public class Entreprise extends User {
         @Builder.Default
         private List<Reservation> reservations = new ArrayList<>();
 
+        @OneToOne
+        @JoinColumn(name = "user_id", referencedColumnName = "id")
+        private User user; // Ajoutez cette relation inverse
+
         @PrePersist
         public void prePersist() {
                 this.dateDemande = new Date();
+        }
+
+        public Entreprise(Long id) {
+                super.setId(id);
         }
 }

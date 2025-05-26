@@ -2,12 +2,13 @@
 <header>
   <!-- Votre en-tête -->
   <button (click)="openAuthModal()">Connexion / Inscription</button>
-</header>
+</header>>
 
 <main>
   <!-- Contenu principal de votre application -->
 </main>
+<router-outlet></router-outlet> 
 
 <ng-container *ngIf="showAuthModal">
-  <app-auth-selection></app-auth-selection>
+  <app-auth-selection (closeModal)="showAuthModal = false"></app-auth-selection>
 </ng-container>

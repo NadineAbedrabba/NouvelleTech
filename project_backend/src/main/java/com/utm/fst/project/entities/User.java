@@ -20,7 +20,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "entreprise_id")
     private Entreprise entreprise;
 }

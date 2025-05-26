@@ -11,11 +11,8 @@ public class EntrepriseSignupDTO {
     private String matricule;
     private String password;
     private String nomEntreprise;
-    private String description;
     private String adresse;
     private String telephone;
     private TypeCuisine typeCuisine;
-    private String localisation;
     // Add the createdAt field in DTO as well
-    private Date createdAt;
 }

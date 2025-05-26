@@ -1,9 +1,24 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { RegisterCompanyComponent } from '../register-company/register-company.component';
+import { CommonModule } from '@angular/common';
+import { LoginUserComponent } from '../login-user/login-user.component';
+import { LoginCompanyComponent } from '../login-company/login-company.component';
+import { RegisterUserComponent } from '../register-user/register-user.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-auth-selection',
   templateUrl: './auth-selection.component.html',
-  styleUrls: ['./auth-selection.component.css']
+  styleUrls: ['./auth-selection.component.css'],
+  imports: [
+    CommonModule,
+    LoginUserComponent,
+    LoginCompanyComponent,
+    RegisterUserComponent,
+    RegisterCompanyComponent,
+    ReactiveFormsModule,
+  ],
+  standalone:true,
 })
 export class AuthSelectionComponent {
   @Output() closeModal = new EventEmitter<void>();
@@ -26,6 +41,11 @@ export class AuthSelectionComponent {
   }
 
   onClose() {
+    this.closeModal.emit();
+  }
+
+   // Méthode appelée quand un enfant veut fermer la modal
+   onChildClose() {
     this.closeModal.emit();
   }
 

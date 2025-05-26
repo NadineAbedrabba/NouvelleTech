@@ -1,4 +1,5 @@
 package com.utm.fst.project.controller;
+
 import com.utm.fst.project.dto.AuthenticationRequest;
 import com.utm.fst.project.dto.AuthenticationResponse;
 import com.utm.fst.project.entities.User;
@@ -24,38 +25,55 @@ import java.io.IOException;
 
 @RestController
 public class AuthenticationController {
+
     @Autowired
     private UserService userService;
+
     @Autowired
     private AuthenticationManager authenticationManager;
+
     @Autowired
     private UserDetailsService userDetailsService;
+
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private JwtUtil jwtUtil;
 
     @PostMapping("/authenticate")
-    public AuthenticationResponse createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest , HttpServletResponse response) throws BadCredentialsException,DisabledException,UsernameNotFoundException, IOException, JSONException , ServletException {
+    public AuthenticationResponse createAuthenticationToken(
+            @RequestBody AuthenticationRequest authenticationRequest,
+            HttpServletResponse response
+    ) throws BadCredentialsException, DisabledException, UsernameNotFoundException,
+            IOException, JSONException, ServletException {
+
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword()));
-            System.out.println("✅ Authentification réussie pour : " + authenticationRequest.getEmail());
-
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                    authenticationRequest.getEmail(),
+                    authenticationRequest.getPassword()
+            ));
         } catch (BadCredentialsException e) {
-            System.out.println("❌ Mauvais identifiants pour : " + authenticationRequest.getEmail());
-
-            throw new BadCredentialsException("username or password is incorrect");
+            throw new BadCredentialsException("Identifiant ou mot de passe incorrect");
         } catch (DisabledException disabledException) {
-            response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE, "user not activated");
+            response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE, "Utilisateur non activé");
             return null;
         }
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
-        User user = userRepository.findFirstByEmail(authenticationRequest.getEmail());
+
+        // Utilisez la nouvelle méthode avec JOIN FETCH
+        User user = userRepository.findFirstByEmailWithEntreprise(authenticationRequest.getEmail());
+
+        if (user == null) {
+            throw new UsernameNotFoundException("Utilisateur non trouvé");
+        }
+
+        // Ajoutez du logging pour le débogage
+        System.out.println("User entreprise: " + (user.getEntreprise() != null ? user.getEntreprise().getId() : "null"));
+
+        Long entrepriseId = (user.getEntreprise() != null) ? user.getEntreprise().getId() : null;
+
         final String jwt = jwtUtil.generateToken(authenticationRequest.getEmail());
-        System.out.println("📦 Réponse envoyée : " + new AuthenticationResponse(jwt));
 
-        System.out.println("🚀 Token généré : " + jwt);
-
-        return new AuthenticationResponse( jwt );
+        return new AuthenticationResponse(jwt, entrepriseId);
     }
 }
