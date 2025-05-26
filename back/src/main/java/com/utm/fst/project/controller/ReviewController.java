@@ -14,12 +14,12 @@ import java.util.Map;
 public class ReviewController {
 
     @Autowired
+    private ReviewService reviewService;
 
     @GetMapping("/ping")
     public String ping() {
         return "pong";
     }
-    private ReviewService reviewService;
 
     @PostMapping
     public ReviewDTO createReview(@RequestBody ReviewDTO dto) {
