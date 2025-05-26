@@ -2,10 +2,13 @@ package com.utm.fst.project.controller;
 
 import com.utm.fst.project.dto.ReservationRequest;
 import com.utm.fst.project.dto.ReservationResponse; // Correction du package
+import com.utm.fst.project.dto.ReservationUpdateDTO;
+import com.utm.fst.project.entities.Reservation;
 import com.utm.fst.project.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import com.utm.fst.project.enums.ReservationStatus;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.time.*;
 import java.util.List;
@@ -81,5 +84,26 @@ public class ReservationController {
                         arr -> ((ReservationStatus) arr[0]).name().toLowerCase(),  // Correction ici
                         arr -> (Long) arr[1]
                 ));
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteReservation(@PathVariable Long id) {
+        reservationService.deleteReservation(id);
+        return ResponseEntity.noContent().build();
+    }
+    @GetMapping
+    public ResponseEntity<List<Reservation>> getReservationsByClientEmail(@RequestParam String clientEmail) {
+        List<Reservation> reservations = reservationService.getReservationsByClientEmail(clientEmail);
+        return ResponseEntity.ok(reservations);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<Reservation> updateReservation(@PathVariable Long id,
+                                                         @RequestBody ReservationUpdateDTO dto) {
+        try {
+            Reservation updated = reservationService.updateReservation(id, dto);
+            return ResponseEntity.ok(updated);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+
     }
 }
