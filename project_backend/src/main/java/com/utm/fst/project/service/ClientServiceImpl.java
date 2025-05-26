@@ -26,7 +26,7 @@ public class ClientServiceImpl implements ClientService {
         client.setEmail(dto.getEmail());
         client.setPassword(passwordEncoder.encode(dto.getPassword()));
         client.setNom(dto.getNom());
-        client.setUserRole(UserRole.CLIENT);
+        client.setUserRole(UserRole.USER);
 
         Client savedClient = userRepository.save(client);
         return mapToUserDTO(savedClient);

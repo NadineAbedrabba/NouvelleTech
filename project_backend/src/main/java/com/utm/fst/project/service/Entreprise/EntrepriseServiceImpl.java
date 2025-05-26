@@ -136,8 +136,8 @@ public class EntrepriseServiceImpl implements EntrepriseService {
     }
 
     @Override
-    public List<EntrepriseDto> getByLocalisation(String localisation) {
-        return entrepriseRepository.findByLocalisationContainingIgnoreCase(localisation).stream()
+    public List<EntrepriseDto> getByLocalisation(String adresse) {
+        return entrepriseRepository.findByAdresseContainingIgnoreCase(adresse).stream()
                 .map(this::mapToDto)
                 .collect(Collectors.toList());
     }
@@ -211,8 +211,8 @@ public class EntrepriseServiceImpl implements EntrepriseService {
         if (dto.getStatut() != null) {
             entreprise.setStatut(dto.getStatut());
         }
-        if (dto.getLocalisation() != null) {
-            entreprise.setLocalisation(dto.getLocalisation());
+        if (dto.getAdresse() != null) {
+            entreprise.setAdresse(dto.getAdresse());
         }
     }
 

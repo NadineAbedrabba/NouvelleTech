@@ -51,8 +51,10 @@ public class WebSecurityConfiguration {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Now this will work
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/authenticate", "/sign-up", "/entreprise/register",
+                                "/client/register",
                                 "/swagger-ui/index.html",
                                 "/entreprise/**",
+                                "/api/reservations/**",
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",

@@ -1,4 +1,14 @@
 package com.utm.fst.project.repository;
 
-public interface ReservationRepository {
+import com.utm.fst.project.entities.Reservation;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface ReservationRepository extends JpaRepository<Reservation, Long> {
+    List<Reservation> findByEntrepriseId(Long entrepriseId);
+    List<Reservation> findByClientEmail(String clientEmail);
+
 }
