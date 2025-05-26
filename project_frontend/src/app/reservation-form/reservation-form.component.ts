@@ -35,16 +35,23 @@ export class ReservationFormComponent implements OnInit {
   ngOnInit(): void {
     this.reservationForm = this.fb.group({
       reservationDate: ['', Validators.required],
-      nbPersonnes: [2, [Validators.required, Validators.min(1), Validators.max(20)]],
-      tempsArrive: ['19:00', Validators.required],
-      preference: ['']
+      arrivalTime: ['', Validators.required],  // attention au formControlName dans HTML = arrivalTime
+      nbPersonnes: [1, [Validators.required, Validators.min(1)]],
+      preference: [''],
+      clientNom: ['', Validators.required],
+      // clientEmail: ['', [Validators.required, Validators.email]],
+      clientTelephone: ['', Validators.required],
     });
   }
 
 
   onSubmit(): void {
     if (this.reservationForm.valid) {
-      this.reservationService.createReservation(this.reservationForm.value).subscribe({
+      const reservationData = {
+        ...this.reservationForm.value,
+        companyId: 2
+      };
+      this.reservationService.createReservation(reservationData).subscribe({
         next: (res) => {
           alert('Réservation créée avec succès !');
           this.reservationForm.reset();
@@ -56,12 +63,5 @@ export class ReservationFormComponent implements OnInit {
         }
       });
     }}
-  newReservation() {
-    this.submitted = false;
-    this.status = ReservationStatus.PENDING;
-    this.reservationForm.reset({
-      nbPersonnes: 2,
-      tempsArrive: '19:00'
-    });
-  }
+ 
 }

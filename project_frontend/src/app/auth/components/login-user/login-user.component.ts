@@ -23,6 +23,8 @@ export class LoginUserComponent {
         this.authService.authenticate(this.loginForm.value).subscribe({
           next: (response) => {
             console.log('Login réussie', response);
+            localStorage.setItem('token', response.jwtToken);
+
           },
           error: (err) => {
             console.error('Erreur lors du login', err);

@@ -8,13 +8,16 @@ import { ReservationService } from '../services/reservation.service';
 
 
 interface Reservation {
-  id: string;
-  reservationDate: string;
-  requestDate: string;
+  id: number;                  // id est un number d'après l'exemple
+  createdAt: string;           // date de création, format ISO string
+  reservationDate: string;     // date de réservation
+  arrivalTime: string;         // tempsArrive -> arrivalTime dans l'exemple
   nbPersonnes: number;
   preference: string;
-  tempsArrive: string;
-  status: 'PENDING' | 'CONFIRMED' | 'CANCELLED';
+  statut: 'EN_ATTENTE' | 'CONFIRMEE' | 'REFUSEE';
+  clientNom: string;
+  clientEmail: string;
+  clientTelephone: string;
 }
 @Component({
   selector: 'app-mes-reservations',
@@ -55,7 +58,8 @@ export class MesReservationsComponent implements OnInit {
       reservationDate: ['', Validators.required],
       nbPersonnes: [2, [Validators.required, Validators.min(1), Validators.max(20)]],
       tempsArrive: ['19:00', Validators.required],
-      preference: ['']
+      preference: [''],
+      clientTelephone: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]], 
     });
   }
 
@@ -63,54 +67,61 @@ export class MesReservationsComponent implements OnInit {
   filteredReservations: Reservation[] = [];
 
   ngOnInit(): void {
-    this.filterReservations('all');
     this.animationState = 'loaded';
     this.reservationService.getUserReservations().subscribe({
       next: (data) => {
         this.reservations = data;
+        this.filterReservations('all');
+
       },
       error: (err) => {
         console.error('Erreur lors de la récupération des réservations :', err);
       }
     });
+
   }
   
 
   filterReservations(filter: string): void {
     this.activeFilter = filter;
     switch (filter) {
-      case 'confirmed':
-        this.filteredReservations = this.reservations.filter(r => r.status === 'CONFIRMED');
+      case 'confirmee':
+        this.filteredReservations = this.reservations.filter(r => r.statut === 'CONFIRMEE');
         break;
-      case 'pending':
-        this.filteredReservations = this.reservations.filter(r => r.status === 'PENDING');
+      case 'en_attente':
+        this.filteredReservations = this.reservations.filter(r => r.statut === 'EN_ATTENTE');
         break;
-      case 'cancelled':
-        this.filteredReservations = this.reservations.filter(r => r.status === 'CANCELLED');
+      case 'refusee':
+        this.filteredReservations = this.reservations.filter(r => r.statut === 'REFUSEE');
         break;
       default:
         this.filteredReservations = [...this.reservations];
     }
   }
+  
+  
 
-  getStatusText(status: string): string {
-    switch (status) {
-      case 'CONFIRMED': return 'Confirmée';
-      case 'PENDING': return 'En attente';
-      case 'CANCELLED': return 'Annulée';
+  getStatusText(statut: string): string {
+    switch (statut) {
+      case 'CONFIRMEE': return 'confirmee';
+      case 'EN_ATTENTE': return 'en_attente';
+      case 'REFUSEE': return 'refusee';
       default: return '';
     }
   }
 
   modifyReservation(reservation: Reservation): void {
     this.currentReservation = reservation;
-    this.editForm.patchValue({
-      reservationDate: reservation.reservationDate,
-      nbPersonnes: reservation.nbPersonnes,
-      tempsArrive: reservation.tempsArrive,
-      preference: reservation.preference
-    });
-    this.showEditModal = true;
+    setTimeout(() => {
+      this.editForm.patchValue({
+        reservationDate: reservation.reservationDate,
+        nbPersonnes: reservation.nbPersonnes,
+        tempsArrive: reservation.arrivalTime,
+        preference: reservation.preference,
+        clientTelephone: reservation.clientTelephone
+      });
+      this.showEditModal = true;
+    }, 0);
   }
   submitUpdate(): void {
     if (this.currentReservation && this.editForm.valid) {
@@ -140,7 +151,7 @@ export class MesReservationsComponent implements OnInit {
     if (confirm('Voulez-vous vraiment annuler cette réservation ?')) {
       this.reservationService.cancelReservation(+reservation.id).subscribe({
         next: () => {
-          reservation.status = 'CANCELLED';
+          reservation.statut = 'REFUSEE';
   
           
           alert('Réservation annulée avec succès.');
