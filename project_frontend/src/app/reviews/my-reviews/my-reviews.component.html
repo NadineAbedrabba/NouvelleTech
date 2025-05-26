@@ -10,13 +10,6 @@
   
   <!-- Section de filtres -->
   <div class="filters-section" *ngIf="!isLoading && !errorMessage && allReviews.length > 0">
-    <div class="filters-header">
-      <h3 class="filter-title">Filtrer mes avis</h3>
-      <div class="results-count">
-        {{ reviews.length }} avis trouvé{{ reviews.length > 1 ? 's' : '' }}
-      </div>
-    </div>
-    
     <div class="filters-container">
       <!-- Barre de recherche -->
       <div class="search-filter">
@@ -27,7 +20,7 @@
           (input)="applyFilters()"
           class="search-input"
         >
-        <span class="search-icon"><i class="fas fa-search"></i></span>
+        <span class="search-icon">🔍</span>
       </div>
       
       <!-- Filtres -->
@@ -67,8 +60,13 @@
       
       <!-- Bouton de réinitialisation -->
       <button class="reset-filters-btn" (click)="resetFilters()">
-        <i class="fas fa-undo-alt"></i> Réinitialiser
+        Réinitialiser
       </button>
+    </div>
+    
+    <!-- Compteur de résultats -->
+    <div class="results-count">
+      {{ reviews.length }} avis trouvé{{ reviews.length > 1 ? 's' : '' }}
     </div>
   </div>
 
