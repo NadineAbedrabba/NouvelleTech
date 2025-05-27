@@ -144,13 +144,13 @@ horairesText: any;
     
     // Si c'est une URL externe
     if (lien.startsWith('http://') || lien.startsWith('https://')) {
-      return lien;
+      return `${lien}?t=${Date.now()}`; // Ajout du timestamp
     }
     
     // Si le lien contient déjà une partie du chemin
     if (lien.includes('review/api/images/files')) {
       const cleanPath = lien.replace(/^\/+/, '');
-      return `http://localhost:8081/${cleanPath}?t=${Date.now()}`; // Ajout du timestamp
+      return `http://localhost:8081/${cleanPath}?t=${Date.now()}`;
     }
     
     // Si c'est juste un nom de fichier
@@ -430,53 +430,54 @@ openEditModal(section: string): void {
       return;
     }
   
-    // Créez une URL d'aperçu temporaire
-    const tempPreviewUrl = URL.createObjectURL(this.selectedFile);
+    // Créer une URL temporaire pour l'aperçu
+    const tempUrl = URL.createObjectURL(this.selectedFile);
   
     this.restaurantService.uploadImage(this.entrepriseId, 'Profil', this.selectedFile)
       .pipe(
-        // Supprime l'ancienne image de profil si elle existe
-        switchMap((newImage) => {
-          const oldProfileImage = this.restaurant.images?.find(img => img.categorie === 'Profil');
-          if (oldProfileImage?.id) {
-            return this.restaurantService.deleteImage(oldProfileImage.id).pipe(
-              // Ignore les erreurs de suppression pour continuer avec la nouvelle image
-              catchError(() => of(null)),
-              map(() => newImage)
-            );
-          }
-          return of(newImage);
+        switchMap(newImage => {
+          // 1. Supprimer l'ancienne image si elle existe
+          const oldImage = this.restaurant.images?.find(img => img.categorie === 'Profil');
+          return oldImage?.id 
+            ? this.restaurantService.deleteImage(oldImage.id).pipe(
+                catchError(() => of(null)), // Ignorer les erreurs
+                map(() => newImage)
+              )
+            : of(newImage);
         })
       )
       .subscribe({
         next: (newImage) => {
-          // Crée un NOUVEL objet avec une nouvelle référence
+          // 2. Mettre à jour l'état avec une NOUVELLE référence
           this.restaurant = {
             ...this.restaurant,
             images: [
               ...(this.restaurant.images || []).filter(img => img.categorie !== 'Profil'),
-              newImage
+              { ...newImage, lien: `${newImage.lien}?t=${Date.now()}` } // Cache buster
             ],
             photoProfil: {
-              src: this.getImageUrlWithCacheBuster(newImage.lien),
-              alt: 'Photo de profil mise à jour'
+              src: this.getImageUrl(newImage.lien) + `?t=${Date.now()}`, // Double protection
+              alt: 'Nouvelle photo de profil'
             }
           };
   
+          // 3. Forcer la détection de changement
+          this.cdRef.detectChanges();
+          
+          // 4. Libérer la mémoire
+          URL.revokeObjectURL(tempUrl);
+          
           this.successMessage = 'Photo mise à jour avec succès';
           setTimeout(() => this.successMessage = null, 3000);
           this.closeAvatarModal();
-          
-          // Libère la mémoire de l'URL d'aperçu
-          URL.revokeObjectURL(tempPreviewUrl);
         },
         error: (err) => {
-          this.errorMessage = 'Échec de la mise à jour. Veuillez réessayer.';
-          console.error('Erreur upload:', err);
+          this.errorMessage = 'Photo mise à jour avec succès';
+          console.error('Erreur:', err);
+          URL.revokeObjectURL(tempUrl); // Nettoyage en cas d'erreur
         }
       });
   }
-  
   // Ajoutez cette méthode pour contourner le cache
   private getImageUrlWithCacheBuster(lien: string): string {
     const baseUrl = this.getImageUrl(lien);

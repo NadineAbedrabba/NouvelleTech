@@ -158,7 +158,7 @@ export class ReviewsComponent implements OnInit {
 
     // Handle backend-hosted images
     const cleanPath = photoUrl.replace(/^\/+/, '');
-    const fullUrl = `http://localhost:8081/review/api/images/files/${cleanPath}?t=${Date.now()}`;
+    const fullUrl = `http://localhost:8081/review/${cleanPath}?t=${Date.now()}`;
     console.log('Constructed backend image URL:', fullUrl);
     return fullUrl;
   }

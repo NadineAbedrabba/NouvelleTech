@@ -1,9 +1,10 @@
 <div class="glass-container">
   <div class="glass-card">
     <div class="reservation-header">
-      <button class="glass-btn back-btn" routerLink="/reservations">
+      <button class="glass-btn back-btn" (click)="goBack()">
         <i class="fas fa-arrow-left"></i>
       </button>
+      
       <h1 class="soft-title">Réservation #{{reservation.id}}</h1>
       <div class="status-chip" [ngClass]="reservation.statut?.toLowerCase()">
         {{reservation.statut}}

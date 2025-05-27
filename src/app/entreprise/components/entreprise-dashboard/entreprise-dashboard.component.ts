@@ -68,7 +68,7 @@ export class EntrepriseDashboardComponent implements AfterViewInit {
           labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'],
           datasets: [{
             label: 'Réservations',
-            data: [120, 190, 170, 210, 180, 220, 240, 210, 230, 250, 280, 300],
+            data: [5, 6, 7, 8, 8, 9, 5, 8, 7, 10, 11, 12],
             borderColor: 'rgb(59, 130, 246)',
             backgroundColor: 'rgba(59, 130, 246, 0.1)',
             tension: 0.4,
@@ -103,7 +103,7 @@ export class EntrepriseDashboardComponent implements AfterViewInit {
         data: {
           labels: ['Approuvées', 'En attente', 'Rejetées'],
           datasets: [{
-            data: [85, 15, 5],
+            data: [15, 3, 2],
             backgroundColor: ['rgb(16, 185, 129)', 'rgb(245, 158, 11)', 'rgb(239, 68, 68)'],
             borderWidth: 0,
             hoverOffset: 10

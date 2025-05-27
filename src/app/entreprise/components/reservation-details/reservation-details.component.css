@@ -29,7 +29,7 @@
   box-shadow: 0 8px 32px 0 rgba(144, 20, 48, 0.1);
   padding: 2rem;
   width: 100%;
-  max-width: 900px;
+  max-width: 1000px;
 }
 
 .reservation-header {
@@ -110,10 +110,13 @@
 
 .reservation-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(3, 250px); /* 3 colonnes de 200px */
+  justify-content: center; /* Centrer l'ensemble des cartes */
+  gap: 70px; /* Espace entre les cartes */
   margin-bottom: 2rem;
 }
+
+
 
 .info-card {
   position: relative;

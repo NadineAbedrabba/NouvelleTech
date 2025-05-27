@@ -30,7 +30,7 @@ export class AdminDashboardComponent implements AfterViewInit {
         type: 'donut',
         height: 300
       },
-      labels: ["ilef", "Italienne", "Japonaise", "Autre"],
+      labels: ["TUNISIENNE", "Italienne", "Japonaise", "Autre"],
       colors: ['#10B981', '#3B82F6', '#F59E0B', '#6B7280'],
       responsive: [{
         breakpoint: 480,
@@ -56,8 +56,8 @@ export class AdminDashboardComponent implements AfterViewInit {
             data: {
                 labels: ['1 étoile', '2 étoiles', '3 étoiles', '4 étoiles', '5 étoiles'],
                 datasets: [{
-                    label: 'Nombre de restaurants',
-                    data: [5, 15, 30, 45, 25], // Modifiez ces valeurs selon vos données réelles
+                   
+                    data: [2, 2, 3, 4, 3], // Modifiez ces valeurs selon vos données réelles
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.7)',
                         'rgba(255, 159, 64, 0.7)',
@@ -92,7 +92,7 @@ export class AdminDashboardComponent implements AfterViewInit {
                         beginAtZero: true,
                         title: {
                             display: true,
-                            text: 'Nombre de restaurants'
+                          
                         }
                     },
                     x: {
@@ -114,10 +114,10 @@ export class AdminDashboardComponent implements AfterViewInit {
       new Chart(cuisineCtx.getContext('2d')!, {
         type: 'bar',
         data: {
-          labels: ['ilef', 'Chinoise', 'Française', 'Mexicaine', 'Japonaise'],
+          labels: ['TUNISIENNE', 'Chinoise', 'Française', 'Mexicaine', 'Japonaise'],
           datasets: [{
-            label: 'Nombre de restaurants',
-            data: [30, 25, 15, 20, 10],
+          
+            data: [8, 2, 3, 1, 1],
             backgroundColor: [
               'rgba(255, 99, 132, 0.7)',
               'rgba(54, 162, 235, 0.7)',
@@ -137,12 +137,18 @@ export class AdminDashboardComponent implements AfterViewInit {
         },
         options: {
           responsive: true,
+          plugins: {
+            legend: {
+              display: false // <-- Masque la légende
+            }
+          },
           maintainAspectRatio: false,
           scales: {
             y: {
               beginAtZero: true
             }
           }
+          
         }
       });
     }
@@ -160,7 +166,7 @@ export class AdminDashboardComponent implements AfterViewInit {
           labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'],
           datasets: [{
             label: 'Réservations',
-            data: [120, 190, 170, 210, 180, 220, 240, 210, 230, 250, 280, 300],
+            data: [3, 5, 4, 5, 5, 6, 7, 8, 9, 10, 8, 5],
             borderColor: 'rgb(59, 130, 246)',
             backgroundColor: 'rgba(59, 130, 246, 0.1)',
             tension: 0.4,
@@ -206,7 +212,7 @@ export class AdminDashboardComponent implements AfterViewInit {
         data: {
           labels: ['Approuvées', 'En attente', 'Rejetées'],
           datasets: [{
-            data: [85, 15, 5],
+            data: [20, 5, 2],
             backgroundColor: [
               'rgb(16, 185, 129)',
               'rgb(245, 158, 11)',

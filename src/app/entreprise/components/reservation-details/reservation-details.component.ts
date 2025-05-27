@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-reservation-details',
@@ -18,7 +19,7 @@ export class ReservationDetailsComponent implements OnInit {
   error: string | null = null;
   entrepriseId: number | undefined;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient, private location: Location) {}
 
   ngOnInit(): void {
     this.route.parent?.params.subscribe(parentParams => {
@@ -83,4 +84,9 @@ export class ReservationDetailsComponent implements OnInit {
         }
       });
   }
+
+  goBack(): void {
+    this.location.back();
+  }
+  
 }

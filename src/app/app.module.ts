@@ -22,8 +22,9 @@ import { UserProfileModule } from "./user-profile/user-profile.module";
 import { AuthModule } from "./auth/auth.module";
 import { HttpClientModule } from "@angular/common/http";
 import { AppComponent } from "./app.component";
+import { NgModule } from "@angular/core";
 
-@module({
+@NgModule({
   declarations: [
     
     HeaderComponent,
@@ -53,6 +54,10 @@ import { AppComponent } from "./app.component";
     HttpClientModule,
     AuthModule,
     UserProfileModule,
+    BrowserModule,
+    CommonModule,
+    RouterModule.forRoot([]),
+    AuthModule
   ],
   exports: [
     HeaderComponent,
