@@ -351,7 +351,7 @@
 
 
       <div *ngFor="let resto of restaurants">
-        <div class="carte">
+        <div class="carte" (click)="goToDetails(resto.id)" style="cursor: pointer;">
           <div class="img">
             <img src="assets/Images/1.jpg" alt="card-content" />
           </div>
@@ -391,7 +391,7 @@
             <p>(238 reiews)</p>
             <div class="website">Website</div>
             <div class="button">
-              <button class="btn">Réserver</button>
+              <button class="btn" (click)="goToReserve(resto.id)">Réserver</button>
             </div>
           </div>
         </div>

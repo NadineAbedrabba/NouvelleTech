@@ -1,0 +1,19 @@
+.btn.btn-primary {
+    background-color: #901430;
+    border-color: #901430;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    float: right; /* Alignement à droite */
+    margin-left: auto; /* Pour renforcer l'alignement */
+    margin: 3rem;
+  }
+  
+  .btn.btn-primary:hover {
+    background-color: #c23d5a;
+    border-color: #c23d5a;
+  }
+

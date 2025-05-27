@@ -21,6 +21,9 @@ import { AdminLayoutComponent } from './admin/components/admin-layout/admin-layo
 import { AdminReviewsComponent } from './admin/components/reviews/reviews.component';
 import { EntrepriseLayoutComponent } from './entreprise/components/entreprise-layout/entreprise-layout.component';
 import { EntrepriseDashboardComponent } from './entreprise/components/entreprise-dashboard/entreprise-dashboard.component';
+import { MesReservationsComponent } from './mes-reservations/mes-reservations.component';
+import { DetailRestoComponent } from './detail-resto/detail-resto.component';
+import { ReservationFormComponent } from './reservation-form/reservation-form.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -66,4 +69,7 @@ export const routes: Routes = [
       { path: 'reviews', component: ReviewsComponent }
     ]
   },
+    { path: 'mesreservations', component: MesReservationsComponent },
+    { path: 'detailsRestaurant/:id', component: DetailRestoComponent  },
+{ path: 'reserver', component: ReservationFormComponent }
 ];

@@ -7,7 +7,7 @@ import { PriceRangeComponent } from '../price-range/price-range.component';
 import { DisponibilityComponent } from '../disponibility/disponibility.component';
 import { LeafletMapComponent } from '../leaflet-map/leaflet-map.component';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Restaurant } from 'src/app/models/restaurant.model';
 import { RestaurantService } from 'src/app/services/restaurant.service';
 
@@ -51,7 +51,7 @@ export class RestaurantsPageComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(private restaurantService: RestaurantService , private route: ActivatedRoute) {}
+  constructor(private restaurantService: RestaurantService , private route: ActivatedRoute,private router: Router) {}
 
 
   searchTerm: string = '';
@@ -95,7 +95,14 @@ this.route.params.subscribe(params => {
   }
 
 
+goToDetails(id: number) {
+  this.router.navigate(['/detailsRestaurant', id.toString()]);
+}
 
+goToReserve(id: number) {
+      this.router.navigate(['/reserver'], { queryParams: { id } });
+
+}
   
   toggleSearchSortOrder(): void {
     this.searchSortOrder = this.searchSortOrder === 'asc' ? 'desc' : 'asc';
