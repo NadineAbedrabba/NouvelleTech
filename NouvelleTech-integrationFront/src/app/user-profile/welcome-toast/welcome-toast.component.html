@@ -1,0 +1,9 @@
+<div class="toast-container" *ngIf="welcomeMessage" @toastAnimation>
+  <div class="toast-content">
+    <i class="fas fa-check-circle toast-icon"></i>
+    <div class="toast-message">{{ welcomeMessage }}</div>
+    <button class="toast-close" (click)="closeToast()">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Témoignages Clients</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        /* Existing styles remain unchanged */
+        .testimonial-card {
+            border-radius: 0.25rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            height: 100%;
+            background-color: #f8f9fa;
+            max-width: 350px;
+            margin: 0 auto;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .testimonial-card .card-up {
+            height: 100px;
+            overflow: hidden;
+            border-top-left-radius: 0.25rem;
+            border-top-right-radius: 0.25rem;
+        }
+        
+        .testimonial-card .avatar {
+            width: 100px;
+            margin-top: -45px;
+            overflow: hidden;
+            border: 3px solid #fff;
+            border-radius: 50%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .testimonial-card .avatar img {
+            width: 100%;
+            height: 100px;
+        }
+        
+        .dark-grey-text {
+            color: #4f4f4f;
+            font-size: 1rem;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .title-with-bg {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            background-color: #991e2a;
+            color: white;
+            transform: skewX(-15deg);
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            font-size: 1rem;
+        }
+        
+        .title-text {
+            display: inline-block;
+            transform: skewX(15deg);
+            font-size:30px
+        }
+        
+        .star-rating {
+            color: #FFD700;
+            margin-bottom: 8px;
+            font-size: 1rem;
+            text-align: center;
+        }
+        
+        .detail-rating {
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .rating-category {
+            display: inline-block;
+            margin: 0 5px 5px 5px;
+        }
+        
+        .rating-label {
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 2px;
+            color: #6c757d;
+        }
+        
+        .rating-stars {
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        .quote-section {
+            margin-top: 10px;
+        }
+        
+        .rating-value {
+            font-weight: bold;
+            margin-left: 3px;
+            color: #FFD700;
+            font-size: 0.9rem;
+        }
+
+        .card-body {
+            padding: 1rem;
+        }
+
+        .card-body h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+        }
+
+        hr {
+            margin: 0.8rem 0;
+        }
+
+        .context-menu {
+            position: fixed;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            z-index: 1000;
+            min-width: 180px;
+            overflow: hidden;
+        }
+
+        .context-menu-item {
+            width: 100%;
+            padding: 8px 16px;
+            border: none;
+            background: none;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #2c3e50;
+        }
+
+        .context-menu-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .context-menu-item.delete {
+            color: #e74c3c;
+        }
+
+        .context-menu-item i {
+            font-size: 1rem;
+        }
+
+        .testimonial-card {
+            user-select: none;
+            -webkit-user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <section style="color: #000; background-color: #f7fafa;">
+        <div class="container py-4">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-10 col-xl-8 text-center">
+                    <h3 class="mb-3">
+                        <span class="title-with-bg">
+                            <span class="title-text">Témoignages</span>
+                        </span>
+                    </h3>
+                    <h2 class="display-6 fw-bold mb-3">Ce que les clients disent</h2>
+                </div>
+            </div>
+
+            <div class="row text-center d-flex align-items-stretch">
+                <!-- Boucle sur les avis -->
+                <div *ngFor="let review of reviews" class="col-md-4 mb-4 mb-md-0 d-flex align-items-stretch">
+                    <div class="card testimonial-card" (contextmenu)="showContextMenu($event, review.id)">
+                        <div class="card-up" style="background-color: #4A81A8;"></div>
+                        <div class="avatar mx-auto bg-white">
+                            <img [src]="getClientPhoto(review.clientPhoto)" 
+                                 (error)="handleImageError($event, review.clientPhoto)"
+                                 class="rounded-circle img-fluid"
+                                 alt="Photo de {{review.clientName}} ou image par défaut" />
+                        </div>
+                        <div class="card-body">
+                            <h4 class="mb-3" style="color:#901430;">{{ review.clientName }}</h4>
+                            
+                            <div class="star-rating">
+                                <i *ngIf="review.rating >= 1" class="bi bi-star-fill"></i>
+                                <i *ngIf="review.rating < 1 && review.rating >= 0.5" class="bi bi-star-half"></i>
+                                <i *ngIf="review.rating < 0.5" class="bi bi-star"></i>
+                                
+                                <i *ngIf="review.rating >= 2" class="bi bi-star-fill"></i>
+                                <i *ngIf="review.rating < 2 && review.rating >= 1.5" class="bi bi-star-half"></i>
+                                <i *ngIf="review.rating < 1.5" class="bi bi-star"></i>
+                                
+                                <i *ngIf="review.rating >= 3" class="bi bi-star-fill"></i>
+                                <i *ngIf="review.rating < 3 && review.rating >= 2.5" class="bi bi-star-half"></i>
+                                <i *ngIf="review.rating < 2.5" class="bi bi-star"></i>
+                                
+                                <i *ngIf="review.rating >= 4" class="bi bi-star-fill"></i>
+                                <i *ngIf="review.rating < 4 && review.rating >= 3.5" class="bi bi-star-half"></i>
+                                <i *ngIf="review.rating < 3.5" class="bi bi-star"></i>
+                                
+                                <i *ngIf="review.rating >= 5" class="bi bi-star-fill"></i>
+                                <i *ngIf="review.rating < 5 && review.rating >= 4.5" class="bi bi-star-half"></i>
+                                <i *ngIf="review.rating < 4.5" class="bi bi-star"></i>
+                                
+                                <span class="rating-value">{{ review.rating?.toFixed(1) || '0.0' }}</span>
+                            </div>
+                            
+                            <div class="detail-rating">
+                                <div class="rating-category">
+                                    <span class="rating-label">Nourriture</span>
+                                    <div class="rating-stars">
+                                        <i *ngIf="review.foodRating >= 1" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.foodRating < 1 && review.foodRating >= 0.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.foodRating < 0.5" class="bi bi-star"></i>
+                                        
+                                        <i *ngIf="review.foodRating >= 2" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.foodRating < 2 && review.foodRating >= 1.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.foodRating < 1.5" class="bi bi-star"></i>
+                                        
+                                        <i *ngIf="review.foodRating >= 3" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.foodRating < 3 && review.foodRating >= 2.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.foodRating < 2.5" class="bi bi-star"></i>
+                                        
+                                        <i *ngIf="review.foodRating >= 4" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.foodRating < 4 && review.foodRating >= 3.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.foodRating < 3.5" class="bi bi-star"></i>
+                                        
+                                        <i *ngIf="review.foodRating >= 5" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.foodRating < 5 && review.foodRating >= 4.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.foodRating < 4.5" class="bi bi-star"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="rating-category">
+                                    <span class="rating-label">Service</span>
+                                    <div class="rating-stars">
+                                        <i *ngIf="review.serviceRating >= 1" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.serviceRating < 1 && review.serviceRating >= 0.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.serviceRating < 0.5" class="bi bi-star"></i>
+                                        
+                                        <i *ngIf="review.serviceRating >= 2" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.serviceRating < 2 && review.serviceRating >= 1.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.serviceRating < 1.5" class="bi bi-star"></i>
+                                        
+                                        <i *ngIf="review.serviceRating >= 3" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.serviceRating < 3 && review.serviceRating >= 2.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.serviceRating < 2.5" class="bi bi-star"></i>
+                                        
+                                        <i *ngIf="review.serviceRating >= 4" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.serviceRating < 4 && review.serviceRating >= 3.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.serviceRating < 3.5" class="bi bi-star"></i>
+                                        
+                                        <i *ngIf="review.serviceRating >= 5" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.serviceRating < 5 && review.serviceRating >= 4.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.serviceRating < 4.5" class="bi bi-star"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="rating-category">
+                                    <span class="rating-label">Ambiance</span>
+                                    <div class="rating-stars">
+                                        <i *ngIf="review.ambianceRating >= 1" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.ambianceRating < 1 && review.ambianceRating >= 0.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.ambianceRating < 0.5" class="bi bi-star"></i>
+                                        
+                                        <i *ngIf="review.ambianceRating >= 2" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.ambianceRating < 2 && review.ambianceRating >= 1.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.ambianceRating < 1.5" class="bi bi-star"></i>
+                                        
+                                        <i *ngIf="review.ambianceRating >= 3" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.ambianceRating < 3 && review.ambianceRating >= 2.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.ambianceRating < 2.5" class="bi bi-star"></i>
+                                        
+                                        <i *ngIf="review.ambianceRating >= 4" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.ambianceRating < 4 && review.ambianceRating >= 3.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.ambianceRating < 3.5" class="bi bi-star"></i>
+                                        
+                                        <i *ngIf="review.ambianceRating >= 5" class="bi bi-star-fill"></i>
+                                        <i *ngIf="review.ambianceRating < 5 && review.ambianceRating >= 4.5" class="bi bi-star-half"></i>
+                                        <i *ngIf="review.ambianceRating < 4.5" class="bi bi-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <hr />
+                            <div class="quote-section">
+                                <p class="dark-grey-text mt-3">
+                                    <i class="bi bi-quote pe-2" style="color:#4A81A8"></i>{{review.commentaire || 'Aucun commentaire'}}
+                                </p>
+                                <small class="text-muted">{{review.createdAt | date:'dd/MM/yyyy HH:mm'}}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Message si aucun avis -->
+                <div *ngIf="reviews.length === 0" class="col-12 text-center py-5">
+                    <p class="lead">Aucun témoignage disponible pour le moment.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu contextuel -->
+        <div class="context-menu" *ngIf="contextMenuVisible"
+             [style.left.px]="contextMenuPosition.x"
+             [style.top.px]="contextMenuPosition.y"
+             (click)="$event.stopPropagation()">
+            
+            <button (click)="deleteReview()" class="context-menu-item delete">
+                <i class="bi bi-trash"></i> Supprimer
+            </button>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

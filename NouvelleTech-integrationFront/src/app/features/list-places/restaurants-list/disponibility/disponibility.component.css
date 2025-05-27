@@ -1,0 +1,224 @@
+input[type="checkbox"] {
+    &:not(.switch) {
+      &:after {
+        width: 6px;
+        height: 6px;
+        border: 2px solid var(--bg1);
+        border-top: 0;
+        border-left: 0;
+        left: 4px;
+        top: 4px;
+        transform: rotate(var(--r, 20deg));
+        background-color: var(--bg1);
+      }
+      &:checked {
+        --r: 45deg;
+        background: var(--active);
+      }
+    }
+    &.switch {
+      width: 38px;
+      border-radius: 11px;
+      &:after {
+        left: 2px;
+        top: 2px;
+        border-radius: 50%;
+        width: 15px;
+        height: 15px;
+        background: var(--ab, var(--border));
+        transform: translateX(var(--x, 0));
+      }
+      &:checked {
+        --ab: var(--active-inner);
+        --x: 17px;
+      }
+      &:disabled {
+        &:not(:checked) {
+          &:after {
+            opacity: 0.6;
+          }
+        }
+      }
+    }
+  }
+
+  .material-symbols-outlined {
+    color: var(--color2); /* Change la couleur en rouge */
+    font-size: 24px; /* Ajuste la taille si nécessaire */
+    font-variation-settings: "FILL" 1; /* Active le mode "Filled" */
+    transform: scale(0.9); /* Réduit encore plus */
+
+
+  }
+  
+  input[type="checkbox"] + label {
+    font-size: 14px;
+    line-height: 24px;
+    display: inline-block;
+    vertical-align: top;
+    cursor: pointer;
+    margin-left: 6px;
+  }
+  
+  .checkbox-group {
+    margin-left: 13px;
+    margin-bottom: 16px;
+  }
+  
+  .dispo-jour-heure {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    opacity: 0.4; /* Opacité faible par défaut */
+    pointer-events: none; /* Empêche les interactions */
+    transition: opacity 0.3s ease; /* Animation fluide */
+  }
+  
+  .dispo-jour-heure.active {
+    opacity: 1; /* Rétablir l'opacité quand activé */
+    pointer-events: auto; /* Autoriser l'interaction */
+  }
+  .dispo-jour-heure input {
+    appearance: none; /* Désactive le style natif */
+    background-color: transparent;
+    color: var(--color1-darker);
+    border: 1px solid var(--color1-darker); /* Bordure rouge */
+    padding: 8px;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    width: 140px;
+    text-align: center;
+    line-height: 30px; /* Ajuster la hauteur de ligne pour centrer verticalement */
+    padding-top: 7px;
+    margin-left: 15px;
+    margin-left: auto;
+    margin-right: 15%;
+  }
+  
+  input[type="date"]:focus {
+    outline: none; /* Supprime le contour de focus par défaut */
+  }
+  
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    color: var(--color1); /* Couleur de l'icône */
+    margin-top: 5px;
+  }
+  
+  .thenya {
+    margin-top: 7px;
+  }
+
+  
+.title {
+    font-family: var(--font-wow1);
+    color: var(--color2);
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+  
+  
+  .flex-title-reset {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5px 4px;
+    }
+
+    
+@supports ((-webkit-appearance: none) or (-moz-appearance: none)) {
+    input[type="checkbox"],
+    input[type="radio"] {
+      --active: var(--color1);
+      --active-inner: #fff;
+      --focus: 0 0 4px var(--color1);
+      --border: #acacac;
+      --border-hover: var(--color1);
+      --background: var(--bg1);
+      --disabled: #f6f8ff;
+      --disabled-inner: #e1e6f9;
+  
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--background);
+      cursor: pointer;
+      display: inline-block;
+      position: relative;
+      transition: background 0.3s, border-color 0.3s, box-shadow 0.2s;
+  
+      &:after {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--active-inner);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        transition: transform 0.3s ease-in-out, opacity 0.2s;
+      }
+  
+      &:checked {
+        background: var(--active);
+        border-color: var(--active);
+      }
+  
+      &:checked:after {
+        transform: translate(-50%, -50%) scale(1);
+      }
+  
+      &:hover:not(:checked):not(:disabled) {
+        border-color: var(--border-hover);
+      }
+  
+      &:focus {
+        box-shadow: var(--focus);
+      }
+  
+      &:disabled {
+        background: var(--disabled);
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
+  
+      &:disabled:checked {
+        background: var(--disabled-inner);
+        border-color: var(--border);
+      }
+    }
+  
+    /* Style des labels */
+    input[type="radio"] + label {
+      font-size: 14px;
+      line-height: 24px;
+      display: inline-block;
+      vertical-align: top;
+      cursor: pointer;
+      margin-left: 6px;
+    }
+  }
+  
+  /* Suppression des puces dans les listes */
+  li {
+    list-style: none;
+    margin: 13px 5px;
+    position: relative;
+    margin-bottom: -4px;
+  }
+  
+  .radio-group {
+    margin-bottom: 10px;
+    margin-top: -13px;
+  }
+  .radio-group > li:last-child {
+    margin-top: 27px;
+    margin-bottom: 15px;
+  }
+  

@@ -1,0 +1,68 @@
+<div class="reservation-wrapper">
+    <div class="reservation-container">
+      <div class="reservation-card">
+        <h1 class="title">Réservez votre table</h1>
+        <p class="subtitle">Planifiez votre expérience culinaire</p>
+        
+        <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()" class="reservation-form">
+          <div class="form-group">
+            <label for="reservationDate">Date de réservation</label>
+            <input type="date" id="reservationDate" formControlName="reservationDate" [min]="today" />
+          </div>
+          
+          <div class="form-group">
+            <label for="nbPersonnes">Nombre de personnes</label>
+            <select id="nbPersonnes" formControlName="nbPersonnes">
+              <option *ngFor="let num of [1,2,3,4,5,6,7,8]" [value]="num">
+                {{num}} personne{{num > 1 ? 's' : ''}}
+              </option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="tempsArrive">Heure d'arrivée</label>
+            <input type="time" id="tempsArrive" formControlName="arrivalTime" />
+          </div>
+  
+          <div class="form-group">
+            <label for="preference">Préférences (optionnel)</label>
+            <textarea id="preference" formControlName="preference" placeholder="Allergies, emplacement préféré..."></textarea>
+          </div>
+  
+          <!-- Ajout des champs clientNom, clientEmail, clientTelephone -->
+  
+          <div class="form-group">
+            <label for="clientNom">Nom du client</label>
+            <input type="text" id="clientNom" formControlName="clientNom" />
+          </div>
+  
+          <!-- <div class="form-group">
+            <label for="clientEmail">Email du client</label>
+            <input type="email" id="clientEmail" formControlName="clientEmail" />
+          </div>
+   -->
+          <div class="form-group">
+            <label for="clientTelephone">Téléphone du client</label>
+            <input type="tel" id="clientTelephone" formControlName="clientTelephone" />
+          </div>
+          
+          <div class="form-actions">
+            <button type="submit" [disabled]="!reservationForm.valid" class="submit-btn">Réserver</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+    
+    <!-- <div *ngIf="submitted" class="confirmation-message" [ngClass]="{'success': status === 'CONFIRMED', 'pending': status === 'PENDING', 'rejected': status === 'REJECTED'}">
+      <h3 *ngIf="status === 'PENDING'">Réservation en attente</h3>
+      <h3 *ngIf="status === 'CONFIRMED'">Réservation confirmée!</h3>
+      <h3 *ngIf="status === 'REJECTED'">Réservation refusée</h3>
+      
+      <p *ngIf="status === 'PENDING'">Votre demande est en cours de traitement. Nous vous contacterons bientôt.</p>
+      <p *ngIf="status === 'CONFIRMED'">Votre table est réservée pour le {{reservationDate | date:'dd/MM/yyyy'}} à {{tempsArrive}}.</p>
+      <p *ngIf="status === 'REJECTED'">Désolé, nous ne pouvons pas honorer votre réservation à cette date. Veuillez choisir une autre date.</p>
+      
+      <button *ngIf="status !== 'PENDING'" (click)="newReservation()" class="new-reservation-btn">Nouvelle réservation</button>
+    </div> -->

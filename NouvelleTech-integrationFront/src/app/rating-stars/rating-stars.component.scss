@@ -1,0 +1,30 @@
+.stars-container {
+    display: inline-block;
+  }
+  
+  .star {
+    color: #FFDF6C;
+    font-size: 1.2rem;
+    position: relative;
+    display: inline-block;
+    
+    &.full {
+      color: #FFDF6C;
+    }
+    
+    &.half {
+      &::before {
+        content: '★';
+        position: absolute;
+        left: 0;
+        width: 50%;
+        overflow: hidden;
+        color: #FFDF6C;
+      }
+      color: #ECEBF0;
+    }
+    
+    &.empty {
+      color: #ECEBF0;
+    }
+  }

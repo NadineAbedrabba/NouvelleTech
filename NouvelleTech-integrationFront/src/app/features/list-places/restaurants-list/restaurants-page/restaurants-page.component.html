@@ -1,0 +1,427 @@
+<body>
+  <div class="container">
+    <!-- Sidebar Section -->
+    <div class="sidebar">
+      <div id="filtre">
+        <h2><span class="underline">Filt</span>res</h2>
+        <p (click)="resetAll()" >Reset All</p>
+        <div id="drop-down-mobile">
+          <span class="material-symbols-outlined" id="icon" (click)="toggleFilters()" style="cursor: pointer;">{{
+            iconNameFilters }}</span>
+        </div>
+      </div>
+
+      <div *ngIf="showFilters" class="filtres">
+        <!-- Map Filter -->
+        <div id="map">
+          <app-leaflet-map></app-leaflet-map>
+        </div>
+
+        <!-- Categories Filter -->
+        <div id="filtre2">
+          <div class="top">
+            <p class="title">Catégories</p>
+           <!--  <p class="tiny">3</p>
+            <p class="tiny">selected</p>-->
+            <span class="material-symbols-outlined"  (click)="resetTypes()" style="cursor: pointer;">restart_alt</span>
+          </div>
+          <div class="checklist">
+            <div class="sort-sidebar">
+              <p [class.selected]="isSelected('Tunisien')" (click)="toggleTypeSelection('Tunisien')">Tunisien</p>
+              <p [class.selected]="isSelected('Fast_food')" (click)="toggleTypeSelection('Fast_food')">Fast-food</p>
+              <p [class.selected]="isSelected('Healthy')" (click)="toggleTypeSelection('Healthy')">Healthy</p>
+              <p [class.selected]="isSelected('Italien')" (click)="toggleTypeSelection('Italien')">Italien</p>
+              <p [class.selected]="isSelected('Japonais')" (click)="toggleTypeSelection('Japonais')">Japonais</p>
+              <p [class.selected]="isSelected('Libanais')" (click)="toggleTypeSelection('Libanais')">Libanais</p>
+              <p [class.selected]="isSelected('Buffet')" (click)="toggleTypeSelection('Buffet')">Buffet</p>
+              <p [class.selected]="isSelected('Cafe_restaurant')" (click)="toggleTypeSelection('Cafe_restaurant')">Café-restaurant</p>
+            </div>
+          </div>
+          
+        </div>
+
+        <!-- Price Range Filter -->
+        <div id="filtre1">
+          <app-price-range (priceRangeChanged)="onPriceRangeChanged($event)"></app-price-range>
+        </div>
+
+
+       
+
+        <!-- Global Rating Filter -->
+        <div id="filtre5">
+          <div class="flex-title-reset">
+            <p class="title">Note Globale</p>
+            <span class="material-symbols-outlined"  (click)="resetNote()" style="cursor: pointer;">restart_alt</span>
+          </div>
+
+          <div class="checklist">
+            <div class="sort-sidebar">
+              <div *ngFor="let star of [1,2,3,4,5]" 
+                   class="star" 
+                   [class.selected]="selectedRating === star"
+                   (click)="onStarClick(star)">
+                <p>{{star}}</p>
+                <span class="material-symbols-outlined">kid_star</span>
+              </div>
+            </div>
+          </div>
+          
+          
+        </div>
+
+       
+   <!--      Food Quality Rating 
+          <div class="nouriture">
+            <span class="material-symbols-outlined">Restaurant</span>
+            <p class="title1">Qualité de la Nourriture</p>
+            <p class="title2">Goût, fraîcheur, présentation des plats, rapport qualité-prix</p>
+          </div>
+
+          <div class="checklist">
+            <div class="sort-sidebar">
+              <div class="star">
+                <p>1</p>
+                <span class="material-symbols-outlined">kid_star</span>
+              </div>
+              <div class="star">
+                <p>2</p>
+                <span class="material-symbols-outlined">kid_star</span>
+              </div>
+              <div class="star">
+                <p>3</p>
+                <span class="material-symbols-outlined">kid_star</span>
+              </div>
+              <div class="star">
+                <p>4</p>
+                <span class="material-symbols-outlined">kid_star</span>
+              </div>
+              <div class="star">
+                <p>5</p>
+                <span class="material-symbols-outlined">kid_star</span>
+              </div>
+            </div>
+          </div>
+
+          Atmosphere Rating 
+          <div class="nouriture">
+            <span class="material-symbols-outlined">sentiment_very_satisfied</span>
+            <p class="title1">Ambiance et Atmosphère</p>
+            <p class="title2">Décoration, musique, confort, ambiance générale</p>
+          </div>
+
+          <div class="checklist">
+            <div class="sort-sidebar">
+              <div class="star">
+                <p>1</p>
+                <span class="material-symbols-outlined">kid_star</span>
+              </div>
+              <div class="star">
+                <p>2</p>
+                <span class="material-symbols-outlined">kid_star</span>
+              </div>
+              <div class="star">
+                <p>3</p>
+                <span class="material-symbols-outlined">kid_star</span>
+              </div>
+              <div class="star">
+                <p>4</p>
+                <span class="material-symbols-outlined">kid_star</span>
+              </div>
+              <div class="star">
+                <p>5</p>
+                <span class="material-symbols-outlined">kid_star</span>
+              </div>
+            </div>
+          </div>
+
+         Staff Service Rating 
+          <div class="nouriture">
+            <span class="material-symbols-outlined">Group</span>
+            <p class="title1">Service du Personnel</p>
+            <p class="title2">Goût, fraîcheur, présentation des plats, rapport qualité-prix</p>
+          </div>
+
+          <div class="checklist">
+            <div class="sort-sidebar">
+              <div class="star">
+                <p>1</p>
+                <span class="material-symbols-outlined">kid_star</span>
+              </div>
+              <div class="star">
+                <p>2</p>
+                <span class="material-symbols-outlined">kid_star</span>
+              </div>
+              <div class="star">
+                <p>3</p>
+                <span class="material-symbols-outlined">kid_star</span>
+              </div>
+              <div class="star">
+                <p>4</p>
+                <span class="material-symbols-outlined">kid_star</span>
+              </div>
+              <div class="star">
+                <p>5</p>
+                <span class="material-symbols-outlined">kid_star</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      -->
+
+        <div id="filtre6">
+          <div class="flex-title-reset">
+            <p class="title">Services Proposés</p>
+            <span class="material-symbols-outlined"  (click)="resetServices()" style="cursor: pointer;">restart_alt</span>
+          </div>
+          <div *ngFor="let service of services; let i = index">
+            <div class="checkbox-group">
+              <li>
+                <input
+        type="checkbox"
+        [id]="'Serv' + i"
+        [value]="service"
+        (change)="onServiceCheckboxChange($event)"
+        [checked]="isServiceSelected(service)"
+      />
+      <label [for]="'Serv' + i">{{ service }}</label>
+              </li>
+
+            </div>
+          </div>
+        </div>
+
+          <!-- Availability Filter -->
+          <div class="dispo">
+            <app-disponibility></app-disponibility>
+          </div>
+  
+
+        <!-- Food Options Filter -->
+        <div id="filtre3">
+          <div class="top">
+            <p class="title">Options Alimentaires</p>
+           <!-- <p class="tiny">3</p>
+            <p class="tiny">selected</p>-->
+
+            <div id="drop-down">
+              <!-- ⬇️ L'événement (click) est uniquement ici -->
+              <span class="material-symbols-outlined" id="icon2" (click)="toggleOptions()" style="cursor: pointer;">
+                {{ iconName }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Le bloc qui s'affiche ou non -->
+          <div *ngIf="showOptions" class="options-alimentaires">
+
+          <!--  <div class="search-sidebar">
+              <div class="search">
+                <span class="material-symbols-outlined">search</span>
+                <input 
+                  type="text" 
+                  placeholder="Rechercher par nom (filtre combiné)..." 
+                  (input)="onSearchInput()" />
+              </div>
+            </div>-->
+
+            <div class="checklist">
+              <div *ngFor="let option of optionsAlimentaires" class="sortoption">
+                <div class="sort-sidebar">
+                  <p
+                    [class.selected]="isSelectedOptionsAlimentaires(option)"
+                    (click)="toggleOptionsAlimentairesSelection(option)"
+                  >
+                    {{ option }}
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+
+            </div>
+
+
+        </div>
+
+
+        <!-- Experience & Accessibility Filter -->
+        <div id="filtre7">
+          <div class="flex-title-reset">
+            <p class="title">Expérience & Atmosphère</p>
+            <span class="material-symbols-outlined" (click)="resetExperiences()" style="cursor: pointer;">restart_alt</span>
+          </div>
+          <div *ngFor="let experience of experiences; let i = index" class="checkbox-group">
+            <li>
+              <input type="checkbox" [id]="'exp' + i" [value]="experience"   (change)="onExperienceCheckboxChange($event)"
+              [checked]="selectedExperiences.includes(experience)" />
+              <label [for]="'exp' + i">{{ experience }}</label>
+            </li>
+
+          </div>
+
+
+
+          <div class="flex-title-reset">
+            <p class="title">Accessibilité & Public</p>
+            <span class="material-symbols-outlined" (click)="resetAccesibilites()" style="cursor: pointer;">restart_alt</span>
+          </div>
+          <div *ngFor="let acc of accesibilites; let i = index" class="checkbox-group">
+            <li>
+              <input type="checkbox" [id]="'acc' + i" [value]="acc"  (change)="onAccesibiliteCheckboxChange($event)"
+              [checked]="selectedAccesibilites.includes(acc)" />
+              <label [for]="'acc' + i">{{ acc }}</label>
+            </li>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Section -->
+    <main>
+      <!-- Search Bar -->
+      <div class="search">
+        <span class="material-symbols-outlined">search</span>
+        <input 
+          type="text" 
+          placeholder="Search..." 
+          [(ngModel)]="searchTerm"
+          (keyup)="onSearchInput()" 
+        />
+      </div>
+      <!-- Sort Options -->
+      <div class="sort">
+        <p (click)="loadRestaurants()">All</p>
+        <p (click)="trierDerniersAjouts()">Derniers Ajouts</p>
+        <p (click)="trierParNote()" >Meilleure note</p>
+        <p>Plus de comentaires</p>
+      </div>
+
+      <!-- Restaurant Card -->
+      <!-- <div class="carte">
+          <div class="img">
+            <img src="/1.jpg" alt="card-content" />
+          </div>
+  
+          <div class="card-content">
+            <div class="title">Name of the restaurant</div>
+            <div class="undername">
+              <span class="material-symbols-outlined">Location_on</span>
+              <p>adresse</p>
+              <span class="material-symbols-outlined" style="scale: 0.4">Radio_Button_Unchecked</span>
+              <p>5dt-20dt</p>
+              <span class="material-symbols-outlined" style="scale: 0.4">Radio_Button_Unchecked</span>
+              <p><span class="open">open </span>until 10pm</p>
+            </div>
+  
+            <div class="latest-comment">
+              <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s, when an unknown printer took a galley
+                of type.
+              </p>
+            </div>
+            <div class="sort-sidebar tags">
+              <p>Vegan</p>
+              <p>Vegétarian</p>
+              <p>Sans gluten</p>
+              <p>Halal</p>
+              <p>Bio</p>
+              <p>Sans lactose</p>
+            </div>
+          </div>
+  
+          <div class="rate">
+            <div class="score">
+              <span class="material-symbols-outlined">kid_star</span>
+              <h2>4.5</h2>
+            </div>
+            <p>(238 reiews)</p>
+            <div class="website">Website</div>
+            <div class="button">
+              <button class="btn">Réserver</button>
+            </div>
+          </div>
+        </div>
+      -->
+
+
+
+      <div *ngFor="let resto of restaurants">
+        <div class="carte" (click)="goToDetails(resto.id)" style="cursor: pointer;">
+          <div class="img">
+            <img src="assets/Images/1.jpg" alt="card-content" />
+          </div>
+
+          <div class="card-content">
+            <div class="title">{{ resto.nomEntreprise }}</div>
+            <div class="undername">
+              <span class="material-symbols-outlined">Location_on</span>
+              <p>{{ resto.adresse }}</p>
+              <span class="material-symbols-outlined" style="scale: 0.4">Radio_Button_Unchecked</span>
+              <p>{{ resto.gammePrix || 'Prix non spécifié' }} dt</p>
+              <span class="material-symbols-outlined" style="scale: 0.4">Radio_Button_Unchecked</span>
+              <p><span class="open">open </span>until 10pm</p>
+            </div>
+
+            <div class="latest-comment">
+              <p>
+                {{resto.description}}
+
+              </p>
+            </div>
+
+            <div class="flex" >
+
+              <div *ngFor="let tag of resto.tags" class="sort-sidebar tags">
+                <p>{{tag}}</p>
+
+              </div>
+            </div>
+
+          </div>
+          <div class="rate">
+            <div class="score">
+              <span class="material-symbols-outlined">kid_star</span>
+              <h2>{{resto.rating}}</h2>
+            </div>
+            <p>(238 reiews)</p>
+            <div class="website">Website</div>
+            <div class="button">
+              <button class="btn" (click)="goToReserve(resto.id)">Réserver</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+      <!-- Pagination -->
+      <div class="pagination">
+        <div class="arrow" onclick="backBtn()">
+          <span class="material-symbols-outlined">keyboard_backspace</span>
+          <button class="btn1">Prev</button>
+        </div>
+        <ul></ul>
+        <div class="arrow" onclick="nextBtn()">
+          <button class="btn2">Next</button>
+          <span class="material-symbols-outlined">East</span>
+        </div>
+      </div>
+
+      <!-- View More Button (Mobile) -->
+      <button class="view-more">
+        View more
+        <span class="material-symbols-outlined">East</span>
+      </button>
+    </main>
+
+
+  </div>
+
+</body>
