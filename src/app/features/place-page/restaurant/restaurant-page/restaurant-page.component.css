@@ -398,8 +398,7 @@ body{
 #button:hover {
   scale: 1.05;
 }
-#go-signin {
-}
+
 
 #section5 {
   display: flex;
@@ -648,7 +647,7 @@ align-items: center;  background-color: var(--color1);
   width: 190px;
   height: 190px;
   border-radius: 30px;
-  align-items: start;
+  align-items: flex-start;
   padding: 2px 17px;
 }
 

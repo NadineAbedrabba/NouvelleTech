@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-company',
-  imports:[ ReactiveFormsModule],
+  imports:[ ReactiveFormsModule, CommonModule ],
   standalone:true,
 
   templateUrl: './login-company.component.html',

@@ -211,7 +211,7 @@
                                 <i *ngIf="review.rating < 5 && review.rating >= 4.5" class="bi bi-star-half"></i>
                                 <i *ngIf="review.rating < 4.5" class="bi bi-star"></i>
                                 
-                                <span class="rating-value">{{ review.rating?.toFixed(1) || '0.0' }}</span>
+                                <span class="rating-value">{{ review.rating.toFixed(1) || '0.0' }}</span>
                             </div>
                             
                             <div class="detail-rating">

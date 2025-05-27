@@ -7,9 +7,9 @@
           <span>Fiche Restaurant</span>
           <div class="title-decoration"></div>
         </h1>
-        <div class="status-badge" [class.pending]="restaurant?.statut === 'EN_ATTENTE'">
+        <div class="status-badge" [class.pending]="restaurant.statut === 'EN_ATTENTE'">
           <div class="status-glow"></div>
-          {{ restaurant?.statut }}
+          {{ restaurant.statut }}
         </div>
       </div>
     </div>
@@ -18,32 +18,32 @@
     <div class="details-grid">
       <div class="detail-row" *ngIf="restaurant.matricule">
         <span class="detail-label">Matricule</span>
-        <span class="detail-value">{{ restaurant?.matricule }}</span>
+        <span class="detail-value">{{ restaurant.matricule }}</span>
       </div>
       <div class="detail-row" *ngIf="restaurant.email">
         <span class="detail-label">Email</span>
-        <span class="detail-value">{{ restaurant?.email }}</span>
+        <span class="detail-value">{{ restaurant.email }}</span>
       </div>
       <div class="detail-row" *ngIf="restaurant.telephone">
         <span class="detail-label">Téléphone</span>
-        <span class="detail-value">{{ restaurant?.telephone }}</span>
+        <span class="detail-value">{{ restaurant.telephone }}</span>
       </div>
       <div class="detail-row" *ngIf="restaurant.adresse">
         <span class="detail-label">Adresse</span>
-        <span class="detail-value">{{ restaurant?.adresse }}</span>
+        <span class="detail-value">{{ restaurant.adresse }}</span>
       </div>
       <div class="detail-row" *ngIf="restaurant.typeCuisine">
         <span class="detail-label">Type de cuisine</span>
-        <span class="detail-value">{{ restaurant?.typeCuisine }}</span>
+        <span class="detail-value">{{ restaurant.typeCuisine }}</span>
       </div>
       <div class="detail-row" *ngIf="restaurant.dateDemande">
         <span class="detail-label">Date d'inscription</span>
-        <span class="detail-value">{{ formatDate(restaurant?.dateDemande) }}</span>
+        <span class="detail-value">{{ formatDate(restaurant.dateDemande) }}</span>
       </div>
     </div>
 
     <!-- Nouveau Footer avec deux boutons -->
-    <div class="luxury-footer" *ngIf="restaurant?.statut === 'EN_ATTENTE'">
+    <div class="luxury-footer" *ngIf="restaurant.statut === 'EN_ATTENTE'">
       <button class="luxury-button accept-button" (click)="accept()">
         <span class="button-text">Accepter</span>
       </button>

@@ -1,0 +1,103 @@
+<div class="settings-container">
+  <div class="settings-header">
+    <h1>Paramètres</h1>
+    <p>Personnalisez votre expérience FoodMatch</p>
+  </div>
+
+  <!-- Messages de succès/erreur -->
+  <div class="alert success" *ngIf="successMessage">{{ successMessage }}</div>
+  <div class="alert error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <!-- Navigation par onglets -->
+  <div class="settings-tabs">
+    <button [class.active]="activeTab === 'preferences'" (click)="setActiveTab('preferences')">
+      <i class="fas fa-sliders-h"></i> Préférences
+    </button>
+    <button [class.active]="activeTab === 'privacy'" (click)="setActiveTab('privacy')">
+      <i class="fas fa-lock"></i> Confidentialité
+    </button>
+  </div>
+
+  <!-- Contenu des onglets -->
+  <div class="settings-content">
+    <!-- Onglet Préférences -->
+    <div class="tab-content" *ngIf="activeTab === 'preferences'">
+      <div class="settings-section">
+        <h2>Apparence</h2>
+        <div class="setting-item dark-mode-setting">
+          <div class="setting-label">
+            <label for="darkMode">Mode sombre</label>
+            <span class="setting-description">Activer le thème sombre pour l'interface</span>
+          </div>
+          <div class="setting-control">
+            <label class="toggle">
+              <input type="checkbox" id="darkMode" [(ngModel)]="preferences.darkMode" (change)="toggleDarkMode()">
+              <span class="slider"></span>
+            </label>
+            <div class="dark-mode-status">
+              <span *ngIf="preferences.darkMode"><i class="fas fa-moon"></i> Mode sombre activé</span>
+              <span *ngIf="!preferences.darkMode"><i class="fas fa-sun"></i> Mode clair activé</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="settings-section">
+        <h2>Préférences culinaires</h2>
+        <p class="setting-description">Sélectionnez vos types de cuisine préférés pour des recommandations personnalisées</p>
+        <div class="cuisine-preferences">
+          <div class="cuisine-item" *ngFor="let cuisine of availableCuisines" 
+               [class.selected]="isCuisineSelected(cuisine)"
+               (click)="toggleCuisine(cuisine)">
+            {{ cuisine }}
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-actions">
+        <button class="btn-save" (click)="saveSettings('preferences')">Enregistrer les préférences</button>
+      </div>
+    </div>
+
+    <!-- Onglet Confidentialité -->
+    <div class="tab-content" *ngIf="activeTab === 'privacy'">
+      <div class="settings-section">
+        <h2>Visibilité du profil</h2>
+        <div class="setting-item">
+          <div class="setting-label">
+            <label for="publicProfile">Profil public</label>
+            <span class="setting-description">Permettre aux autres utilisateurs de voir votre profil</span>
+          </div>
+          <div class="setting-control">
+            <label class="toggle">
+              <input type="checkbox" id="publicProfile" [(ngModel)]="privacy.publicProfile">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <h2>Avis et évaluations</h2>
+        <div class="setting-item">
+          <div class="setting-label">
+            <label for="showReviews">Afficher mes avis</label>
+            <span class="setting-description">Permettre aux autres utilisateurs de voir vos avis</span>
+          </div>
+          <div class="setting-control">
+            <label class="toggle">
+              <input type="checkbox" id="showReviews" [(ngModel)]="privacy.showReviews">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-actions">
+        <button class="btn-save" (click)="saveSettings('privacy')">Enregistrer les paramètres de confidentialité</button>
+      </div>
+    </div>
+  </div>
+</div>

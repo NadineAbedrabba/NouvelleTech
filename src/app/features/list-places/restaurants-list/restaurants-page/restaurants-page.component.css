@@ -200,7 +200,7 @@ input[type="text"] {
   grid-area: top;
   display: flex;
   flex-direction: row;
-  justify-content: end;
+  justify-content: flex-end;
   gap: 5px;
   align-items: center;
   padding: 5px 14px 0px 14px;
@@ -283,7 +283,9 @@ input[type="text"] {
     --disabled-inner: #e1e6f9;
 
     -webkit-appearance: none;
+    appearance: none;
     -moz-appearance: none;
+    appearance: none;
     width: 18px;
     height: 18px;
     border-radius: 50%;
@@ -506,7 +508,7 @@ input[type="checkbox"] + label {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
   opacity: 0.4; /* Opacité faible par défaut */
   pointer-events: none; /* Empêche les interactions */
   transition: opacity 0.3s ease; /* Animation fluide */
@@ -799,8 +801,8 @@ ul li:not(.link) { /* Pour que "..." ne soit pas cliquable */
   }
   .rate {
     display: flex; /* Utiliser Flexbox pour aligner les éléments à l'intérieur de .rate */
-    justify-content: start; /* Centrer horizontalement le contenu de .rate */
-    align-items: start; /* Centrer verticalement le contenu de .rate */
+    justify-content: flex-start; /* Centrer horizontalement le contenu de .rate */
+    align-items: flex-start; /* Centrer verticalement le contenu de .rate */
     justify-self: start; /* Align it to the left inside the grid cell */
 
     padding: 0px;

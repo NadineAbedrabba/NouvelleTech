@@ -1,0 +1,344 @@
+@import '../header/variables';
+
+.settings-container {
+  max-width: 900px;
+  margin: 0 auto;
+  margin-top: 6rem; /* Espace suffisant pour le header */
+  margin-bottom: 2rem; /* Espace en bas pour éviter que le contenu soit coupé par le footer */
+  padding: 2rem;
+  background-color: $white-2;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  
+  @media (max-width: 768px) {
+    margin-top: 5rem;
+    padding: 1.5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+}
+
+.settings-header {
+  margin-bottom: 2rem;
+  text-align: center;
+  
+  h1 {
+    font-family: var(--font-wow1, "Josefin Sans", sans-serif);
+    color: $pink;
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+  }
+  
+  p {
+    color: #666;
+    font-size: 1rem;
+  }
+}
+
+.alert {
+  padding: 0.8rem 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  
+  &.success {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #2e7d32;
+    border: 1px solid rgba(76, 175, 80, 0.2);
+  }
+  
+  &.error {
+    background-color: rgba(244, 67, 54, 0.1);
+    color: #d32f2f;
+    border: 1px solid rgba(244, 67, 54, 0.2);
+  }
+}
+
+.settings-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #eee;
+  
+  button {
+    background: none;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-family: var(--font-normal, "Mulish", sans-serif);
+    font-size: 1rem;
+    color: #666;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s;
+    
+    i {
+      margin-right: 0.5rem;
+    }
+    
+    &.active {
+      color: $pink;
+      font-weight: 600;
+      
+      &:after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background-color: $pink;
+      }
+    }
+    
+    &:hover:not(.active) {
+      color: $blue;
+    }
+  }
+}
+
+.settings-section {
+  margin-bottom: 2rem;
+  
+  h2 {
+    font-family: var(--font-wow1, "Josefin Sans", sans-serif);
+    color: $blue;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+  
+  .setting-description {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid #eee;
+  
+  &:last-child {
+    border-bottom: none;
+  }
+  
+  .setting-label {
+    flex: 1;
+    
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+    
+    .setting-description {
+      color: #777;
+      font-size: 0.85rem;
+      margin: 0;
+    }
+  }
+  
+  .setting-control {
+    min-width: 80px;
+    
+    select {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background-color: white;
+      font-family: var(--font-normal, "Mulish", sans-serif);
+    }
+  }
+}
+
+// Toggle switch
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+  
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    
+    &:checked + .slider {
+      background-color: $pink;
+    }
+    
+    &:checked + .slider:before {
+      transform: translateX(26px);
+    }
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
+    
+    &:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+  }
+}
+
+// Style spécifique pour le paramètre de mode sombre
+.dark-mode-setting {
+  .setting-control {
+    display: flex;
+    align-items: center;
+    
+    .dark-mode-status {
+      margin-left: 15px;
+      font-size: 0.9rem;
+      
+      i {
+        margin-right: 5px;
+      }
+      
+      .fa-moon {
+        color: $blue;
+      }
+      
+      .fa-sun {
+        color: orange;
+      }
+    }
+  }
+}
+
+// Cuisine preferences
+.cuisine-preferences {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 1rem;
+  
+  .cuisine-item {
+    padding: 0.6rem 1.2rem;
+    background-color: #f5f5f5;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 500;
+    border: 1px solid transparent;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    
+    &:hover {
+      background-color: rgba($blue, 0.15);
+      border-color: rgba($blue, 0.3);
+      transform: translateY(-2px);
+    }
+    
+    &.selected {
+      background-color: rgba($pink, 0.15);
+      color: $pink;
+      font-weight: 600;
+      border-color: rgba($pink, 0.4);
+      box-shadow: 0 3px 6px rgba($pink, 0.2);
+    }
+  }
+}
+
+// Styles spécifiques pour le mode sombre
+:host-context(body.dark-theme) {
+  .cuisine-preferences {
+    .cuisine-item {
+      background-color: #2d2d2d;
+      color: #e0e0e0;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      
+      &:hover {
+        background-color: #383860;
+        border-color: #4a4a80;
+        color: #ffffff;
+      }
+      
+      &.selected {
+        background-color: #3d2a38;
+        color: #ff9ecd;
+        border-color: #7a4a6e;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+      }
+    }
+  }
+  
+  .settings-section h2 {
+    color: #e0e0e0;
+  }
+  
+  .setting-description {
+    color: #b0b0b0;
+  }
+}
+
+.settings-actions {
+  margin-top: 2rem;
+  text-align: right;
+  
+  .btn-save {
+    background-color: $pink;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    font-family: var(--font-wow1, "Josefin Sans", sans-serif);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    
+    &:hover {
+      background-color: darken($pink, 10%);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba($pink, 0.3);
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .settings-container {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .setting-item {
+    flex-direction: column;
+    align-items: flex-start;
+    
+    .setting-label {
+      margin-bottom: 1rem;
+    }
+    
+    .setting-control {
+      width: 100%;
+    }
+  }
+  
+  .settings-tabs {
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    
+    button {
+      white-space: nowrap;
+    }
+  }
+}

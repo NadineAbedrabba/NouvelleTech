@@ -44,17 +44,22 @@
     
     <nav class="nav">
       <div class="dropdown-container" 
-           (mouseenter)="showDropdown = true" 
-           (mouseleave)="onDropdownMouseLeave($event)">
+           (click)="toggleDropdown($event)"
+           (mouseenter)="showDropdown = true">
         <button class="nav-item dropdown-toggle">
           <span>Restaurants</span>
           <i class="fas fa-chevron-down dropdown-arrow" [class.rotate]="showDropdown"></i>
         </button>
-        <ul class="dropdown-menu" *ngIf="showDropdown" @dropdownAnimation
-            (mouseenter)="keepDropdownOpen = true"
-            (mouseleave)="keepDropdownOpen = false; showDropdown = false">
+        <ul class="dropdown-menu" *ngIf="showDropdown" @dropdownAnimation>
+          <li>
+            <a routerLink="/restaurants" (click)="$event.stopPropagation(); showDropdown = false">
+              <i class="fas fa-th-list"></i>
+              Tous les restaurants
+            </a>
+          </li>
+          <li class="dropdown-divider"></li>
           <li *ngFor="let category of restaurantCategories">
-            <a href="#" (click)="showDropdown = false">
+            <a href="#" (click)="$event.stopPropagation(); showDropdown = false">
               <i class="fas fa-utensils"></i>
               {{category.name}}
             </a>

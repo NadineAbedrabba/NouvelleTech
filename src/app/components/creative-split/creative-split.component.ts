@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { SiteReviewService } from '../../services/site-review.service';
 
 @Component({
@@ -7,7 +8,7 @@ import { SiteReviewService } from '../../services/site-review.service';
   templateUrl: './creative-split.component.html',
   styleUrls: ['./creative-split.component.scss'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule, RouterModule]
 })
 export class CreativeSplitComponent implements OnInit {
   // Note moyenne globale du site

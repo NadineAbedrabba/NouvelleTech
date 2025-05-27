@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../auth.service';
 import { UserService } from '../../../user-profile/user.service';
@@ -9,7 +10,7 @@ import { LoginSuccessService } from '../../../user-profile/login-success.service
   templateUrl: './login-user.component.html',
   styleUrls: ['./login-user.component.css'],
   standalone:true,
-  imports:[ ReactiveFormsModule]
+  imports:[ ReactiveFormsModule, CommonModule]
 })
 export class LoginUserComponent {
   loginForm = this.fb.group({

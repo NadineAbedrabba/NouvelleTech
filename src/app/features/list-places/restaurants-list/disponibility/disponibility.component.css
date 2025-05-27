@@ -69,7 +69,7 @@ input[type="checkbox"] {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: start;
+    justify-content: flex-start;
     opacity: 0.4; /* Opacité faible par défaut */
     pointer-events: none; /* Empêche les interactions */
     transition: opacity 0.3s ease; /* Animation fluide */
@@ -141,7 +141,9 @@ input[type="checkbox"] {
       --disabled-inner: #e1e6f9;
   
       -webkit-appearance: none;
+    appearance: none;
       -moz-appearance: none;
+    appearance: none;
       width: 18px;
       height: 18px;
       border-radius: 50%;

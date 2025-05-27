@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+
 import { RestaurantsComponent } from './admin/components/restaurants-page/restaurants.component';
 import { RestaurantRequestsComponent } from './admin/components/restaurant-requests/restaurant-requests.component';
 import { RestaurantDetailsComponent } from './admin/components/restaurant-details/restaurant-details.component';
@@ -21,7 +22,7 @@ import { AdminLayoutComponent } from './admin/components/admin-layout/admin-layo
 import { AdminReviewsComponent } from './admin/components/reviews/reviews.component';
 import { EntrepriseLayoutComponent } from './entreprise/components/entreprise-layout/entreprise-layout.component';
 import { EntrepriseDashboardComponent } from './entreprise/components/entreprise-dashboard/entreprise-dashboard.component';
-
+import { SettingsComponent } from './settings/settings.component';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'reviews', component: ReviewsComponent },
@@ -35,12 +36,11 @@ export const routes: Routes = [
     canActivate: [AuthGuard] 
   },
   { path: 'favorites', component: FavoritesComponent },
-
-    { path: 'restaurants/:id', component: RestaurantsPageComponent },
-    { path: 'restaurants', component: RestaurantsPageComponent },
-    { path: 'restaurant', component: RestaurantPageComponent },
-    { path: 'italian-restaurant', component: ItalianRestaurantPageComponent},
-     {
+  { path: 'restaurants/:id', component: RestaurantsPageComponent },
+  { path: 'restaurants', component: RestaurantsPageComponent },
+  { path: 'restaurant', component: RestaurantPageComponent },
+  { path: 'italian-restaurant', component: ItalianRestaurantPageComponent},
+  {
     path: 'EspaceAdmin',
     component: AdminLayoutComponent,
     children: [
@@ -66,4 +66,9 @@ export const routes: Routes = [
       { path: 'reviews', component: ReviewsComponent }
     ]
   },
+  { 
+    path: 'settings', 
+    component: SettingsComponent,
+    canActivate: [AuthGuard] 
+  }
 ];

@@ -20,15 +20,15 @@ interface Category {
 export class RestaurantCategoriesComponent implements OnInit {
   // Définition des catégories avec des valeurs par défaut
   categories: Category[] = [
-    { name: 'Français', description: 'Cuisine raffinée et classique française', count: 0, image: 'assets/Images/ramen-7238665_1280.jpg' },
-    { name: 'Italien', description: 'Pâtes, pizzas et spécialités italiennes', count: 0, image: 'assets/Images/ramen-7238665_1280.jpg' },
-    { name: 'Chinois', description: 'Saveurs authentiques de Chine', count: 0, image: 'assets/Images/ramen-7238665_1280.jpg' },
-    { name: 'Japonais', description: 'Sushis, sushimis et plats japonais traditionnels', count: 0, image: 'assets/Images/ramen-7238665_1280.jpg' },
-    { name: 'Tunisien', description: 'Cuisine méditerranéenne aux épices parfumées', count: 0, image: 'assets/Images/ramen-7238665_1280.jpg' },
-    { name: 'Indien', description: 'Currys et plats épicés d\'Inde', count: 0, image: 'assets/Images/ramen-7238665_1280.jpg' },
-    { name: 'Marocain', description: 'Tajines et couscous savoureux', count: 0, image: 'assets/Images/ramen-7238665_1280.jpg' },
-    { name: 'Libanais', description: 'Mézzés et grillades du Moyen-Orient', count: 0, image: 'assets/Images/ramen-7238665_1280.jpg' },
-    { name: 'Américain', description: 'Burgers, steaks et spécialités américaines', count: 0, image: 'assets/Images/ramen-7238665_1280.jpg' }
+    { name: 'Français', description: 'Cuisine raffinée et classique française', count: 5, image: 'assets/Images/ramen-7238665_1280.jpg' },
+    { name: 'Italien', description: 'Pâtes, pizzas et spécialités italiennes', count: 6, image: 'assets/Images/ramen-7238665_1280.jpg' },
+    { name: 'Chinois', description: 'Saveurs authentiques de Chine', count: 3, image: 'assets/Images/ramen-7238665_1280.jpg' },
+    { name: 'Japonais', description: 'Sushis, sushimis et plats japonais traditionnels', count: 2, image: 'assets/Images/ramen-7238665_1280.jpg' },
+    { name: 'Tunisien', description: 'Cuisine méditerranéenne aux épices parfumées', count: 4, image: 'assets/Images/ramen-7238665_1280.jpg' },
+    { name: 'Indien', description: 'Currys et plats épicés d\'Inde', count: 5, image: 'assets/Images/ramen-7238665_1280.jpg' },
+    { name: 'Marocain', description: 'Tajines et couscous savoureux', count: 3, image: 'assets/Images/ramen-7238665_1280.jpg' },
+    { name: 'Libanais', description: 'Mézzés et grillades du Moyen-Orient', count: 2, image: 'assets/Images/ramen-7238665_1280.jpg' },
+    { name: 'Américain', description: 'Burgers, steaks et spécialités américaines', count: 1, image: 'assets/Images/ramen-7238665_1280.jpg' }
   ];
   
   // Map pour convertir les noms d'enum en noms affichables

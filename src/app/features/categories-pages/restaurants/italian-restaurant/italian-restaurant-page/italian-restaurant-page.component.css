@@ -74,7 +74,7 @@ word-wrap: break-word; /* Permet au texte de se couper et de passer à la ligne 
     width: 190px;
     height: auto;
 border-radius: 30px;
-align-items: start;
+align-items: flex-start;
 padding: 2px 17px;
 }
 
@@ -264,7 +264,7 @@ border: 2px solid var(--color2);
         /* Conteneur des boutons */
         .content-section3 .buttons {
             display: flex;
-            justify-content: start; /* Centre les boutons */
+            justify-content: flex-start; /* Centre les boutons */
             gap: 15px; /* Espace entre les boutons */
             margin-top: 15px; /* Petit espace sous le texte */
             

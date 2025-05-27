@@ -80,7 +80,7 @@ $avatar-border: 4px;
     top: 0;
     left: 0;
     right: 0;
-    height: $profile-header-height/2;
+    height: calc($profile-header-height / 2);
     background: linear-gradient(135deg, rgba(v.$blue, 0.8), rgba(v.$pink, 0.6));
     z-index: -1;
     border-radius: 0 0 v.$border-radius-lg v.$border-radius-lg;
@@ -373,10 +373,10 @@ $avatar-border: 4px;
   }
 
   .profile-header {
-    padding-top: calc($avatar-size/2 + v.$spacing-md);
+    padding-top: calc($avatar-size / 2 + v.$spacing-md);
 
     &::before {
-      height: $profile-header-height/3;
+      height: calc($profile-header-height / 3);
     }
   }
 

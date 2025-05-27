@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../auth.service';
 
@@ -7,7 +8,7 @@ import { AuthService } from '../../auth.service';
   templateUrl: './register-user.component.html',
   styleUrls: ['./register-user.component.css'],
    standalone:true,
-  imports:[ ReactiveFormsModule]
+  imports:[ ReactiveFormsModule, CommonModule]
 })
 export class RegisterUserComponent {
   passwordError = ''

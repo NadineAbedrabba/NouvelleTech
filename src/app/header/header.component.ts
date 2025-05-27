@@ -116,16 +116,16 @@ export class HeaderComponent implements OnInit {
     this.searchQuery = '';
   }
 
+  // Cette méthode n'est plus utilisée car nous avons simplifié la gestion du dropdown
   onDropdownMouseLeave(event: MouseEvent) {
-    // Petit délai pour éviter la fermeture immédiate
-    setTimeout(() => {
-      if (!this.keepDropdownOpen) {
-        this.showDropdown = false;
-      }
-    }, 100);
+    // Méthode conservée pour référence mais non utilisée
   }
 
-  toggleDropdown() {
+  toggleDropdown(event: MouseEvent) {
+    // Empêcher la propagation de l'événement pour éviter que le dropdown ne se ferme immédiatement
+    event.stopPropagation();
+    
+    // Basculer l'état du dropdown
     this.showDropdown = !this.showDropdown;
   }
   
@@ -158,6 +158,7 @@ export class HeaderComponent implements OnInit {
 
   @HostListener('document:click', ['$event'])
   onClickOutside(event: MouseEvent) {
+    // Fermer le dropdown si on clique en dehors du conteneur dropdown
     if (!(event.target as HTMLElement).closest('.dropdown-container')) {
       this.showDropdown = false;
     }

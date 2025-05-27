@@ -29,8 +29,8 @@
             "styles": [
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "node_modules/swiper/swiper-bundle.min.css",
-              "src/styles.css" 
-            
+              "src/styles.css",
+              "src/styles-dark.css"
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [
@@ -98,7 +98,8 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-  "src/styles.css"
+              "src/styles.css",
+              "src/styles-dark.css"
             ],
             "scripts": []
           }

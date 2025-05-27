@@ -245,6 +245,16 @@
     .dropdown-container {
       position: relative;
       
+      /* Ajouter une zone tampon pour faciliter le passage de la souris */
+      &::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: 15px; /* Zone tampon pour faciliter le passage de la souris */
+      }
+      
       &:hover {
         .dropdown-menu {
           visibility: visible;
@@ -292,7 +302,7 @@
     
     .dropdown-menu {
       position: absolute;
-      top: 100%;
+      top: calc(100% - 1px); /* Réduire l'espace entre le bouton et le dropdown */
       left: 0;
       background: white;
       border-radius: 12px;
@@ -300,12 +310,20 @@
       padding: 0.8rem 0;
       min-width: 220px;
       list-style: none;
-      z-index: 1000;
+      z-index: 1001; /* Assurer que le dropdown est au-dessus des autres éléments */
       visibility: hidden;
       opacity: 0;
       transform: translateY(10px);
-      transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+      margin-top: 0; /* Éliminer toute marge supérieure */
+      pointer-events: auto; /* Permettre l'interaction avec le dropdown */
+      
+      .dropdown-divider {
+        height: 1px;
+        margin: 8px 0;
+        overflow: hidden;
+        background-color: rgba($blue, 0.1);
+      }
       
       li {
         a {
