@@ -1,0 +1,54 @@
+<div class="user-profile-container">
+  <!-- Afficher le bouton de connexion si aucun utilisateur n'est connecté -->
+  <div *ngIf="!user" class="login-button">
+    <a routerLink="/auth/login" class="nav-item btn-login">
+      <i class="fas fa-user"></i>
+      <span>Connexion</span>
+    </a>
+  </div>
+
+  <!-- Afficher le profil si un utilisateur est connecté -->
+  <div *ngIf="user" class="profile-section">
+    <div class="profile-trigger" (click)="toggleDropdown()">
+      <!-- Afficher l'image de profil si disponible, sinon afficher les initiales -->
+      <div class="profile-avatar" *ngIf="client && client.imageUrl">
+        <img [src]="client.imageUrl" alt="Photo de profil">
+      </div>
+      <div class="profile-avatar initials" *ngIf="!client?.imageUrl">
+        {{ getUserInitials() }}
+      </div>
+      <div class="profile-info">
+        <span class="profile-name">
+          <ng-container *ngIf="client && (client.prenom || client.nom)">
+            {{ client.prenom }} {{ client.nom }}
+          </ng-container>
+          <ng-container *ngIf="!client && user && user.nom">
+            {{ user.prenom }} {{ user.nom }}
+          </ng-container>
+        </span>
+        <i class="fas fa-chevron-down dropdown-arrow" [class.rotate]="showDropdown"></i>
+      </div>
+    </div>
+
+    <!-- Menu déroulant du profil -->
+    <div class="profile-dropdown" *ngIf="showDropdown">
+      <div class="dropdown-header">
+        <div class="welcome-message">
+          <ng-container *ngIf="client && (client.prenom || client.nom)">
+            Bienvenue, {{ client.prenom }} {{ client.nom }}!
+          </ng-container>
+          <ng-container *ngIf="!client && user && user.nom">
+            Bienvenue, {{ user.prenom }} {{ user.nom }}!
+          </ng-container>
+        </div>
+      </div>
+      <ul class="dropdown-menu">
+        <li><a routerLink="/profile"><i class="fas fa-user-circle"></i> Mon profil</a></li>
+        <li><a routerLink="/my-reviews"><i class="fas fa-star"></i> Mes avis</a></li>
+        <li><a routerLink="/settings"><i class="fas fa-cog"></i> Paramètres</a></li>
+        <li class="divider"></li>
+        <li><a (click)="logout()"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
+      </ul>
+    </div>
+  </div>
+</div>

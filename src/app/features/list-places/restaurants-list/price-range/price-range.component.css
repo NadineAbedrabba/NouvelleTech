@@ -1,0 +1,255 @@
+
+
+
+
+
+
+
+
+
+
+
+.material-symbols-outlined {
+  color: var(--color2); /* Change la couleur en rouge */
+  font-size: 24px; /* Ajuste la taille si nécessaire */
+}
+
+
+#filtre1 {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#filtre1 .flex-title-reset {
+  padding: 0;
+  margin: 6px 0px 4px 0px;
+}
+
+#filtre1 > * {
+  width: 90%;
+}
+.range-slider {
+  width: 80%;
+  text-align: center;
+  position: relative;
+  padding-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-title-reset {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 4px;
+}
+
+.title {
+  font-family: var(--font-wow1);
+  color: var(--color2);
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+
+.range-slider .rangeValues {
+  display: inline-block;
+  width: 80%;
+  max-width: 240px;
+
+  /* Appliquer l'animation de fond dégradé fluide entre les couleurs */
+  background: linear-gradient(
+    -45deg,
+    var(--color1-lighter),
+    var(--color1),
+    var(--color1-darker)
+  );
+  background-size: 200% 1500%; /* Cela permet de rendre l'animation plus fluide */
+  animation: gradient 7s ease infinite;
+
+  padding: 20px 15px 15px 15px;
+  margin-bottom: 30px;
+  border-radius: 100px;
+  color: var(--white);
+  font-size: clamp(1.1rem, 2vw, 1.2rem);
+  overflow: hidden;
+  white-space: normal; /* Permet au texte de passer à la ligne suivante */
+  overflow-wrap: break-word; /* Coupe le texte uniquement par les mots, pas par les lettres */
+}
+
+/* Définir l'animation du dégradé */
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 50% 100%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  75% {
+    background-position: 50% 0%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.02); /* Ombre sur le curseur */
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 300px;
+  height: 6.5px;
+  background: var(--color1);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.slider {
+  padding-bottom: 20px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: none;
+  width: 18px;
+  height: 18px;
+  background: var(--bg1);
+  border: 2px solid var(--color1);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05); /* Ombre sur le curseur */
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  margin-top: -6px;
+}
+input[type="range"]:focus {
+  outline: none;
+}
+
+input[type="range"]:focus ::-webkit-slider-runnable-track {
+  outline: none;
+} /* nahiw el bleu taaa navig auto */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@supports ((-webkit-appearance: none) or (-moz-appearance: none)) {
+  input[type="checkbox"],
+  input[type="radio"] {
+    --active: var(--color1);
+    --active-inner: #fff;
+    --focus: 0 0 4px var(--color1);
+    --border: #acacac;
+    --border-hover: var(--color1);
+    --background: var(--bg1);
+    --disabled: #f6f8ff;
+    --disabled-inner: #e1e6f9;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--background);
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: background 0.3s, border-color 0.3s, box-shadow 0.2s;
+
+    &:after {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--active-inner);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      transition: transform 0.3s ease-in-out, opacity 0.2s;
+    }
+
+    &:checked {
+      background: var(--active);
+      border-color: var(--active);
+    }
+
+    &:checked:after {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    &:hover:not(:checked):not(:disabled) {
+      border-color: var(--border-hover);
+    }
+
+    &:focus {
+      box-shadow: var(--focus);
+    }
+
+    &:disabled {
+      background: var(--disabled);
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    &:disabled:checked {
+      background: var(--disabled-inner);
+      border-color: var(--border);
+    }
+  }
+
+  /* Style des labels */
+  input[type="radio"] + label {
+    font-size: 14px;
+    line-height: 24px;
+    display: inline-block;
+    vertical-align: top;
+    cursor: pointer;
+    margin-left: 6px;
+  }
+}
+
+/* Suppression des puces dans les listes */
+li {
+  list-style: none;
+  margin: 13px 5px;
+  position: relative;
+  margin-bottom: -4px;
+}
+
+.radio-group {
+  margin-bottom: 10px;
+  margin-top: -13px;
+}
+.radio-group > li:last-child {
+  margin-top: 27px;
+  margin-bottom: 15px;
+}
+
+

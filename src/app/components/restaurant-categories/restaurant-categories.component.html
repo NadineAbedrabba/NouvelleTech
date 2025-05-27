@@ -1,0 +1,32 @@
+<section class="restaurant-categories">
+  <div class="container">
+    <h2 class="section-title">Nos Catégories Gourmandes</h2>
+    <p class="section-subtitle">Explorez une diversité de saveurs</p>
+
+    <div class="scrolling-wrapper">
+      <!-- Original Grid -->
+      <div class="categories-grid">
+        <div *ngFor="let category of categories" class="category-card">
+          <div class="card-image">
+            <img [src]="category.image" [alt]="'Image ' + category.name">
+          </div>
+          <h3>{{category.name}}</h3>
+          <p>{{category.description}}</p>
+          <div class="card-badge">{{category.count}}+</div>
+        </div>
+      </div>
+
+      <!-- Clone for Infinite Scroll -->
+      <div class="categories-grid clone">
+        <div *ngFor="let category of categories" class="category-card">
+          <div class="card-image">
+            <img [src]="category.image" [alt]="'Image ' + category.name">
+          </div>
+          <h3>{{category.name}}</h3>
+          <p>{{category.description}}</p>
+          <div class="card-badge">{{category.count}}+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,31 @@
+<div id="filtre1">
+  <div class="flex-title-reset">
+    <p class="title">Price Range</p>
+    <span class="material-symbols-outlined">restart_alt</span>
+  </div>
+
+  <div class="radio-group">
+    <li>
+      <input id="prix1" type="radio" name="prix" value="1" (change)="emitFixedRange(0, 50)" />
+      <label for="prix1">💰 (Économique)</label>
+    </li>
+    <li>
+      <input id="prix2" type="radio" name="prix" value="2" checked (change)="emitFixedRange(50, 120)" />
+      <label for="prix2">💰💰 (Moyenne)</label>
+    </li>
+    <li>
+      <input id="prix3" type="radio" name="prix" value="3" (change)="emitFixedRange(120, 200)" />
+      <label for="prix3">💰💰💰 (Haut de gamme)</label>
+    </li>
+    <li class="title">Intervalle personnalisé</li>
+  </div>
+
+  <!-- 🟢 Ajouter les références de template ici -->
+  <div class="range-slider" id="range-slider" #rangeSlider>
+    <span class="rangeValues" id="range-values" #rangeValues></span>
+    <div class="slider">
+      <input value="0" min="0" max="200" step="5" type="range" class="range-input" id="range1" />
+      <input value="200" min="0" max="200" step="5" type="range" class="range-input" id="range2" />
+    </div>
+  </div>
+</div>

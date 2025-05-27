@@ -1,0 +1,43 @@
+<section class="daily-discovery">
+    <div class="container">
+      <div class="discovery-header">
+        <h2 class="section-title">Notre Sélection Mystère</h2>
+        <p class="section-subtitle">Laissez-vous surprendre par notre algorithme gourmand</p>
+        <div class="discovery-badge" [@pulseBadge]="badgeState">Nouveau chaque jour</div>
+      </div>
+  
+      <div class="discovery-card" #discoveryCard>
+        <div class="discovery-image" [style.backgroundImage]="'url(' + todaysRecommendation.image + ')'">
+          <button class="reveal-btn" (click)="revealSurprise()">
+            <i class="fas fa-random"></i> {{ isRevealed ? 'Cacher' : 'Révéler' }} la surprise
+          </button>
+        </div>
+  
+        <div class="discovery-content">
+          <div class="placeholder" *ngIf="!isRevealed">
+            <p>Cliquez pour découvrir votre recommandation personnalisée</p>
+          </div>
+  
+          <div class="revealed-content" *ngIf="isRevealed" [@revealAnimation]="'visible'">
+
+            <h3>{{ todaysRecommendation.name }}</h3>
+            
+            <!-- ★★ STAR RATING SECTION ★★ -->
+            <div class="rating">
+              <ng-container *ngFor="let star of getStars(todaysRecommendation.rating)">
+                <i [ngClass]="getStarClass(star)"></i>
+              </ng-container>
+              <span>{{ todaysRecommendation.rating }}/5 ({{ todaysRecommendation.reviewCount }} avis)</span>
+            </div>
+  
+            <p class="description">{{ todaysRecommendation.description }}</p>
+            <div class="tags">
+              <span *ngFor="let tag of todaysRecommendation.tags">{{ tag }}</span>
+            </div>
+            <a href="#" class="cta-btn">Je tente l'expérience</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  

@@ -1,0 +1,127 @@
+[
+  {
+    "id": 1,
+    "nomEntreprise": "Tech Innov",
+    "adresse": "123 Rue de l'Industrie",
+    "telephone": "0555123456",
+    "typeCuisine": "ITALIENNE",
+    "localisation": "Tunisie",
+    "description": "Entreprise spécialisée dans l'innovation technologique.",
+    "statut": "EN_ATTENTE",
+    "complet": false,
+    "acceptReservation": false,
+    "livraisonDisponible": false,
+    "gammePrix": "Moyenne",
+    "horaires": {
+      "Lundi": {
+        "heureOuverture": "09:00",
+        "heureFermeture": "18:00"
+      },
+      "Mardi": {
+        "heureOuverture": "09:00",
+        "heureFermeture": "18:00"
+      },
+      "Mercredi": {
+        "heureOuverture": "09:00",
+        "heureFermeture": "18:00"
+      }
+    },
+    "services": [
+      "Wi-Fi",
+      "Parking"
+    ],
+    "optionsAlimentaires": [
+      "Végétarien",
+      "Sans Gluten"
+    ],
+    "experiences": [
+      "Atelier de cuisine",
+      "Soirée dégustation"
+    ],
+    "caracteristiqueRepas": [
+      "Cuisine légère",
+      "Menu spécial"
+    ],
+    "accesibilite": [
+      "Accessible aux fauteuils roulants"
+    ],
+    "users": [
+      {
+        "id": 1,
+        "nomUtilisateur": "admin",
+        "role": "ADMIN"
+      }
+    ],
+    "images": [
+      {
+        "id": 1,
+        "url": "http://example.com/image1.jpg",
+        "description": "Image de l'extérieur"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "nomEntreprise": "Le Gourmet Voyageur",
+    "adresse": "45 Avenue des Saveurs",
+    "telephone": "0555789123",
+    "typeCuisine": "FRANCAISE",
+    "localisation": "France",
+    "description": "Un restaurant gastronomique qui vous emmène dans un voyage culinaire.",
+    "statut": "OUVERT",
+    "complet": false,
+    "acceptReservation": true,
+    "livraisonDisponible": true,
+    "gammePrix": "Élevée",
+    "horaires": {
+      "Lundi": {
+        "heureOuverture": "12:00",
+        "heureFermeture": "22:00"
+      },
+      "Mardi": {
+        "heureOuverture": "12:00",
+        "heureFermeture": "22:00"
+      },
+      "Mercredi": {
+        "heureOuverture": "12:00",
+        "heureFermeture": "22:00"
+      }
+    },
+    "services": [
+      "Wi-Fi",
+      "Parking",
+      "Toilettes",
+      "Climatisation"
+    ],
+    "optionsAlimentaires": [
+      "Végétarien",
+      "Halal"
+    ],
+    "experiences": [
+      "Dégustation de vins",
+      "Soirée gastronomique"
+    ],
+    "caracteristiqueRepas": [
+      "Cuisine raffinée",
+      "Menu dégustation"
+    ],
+    "accesibilite": [
+      "Accessible aux fauteuils roulants",
+      "Accès PMR"
+    ],
+    "users": [
+      {
+        "id": 2,
+        "nomUtilisateur": "chef",
+        "role": "CHEF"
+      }
+    ],
+    "images": [
+      {
+        "id": 2,
+        "url": "http://example.com/image2.jpg",
+        "description": "Image de l'intérieur du restaurant"
+      }
+    ]
+  }
+]

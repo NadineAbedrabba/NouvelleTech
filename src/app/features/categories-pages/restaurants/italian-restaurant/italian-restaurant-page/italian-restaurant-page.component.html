@@ -1,0 +1,530 @@
+<body>
+    
+
+<app-italian-restaurant-carousel></app-italian-restaurant-carousel>
+
+<div id="section4-title" *ngIf="topRatedRestaurants.length > 0">
+    <p>CUISINE ITALIENNE</p>
+    <h1>The most rated restaurants</h1>
+  </div>
+
+  <div id="section4" *ngIf="topRatedRestaurants.length" >
+
+    <div *ngFor="let restaurant of topRatedRestaurants">
+      <div class="component">
+        <div id="image-component">
+          <img src="assets/Images/1.jpg" alt="" />
+        </div>
+  
+        <div id="content-component">
+          <p>{{restaurant.nomEntreprise}}</p>
+          <div class="score">
+            <span class="material-symbols-outlined">kid_star</span>
+            <h2>{{restaurant.rating}}</h2>
+          </div>
+          <p>(320 reviews)</p>
+  
+          <p>{{restaurant.adresse}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="section3">
+      <div id="review-deroulant">
+        <!-- colonne 1  -->
+        <div class="review c1 fadeout-vertical">
+
+          <div class="marquee-text-track">
+            <div class="card">
+              <div id="nameRestImg">
+                <img src="
+    /1.jpg" alt="" />
+
+                <h1>Name of restaurant</h1>
+              </div>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam
+                eligendi nisi accusamus, veritatis quae, pariatur nemo aperiam
+                incidunt id aspernatur mollitia! Totam architecto sapiente
+                voluptatem! Mollitia at nihil magni voluptatibus!
+              </p>
+
+              <div id="buttScore">
+                <div class="score">
+                  <span class="material-symbols-outlined">kid_star</span>
+                  <p>4.5</p>
+                </div>
+                <button>View more</button>
+              </div>
+            </div>
+            <div class="card">
+              <div id="nameRestImg">
+                <img src="
+    /1.jpg" alt="" />
+
+                <h1>Name of restaurant</h1>
+              </div>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam
+                eligendi nisi accusamus, veritatis quae, pariatur nemo aperiam
+                incidunt id aspernatur mollitia! Totam architecto sapiente
+                voluptatem! Mollitia at nihil magni voluptatibus!
+              </p>
+
+              <div id="buttScore">
+                <div class="score">
+                  <span class="material-symbols-outlined">kid_star</span>
+                  <p>4.5</p>
+                </div>
+                <button>View more</button>
+              </div>
+            </div>
+            <div class="card">
+              <div id="nameRestImg">
+                <img src="
+    /1.jpg" alt="" />
+
+                <h1>Name of restaurant</h1>
+              </div>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam
+                eligendi nisi accusamus, veritatis quae, pariatur nemo aperiam
+                incidunt id aspernatur mollitia! Totam architecto sapiente
+                voluptatem! Mollitia at nihil magni voluptatibus!
+              </p>
+
+              <div id="buttScore">
+                <div class="score">
+                  <span class="material-symbols-outlined">kid_star</span>
+                  <p>4.5</p>
+                </div>
+                <button>View more</button>
+              </div>
+            </div>
+        
+        </div>
+
+            <div aria-hidden  class="marquee-text-track hiden" >
+              <div class="card">
+                <div id="nameRestImg">
+                  <img src="
+        /1.jpg" alt="" />
+
+                  <h1>Name of restaurant</h1>
+                </div>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Totam eligendi nisi accusamus, veritatis quae, pariatur nemo
+                  aperiam incidunt id aspernatur mollitia! Totam architecto
+                  sapiente voluptatem! Mollitia at nihil magni voluptatibus!
+                </p>
+
+                <div id="buttScore">
+                  <div class="score">
+                    <span class="material-symbols-outlined">kid_star</span>
+                    <p>4.5</p>
+                  </div>
+                  <button>View more</button>
+                </div>
+              </div>
+              <div class="card">
+                <div id="nameRestImg">
+                  <img src="
+        /1.jpg" alt="" />
+
+                  <h1>Name of restaurant</h1>
+                </div>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Totam eligendi nisi accusamus, veritatis quae, pariatur nemo
+                  aperiam incidunt id aspernatur mollitia! Totam architecto
+                  sapiente voluptatem! Mollitia at nihil magni voluptatibus!
+                </p>
+
+                <div id="buttScore">
+                  <div class="score">
+                    <span class="material-symbols-outlined">kid_star</span>
+                    <p>4.5</p>
+                  </div>
+                  <button>View more</button>
+                </div>
+              </div>
+              <div class="card">
+                <div id="nameRestImg">
+                  <img src="
+        /1.jpg" alt="" />
+
+                  <h1>Name of restaurant</h1>
+                </div>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Totam eligendi nisi accusamus, veritatis quae, pariatur nemo
+                  aperiam incidunt id aspernatur mollitia! Totam architecto
+                  sapiente voluptatem! Mollitia at nihil magni voluptatibus!
+                </p>
+
+                <div id="buttScore">
+                  <div class="score">
+                    <span class="material-symbols-outlined">kid_star</span>
+                    <p>4.5</p>
+                  </div>
+                  <button>View more</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+
+          <div class="review c2 fadeout-vertical">
+
+            <div class="marquee-text-track-reverse">
+              <div class="card">
+                <div id="nameRestImg">
+                  <img src="
+        /1.jpg" alt="" />
+  
+                  <h1>Name of restaurant</h1>
+                </div>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam
+                  eligendi nisi accusamus, veritatis quae, pariatur nemo aperiam
+                  incidunt id aspernatur mollitia! Totam architecto sapiente
+                  voluptatem! Mollitia at nihil magni voluptatibus!
+                </p>
+  
+                <div id="buttScore">
+                  <div class="score">
+                    <span class="material-symbols-outlined">kid_star</span>
+                    <p>4.5</p>
+                  </div>
+                  <button>View more</button>
+                </div>
+              </div>
+              <div class="card">
+                <div id="nameRestImg">
+                  <img src="
+        /1.jpg" alt="" />
+  
+                  <h1>Name of restaurant</h1>
+                </div>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam
+                  eligendi nisi accusamus, veritatis quae, pariatur nemo aperiam
+                  incidunt id aspernatur mollitia! Totam architecto sapiente
+                  voluptatem! Mollitia at nihil magni voluptatibus!
+                </p>
+  
+                <div id="buttScore">
+                  <div class="score">
+                    <span class="material-symbols-outlined">kid_star</span>
+                    <p>4.5</p>
+                  </div>
+                  <button>View more</button>
+                </div>
+              </div>
+              <div class="card">
+                <div id="nameRestImg">
+                  <img src="
+        /1.jpg" alt="" />
+  
+                  <h1>Name of restaurant</h1>
+                </div>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam
+                  eligendi nisi accusamus, veritatis quae, pariatur nemo aperiam
+                  incidunt id aspernatur mollitia! Totam architecto sapiente
+                  voluptatem! Mollitia at nihil magni voluptatibus!
+                </p>
+  
+                <div id="buttScore">
+                  <div class="score">
+                    <span class="material-symbols-outlined">kid_star</span>
+                    <p>4.5</p>
+                  </div>
+                  <button>View more</button>
+                </div>
+              </div>
+          
+          </div>
+  
+              <div aria-hidden  class="marquee-text-track-reverse hiden" >
+                <div class="card">
+                  <div id="nameRestImg">
+                    <img src="
+        /1.jpg" alt="" />
+  
+                    <h1>Name of restaurant</h1>
+                  </div>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Totam eligendi nisi accusamus, veritatis quae, pariatur nemo
+                    aperiam incidunt id aspernatur mollitia! Totam architecto
+                    sapiente voluptatem! Mollitia at nihil magni voluptatibus!
+                  </p>
+  
+                  <div id="buttScore">
+                    <div class="score">
+                      <span class="material-symbols-outlined">kid_star</span>
+                      <p>4.5</p>
+                    </div>
+                    <button>View more</button>
+                  </div>
+                </div>
+                <div class="card">
+                  <div id="nameRestImg">
+                    <img src="
+        /1.jpg" alt="" />
+  
+                    <h1>Name of restaurant</h1>
+                  </div>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Totam eligendi nisi accusamus, veritatis quae, pariatur nemo
+                    aperiam incidunt id aspernatur mollitia! Totam architecto
+                    sapiente voluptatem! Mollitia at nihil magni voluptatibus!
+                  </p>
+  
+                  <div id="buttScore">
+                    <div class="score">
+                      <span class="material-symbols-outlined">kid_star</span>
+                      <p>4.5</p>
+                    </div>
+                    <button>View more</button>
+                  </div>
+                </div>
+                <div class="card">
+                  <div id="nameRestImg">
+                    <img src="
+        /1.jpg" alt="" />
+  
+                    <h1>Name of restaurant</h1>
+                  </div>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Totam eligendi nisi accusamus, veritatis quae, pariatur nemo
+                    aperiam incidunt id aspernatur mollitia! Totam architecto
+                    sapiente voluptatem! Mollitia at nihil magni voluptatibus!
+                  </p>
+  
+                  <div id="buttScore">
+                    <div class="score">
+                      <span class="material-symbols-outlined">kid_star</span>
+                      <p>4.5</p>
+                    </div>
+                    <button>View more</button>
+                  </div>
+                </div>
+              </div>
+  
+            </div>
+
+            <div class="review c1 c3 fadeout-vertical">
+
+                <div class="marquee-text-track">
+                  <div class="card">
+                    <div id="nameRestImg">
+                      <img src="
+            /1.jpg" alt="" />
+      
+                      <h1>Name of restaurant</h1>
+                    </div>
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam
+                      eligendi nisi accusamus, veritatis quae, pariatur nemo aperiam
+                      incidunt id aspernatur mollitia! Totam architecto sapiente
+                      voluptatem! Mollitia at nihil magni voluptatibus!
+                    </p>
+      
+                    <div id="buttScore">
+                      <div class="score">
+                        <span class="material-symbols-outlined">kid_star</span>
+                        <p>4.5</p>
+                      </div>
+                      <button>View more</button>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div id="nameRestImg">
+                      <img src="
+            /1.jpg" alt="" />
+      
+                      <h1>Name of restaurant</h1>
+                    </div>
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam
+                      eligendi nisi accusamus, veritatis quae, pariatur nemo aperiam
+                      incidunt id aspernatur mollitia! Totam architecto sapiente
+                      voluptatem! Mollitia at nihil magni voluptatibus!
+                    </p>
+      
+                    <div id="buttScore">
+                      <div class="score">
+                        <span class="material-symbols-outlined">kid_star</span>
+                        <p>4.5</p>
+                      </div>
+                      <button>View more</button>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div id="nameRestImg">
+                      <img src="
+            /1.jpg" alt="" />
+      
+                      <h1>Name of restaurant</h1>
+                    </div>
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam
+                      eligendi nisi accusamus, veritatis quae, pariatur nemo aperiam
+                      incidunt id aspernatur mollitia! Totam architecto sapiente
+                      voluptatem! Mollitia at nihil magni voluptatibus!
+                    </p>
+      
+                    <div id="buttScore">
+                      <div class="score">
+                        <span class="material-symbols-outlined">kid_star</span>
+                        <p>4.5</p>
+                      </div>
+                      <button>View more</button>
+                    </div>
+                  </div>
+              
+              </div>
+      
+                  <div aria-hidden  class="marquee-text-track hiden" >
+                    <div class="card">
+                      <div id="nameRestImg">
+                        <img src="
+            /1.jpg" alt="" />
+      
+                        <h1>Name of restaurant</h1>
+                      </div>
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Totam eligendi nisi accusamus, veritatis quae, pariatur nemo
+                        aperiam incidunt id aspernatur mollitia! Totam architecto
+                        sapiente voluptatem! Mollitia at nihil magni voluptatibus!
+                      </p>
+      
+                      <div id="buttScore">
+                        <div class="score">
+                          <span class="material-symbols-outlined">kid_star</span>
+                          <p>4.5</p>
+                        </div>
+                        <button>View more</button>
+                      </div>
+                    </div>
+                    <div class="card">
+                      <div id="nameRestImg">
+                        <img src="
+            /1.jpg" alt="" />
+      
+                        <h1>Name of restaurant</h1>
+                      </div>
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Totam eligendi nisi accusamus, veritatis quae, pariatur nemo
+                        aperiam incidunt id aspernatur mollitia! Totam architecto
+                        sapiente voluptatem! Mollitia at nihil magni voluptatibus!
+                      </p>
+      
+                      <div id="buttScore">
+                        <div class="score">
+                          <span class="material-symbols-outlined">kid_star</span>
+                          <p>4.5</p>
+                        </div>
+                        <button>View more</button>
+                      </div>
+                    </div>
+                    <div class="card">
+                      <div id="nameRestImg">
+                        <img src="
+            /1.jpg" alt="" />
+      
+                        <h1>Name of restaurant</h1>
+                      </div>
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Totam eligendi nisi accusamus, veritatis quae, pariatur nemo
+                        aperiam incidunt id aspernatur mollitia! Totam architecto
+                        sapiente voluptatem! Mollitia at nihil magni voluptatibus!
+                      </p>
+      
+                      <div id="buttScore">
+                        <div class="score">
+                          <span class="material-symbols-outlined">kid_star</span>
+                          <p>4.5</p>
+                        </div>
+                        <button>View more</button>
+                      </div>
+                    </div>
+                  </div>
+      
+                </div>
+      
+          
+
+            
+      </div>
+
+
+
+
+
+      
+
+        <div class="content-section3">
+            <p>Dis-nous ce que t'en penses !</p>
+            <h1> T’es allé où ? Laisse <span class="bleu"> ton avis !</span> </h1>
+            <h3>
+              T’as découvert un endroit top ? Ou au contraire, un spot à éviter ? On veut savoir ! Partage ton avis et aide les autres à faire le bon choix.
+            </h3>
+    
+            <div class="buttons">
+              <button>VOIR PLUS</button>
+              <button>S'INSCRIRE</button>
+            </div>
+          </div>
+      </div>
+
+
+<div id="section4-title" *ngIf="latestRestaurants.length > 0">
+        <p>CUISINE ITALIENNE</p>
+        <h1>The trendiest  restaurants</h1>
+      </div>
+  
+      <div id="section4"  *ngIf="latestRestaurants.length > 0"  >
+        <div *ngFor="let restaurant of latestRestaurants">
+          <div class="component">
+            <div id="image-component">
+              <img src="assets/Images/1.jpg" alt="" />
+            </div>
+      
+            <div id="content-component">
+              <p>{{restaurant.nomEntreprise}}</p>
+              <div class="score">
+                <span class="material-symbols-outlined">kid_star</span>
+                <h2>{{restaurant.rating}}</h2>
+              </div>
+              <p>(320 reviews)</p>
+      
+              <p>{{restaurant.adresse}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </body>
+
+
+
+
+     
+
+
+
+
+        
