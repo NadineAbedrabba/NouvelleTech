@@ -30,8 +30,8 @@ export class DetailRestoComponent {
   }
 
   openReservationForm() {
-    this.router.navigate(['/reservation'], {
-      queryParams: { companyId: this.restaurant.id }
-    });
+    // this.router.navigate(['/reservation'], {
+    //   queryParams: { companyId: this.restaurant.id }
+    // });
   }
 }
