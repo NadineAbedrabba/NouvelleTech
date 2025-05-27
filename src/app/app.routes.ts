@@ -27,7 +27,7 @@ import { ReservationFormComponent } from './reservation-form/reservation-form.co
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'reviews', component: ReviewsComponent },
+  { path: 'reviews', component: ReviewsComponent , canActivate: [AuthGuard] },
   { path: 'reviews/:id', component: ReviewsComponent },
   { path: 'profile', component: ProfileEditComponent },
   { path: 'review', component: ReviewContainerComponent },
@@ -69,7 +69,7 @@ export const routes: Routes = [
       { path: 'reviews', component: ReviewsComponent }
     ]
   },
-    { path: 'mesreservations', component: MesReservationsComponent },
+    { path: 'mesreservations', component: MesReservationsComponent,canActivate: [AuthGuard] },
     { path: 'detailsRestaurant/:id', component: DetailRestoComponent  },
-{ path: 'reserver', component: ReservationFormComponent }
+{ path: 'reserver', component: ReservationFormComponent,canActivate: [AuthGuard] }
 ];

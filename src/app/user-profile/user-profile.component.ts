@@ -36,7 +36,8 @@ export class UserProfileComponent implements OnInit {
   logout(): void {
     this.userService.logout();
     this.showDropdown = false;
-    
+    localStorage.removeItem('authToken')
+      localStorage.clear(); 
     // Forcer la mise à jour de l'interface sans rafraîchir la page
     this.userService.notifyLoginStateChange();
   }
