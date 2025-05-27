@@ -27,7 +27,7 @@ public class Client extends User {
     private Image image;
 
     @CreationTimestamp
-    @Column(name = "date_creation", nullable = false, updatable = false)
+    @Column(name = "date_creation", nullable = true, updatable = false)
     private LocalDateTime dateCreation;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -42,4 +42,5 @@ public class Client extends User {
         // constructeur par défaut requis par Hibernate
     }
 }
+
 

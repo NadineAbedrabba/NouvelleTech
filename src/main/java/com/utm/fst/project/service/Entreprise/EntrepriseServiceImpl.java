@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import jakarta.persistence.EntityNotFoundException; // pour Jakarta EE
+import jakarta.persistence.EntityNotFoundException;
 
 import java.util.stream.Collectors;
 
@@ -522,3 +522,4 @@ public class EntrepriseServiceImpl implements EntrepriseService {
 
 
 }
+

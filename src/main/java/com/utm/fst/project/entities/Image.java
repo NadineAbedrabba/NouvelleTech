@@ -23,3 +23,4 @@ public class Image {
     @JoinColumn(name = "entreprise_id")
     private Entreprise entreprise;
 }
+

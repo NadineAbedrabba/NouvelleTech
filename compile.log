@@ -1,0 +1,44 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------------< com.utm.fst:project >-------------------------
+[INFO] Building project.backend 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.2.0:clean (default-clean) @ project ---
+[INFO] Deleting C:\Users\MSI\Desktop\back\target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ project ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ project ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 67 source files with javac [debug release 17] to target\classes
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /C:/Users/MSI/Desktop/back/src/main/java/com/utm/fst/project/controller/AuthenticationController.java:[11,16] package org.json does not exist
+[ERROR] /C:/Users/MSI/Desktop/back/src/main/java/com/utm/fst/project/controller/AuthenticationController.java:[49,26] cannot find symbol
+  symbol:   class JSONException
+  location: class com.utm.fst.project.controller.AuthenticationController
+[INFO] 2 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  4.116 s
+[INFO] Finished at: 2025-05-27T01:03:46+02:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.11.0:compile (default-compile) on project project: Compilation failure: Compilation failure: 
+[ERROR] /C:/Users/MSI/Desktop/back/src/main/java/com/utm/fst/project/controller/AuthenticationController.java:[11,16] package org.json does not exist
+[ERROR] /C:/Users/MSI/Desktop/back/src/main/java/com/utm/fst/project/controller/AuthenticationController.java:[49,26] cannot find symbol
+[ERROR]   symbol:   class JSONException
+[ERROR]   location: class com.utm.fst.project.controller.AuthenticationController
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

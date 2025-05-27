@@ -92,7 +92,30 @@ public class SiteReviewServiceImpl implements SiteReviewService {
 
     @Override
     public List<SiteReviewDTO> getSiteReviewsByClient(Long clientId) {
-        return siteReviewRepository.findByClientId(clientId).stream()
+        System.out.println("Recherche des avis pour le client ID: " + clientId);
+        
+        // Vérifier si le client existe
+        boolean clientExists = clientRepository.existsById(clientId);
+        System.out.println("Le client avec ID " + clientId + " existe: " + clientExists);
+        
+        // Récupérer tous les avis pour vérification
+        List<SiteReview> allReviews = siteReviewRepository.findAll();
+        System.out.println("Nombre total d'avis dans la base de données: " + allReviews.size());
+        
+        // Afficher les détails de chaque avis pour débogage
+        allReviews.forEach(review -> {
+            System.out.println("Avis ID: " + review.getId() + 
+                             ", Rating: " + review.getRating() + 
+                             ", Client: " + (review.getClient() != null ? 
+                                           "ID=" + review.getClient().getId() + ", Nom=" + review.getClient().getNom() : 
+                                           "null"));
+        });
+        
+        // Récupérer les avis spécifiques au client
+        List<SiteReview> clientReviews = siteReviewRepository.findByClientId(clientId);
+        System.out.println("Nombre d'avis trouvés pour le client ID " + clientId + ": " + clientReviews.size());
+        
+        return clientReviews.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }

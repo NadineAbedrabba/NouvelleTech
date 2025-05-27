@@ -8,7 +8,7 @@ import com.utm.fst.project.service.user.UserService;
 import com.utm.fst.project.utils.JwtUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletResponse;
-import org.json.JSONException;
+// import org.json.JSONException; // Supprimé car non utilisé
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -46,7 +46,7 @@ public class AuthenticationController {
             @RequestBody AuthenticationRequest authenticationRequest,
             HttpServletResponse response
     ) throws BadCredentialsException, DisabledException, UsernameNotFoundException,
-            IOException, JSONException, ServletException {
+            IOException, ServletException {
 
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(

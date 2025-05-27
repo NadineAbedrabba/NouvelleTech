@@ -46,31 +46,47 @@ public class WebSecurityConfiguration {
     // 2. Then define the security filter chain that uses it
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        System.out.println("Configuring security filter chain...");
         return http
                 .csrf(csrf -> csrf.disable())
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Now this will work
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.GET, "/entreprise/**").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/entreprise/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/review/api/reviews/**").permitAll()
-                        .requestMatchers("/authenticate", "/sign-up", "/entreprise/register",
-                                "/swagger-ui/index.html",
-                                "/entreprise/**",
-                                "/v3/api-docs/**",
-                                "/swagger-ui/**",
-                                "/swagger-ui.html",
-                                "/favicon.ico",
-                                "/webjars/**",
-                                "/api/entreprises/**", "/api/images/**",
-                                "/client/register/**",
-                                "/api/reviews/**",
-                                "/client/**",
-                                "/entreprise/**",
-                                "/api/reservations/**",
-                                "/api/images").permitAll()
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/api/**").authenticated()
-                )
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .authorizeHttpRequests(auth -> {
+                    // Endpoints publics avec méthodes spécifiques
+                    auth.requestMatchers(HttpMethod.GET, "/entreprise/**").permitAll();
+                    auth.requestMatchers(HttpMethod.DELETE, "/entreprise/**").permitAll();
+                    auth.requestMatchers(HttpMethod.GET, "/review/api/reviews/**").permitAll();
+                    
+                    // Endpoints publics pour les avis de site (GET et POST)
+                    auth.requestMatchers(HttpMethod.GET, "/api/site-reviews/**").permitAll();
+                    auth.requestMatchers(HttpMethod.POST, "/api/site-reviews").permitAll();
+                    System.out.println("POST /api/site-reviews configuré comme public");
+                    
+                    // Autres endpoints publics
+                    auth.requestMatchers(
+                            "/authenticate", "/sign-up", "/entreprise/register",
+                            "/swagger-ui/index.html",
+                            "/entreprise/**",
+                            "/v3/api-docs/**",
+                            "/swagger-ui/**",
+                            "/swagger-ui.html",
+                            "/favicon.ico",
+                            "/webjars/**",
+                            "/api/entreprises/**", "/api/images/**",
+                            "/client/register/**",
+                            "/api/reviews/**",
+                            "/client/**",
+                            "/entreprise/**",
+                            "/api/reservations/**",
+                            "/api/images",
+                            "/settings/**"
+                    ).permitAll();
+                    
+                    // Préflight CORS
+                    auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
+                    
+                    // Tous les autres endpoints API nécessitent une authentification
+                    auth.requestMatchers("/api/**").authenticated();
+                })
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
