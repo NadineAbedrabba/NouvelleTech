@@ -24,4 +24,7 @@ export class DetailRestoComponent implements OnInit{
   openReservationForm() {
     this.router.navigate(['/reserver'], { queryParams: { id: this.restaurantId } });
   }
+  goToReview() {
+  this.router.navigate(['/review']);
+}
 }

@@ -83,6 +83,7 @@ $font-secondary: 'Mulish', sans-serif;
   margin: 3rem auto;
   padding: 1rem;
   position: relative;
+  padding-top: 80px;
   overflow: hidden;
   font-family: $font-primary;
 
@@ -121,13 +122,14 @@ $font-secondary: 'Mulish', sans-serif;
     text-align: center;
     font-family: $font-heading;
     font-size: 3rem;
-    margin-bottom: 2rem;
+    margin: 0 auto 2rem;  // Changé ici
     color: $pink;
     text-shadow: 2px 2px 0 rgba($blue, 0.2);
+    display: block;  // Changé de inline-block à block
+    width: 100%;    // Ajouté pour occuper toute la largeur
     position: relative;
-    display: inline-block;
-    left: 50%;
-    transform: translateX(-50%);
+    left: auto;     // Supprimé le positionnement à 50%
+    transform: none; // Supprimé la translation
     animation: pulse 2s infinite;
 
     &::after {
@@ -150,7 +152,7 @@ $font-secondary: 'Mulish', sans-serif;
     position: relative;
     z-index: 1;
     border: 2px solid rgba($blue, 0.3);
-    animation: wobble 5s infinite ease-in-out;
+    //animation: wobble 5s infinite ease-in-out;
     transition: all 0.3s;
 
     &:hover {
